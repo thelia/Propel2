@@ -1,5 +1,5 @@
 {
-    "name": "propel/propel",
+    "name": "thelia/propel",
     "type": "library",
     "description": "Propel2 is an open-source Object-Relational Mapping (ORM) for PHP 5.4",
     "keywords": [
@@ -42,7 +42,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "2.3-dev"
         }
     }
 }
