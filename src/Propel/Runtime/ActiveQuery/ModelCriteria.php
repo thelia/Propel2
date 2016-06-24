@@ -596,6 +596,24 @@ class ModelCriteria extends BaseModelCriteria
      */
     public function addJoinObject(Join $join, $name = null)
     {
+        if (!$join instanceof ModelJoin) {
+            @trigger_error(
+                "Adding a Join to a ModelCriteria is still allowed by Propel but can cause issues by being processed as"
+                . " a ModelJoin is some cases. It may be unallowed in the future."
+                . " The Join has been tentatively converted to a ModelJoin, but you may wish to provide a ModelJoin.",
+                E_USER_WARNING
+            );
+
+            $modelJoin = new ModelJoin();
+            $modelJoin->buildFromJoin($join);
+
+            if ($modelJoin->getRightTableAlias() !== null) {
+                $this->addAlias($modelJoin->getRightTableAlias(), $modelJoin->getRightTableName());
+            }
+
+            $join = $modelJoin;
+        }
+
         if (!in_array($join, $this->joins)) { // compare equality, NOT identity
             if (null === $name) {
                 $this->joins[] = $join;

@@ -12,6 +12,7 @@ namespace Propel\Runtime\ActiveQuery;
 
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
+use Propel\Runtime\Propel;
 
 /**
  * A ModelJoin is a Join object tied to a RelationMap object
@@ -190,5 +191,26 @@ class ModelJoin extends Join
             . ' relationMap: ' . $this->relationMap->getName()
             . ' previousJoin: ' . ($this->previousJoin ? '(' . $this->previousJoin . ')' : 'null')
             . ' relationAlias: ' . $this->rightTableAlias;
+    }
+
+    /**
+     * Build from a Join.
+     * @param Join $join Join to build from.
+     * @deprecated Compatibility hack. Do not use.
+     */
+    public function buildFromJoin(Join $join)
+    {
+        // copy all join properties
+        $reflectedJoin = new \ReflectionClass($join);
+
+        foreach ($reflectedJoin->getProperties() as $reflectedProperty) {
+            $reflectedProperty->setAccessible(true);
+            $reflectedProperty->setValue($this, $reflectedProperty->getValue($join));
+        }
+
+        // set the TableMap for the right side table
+        // this works only if all table maps in the application were built at boot
+        $rightTableMap = Propel::getDatabaseMap()->getTable($join->getRightTableName());
+        $this->setTableMap($rightTableMap);
     }
 }
