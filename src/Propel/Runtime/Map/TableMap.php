@@ -37,6 +37,13 @@ class TableMap
     const TYPE_STUDLYPHPNAME = 'camelName';
 
     /**
+     * studlyphpname type
+     * e.g. 'authorId'
+     * @deprecated Legacy constant for compatibility. Use TYPE_CAMELNAME.
+     */
+    const TYPE_STUDLYPHPNAME = 'camelName';
+
+    /**
      * camelCase type
      * e.g. 'authorId'
      */
