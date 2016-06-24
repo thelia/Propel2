@@ -205,6 +205,11 @@ class ".$this->getUnqualifiedClassName()." extends TableMap
         foreach ($this->getTable()->getColumns() as $col) {
             $script .= "
     /**
+     * the column legacy name for the " . $col->getName() ." field
+     * @deprecated Legacy constant for compatibility. Use {$col->getConstantName()}.
+     */
+    const ".$col->getLegacyConstantName() ." = '" . $this->getTable()->getName() . ".".$col->getName()."';
+    /**
      * the column name for the " . $col->getName() ." field
      */
     const ".$col->getConstantName() ." = '" . $this->getTable()->getName() . ".".$col->getName()."';
@@ -224,6 +229,10 @@ class ".$this->getUnqualifiedClassName()." extends TableMap
     /** The enumerated values for the " . $col->getName() . " field */";
                 foreach ($col->getValueSet() as $value) {
                     $script .= "
+    /**
+     * @deprecated Legacy constant for compatibility. Use {$col->getConstantName()}_{$this->getValueSetConstant($value)}.
+     */
+    const " . $col->getLegacyConstantName() . '_' . $this->getValueSetConstant($value) . " = '" . $value . "';"."
     const " . $col->getConstantName() . '_' . $this->getValueSetConstant($value) . " = '" . $value . "';";
                 }
                 $script .= "
@@ -244,6 +253,13 @@ class ".$this->getUnqualifiedClassName()." extends TableMap
         foreach ($this->getTable()->getColumns() as $col) {
             if ($col->isValueSetType()) {
                 $script .= "
+                {$col->getFQLegacyConstantName()} => array(
+                ";
+                foreach ($col->getValueSet() as $value) {
+                    $script .= "            self::" . $col->getLegacyConstantName() . '_' . $this->getValueSetConstant($value) . ",
+";
+                }
+                $script .= "        ),
                 {$col->getFQConstantName()} => array(
                 ";
                 foreach ($col->getValueSet() as $value) {
