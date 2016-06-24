@@ -49,6 +49,13 @@ class TableMap
     public const TYPE_COLNAME = 'colName';
 
     /**
+     * column part of the column tableMap name
+     * e.g. 'AUTHOR_ID'
+     * @deprecated Legacy constant, was removed. Do not use.
+     */
+    const TYPE_RAW_COLNAME = 'rawColName';
+
+    /**
      * column fieldname type
      * e.g. 'author_id'
      */
