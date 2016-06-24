@@ -821,10 +821,19 @@ class Table extends ScopedMappingModel implements IdMethod
             if ($refFK->getTable()->isCrossRef()) {
                 $crossFK = new CrossForeignKeys($refFK, $this);
                 foreach ($refFK->getOtherFks() as $fk) {
-                    if ($fk->isAtLeastOneLocalPrimaryKeyIsRequired() &&
-                        $crossFK->isAtLeastOneLocalPrimaryKeyNotCovered($fk)) {
-                        $crossFK->addCrossForeignKey($fk);
+                    if (!$fk->isAtLeastOneLocalPrimaryKeyIsRequired() ||
+                        !$crossFK->isAtLeastOneLocalPrimaryKeyNotCovered($fk)) {
+                        @trigger_error(
+                            "Schema change required for {$refFK->getTable()->getName()}."
+                            . " New conditions should be matched by primary/foreign keys of cross tables in order for"
+                            . " relationship methods to be generated in the joined entities."
+                            . " -> Foreign keys of cross tables should also be primary keys."
+                            . " See https://github.com/propelorm/Propel2/commit/e9e8b3dba8e028ebe7c5b4b6e7a552901b13073a#diff-744059cd04c85fd3ddeaa124a676e953",
+                            E_USER_DEPRECATED
+                        );
                     }
+
+                    $crossFK->addCrossForeignKey($fk);
                 }
                 if ($crossFK->hasCrossForeignKeys()) {
                     $crossFks[] = $crossFK;
