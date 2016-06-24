@@ -733,6 +733,23 @@ class Column extends MappingModel
     }
 
     /**
+     * Returns the column legacy constant name.
+     *
+     * @return string
+     *
+     * @deprecated Legacy counterpart of getConstantName(). Do not use.
+     */
+    public function getLegacyConstantName()
+    {
+        // was it overridden in schema.xml ?
+        if ($this->getTableMapName()) {
+            return strtoupper($this->getTableMapName());
+        }
+
+        return strtoupper($this->getName());
+    }
+
+    /**
      * Returns the column constant name.
      *
      * @return string
