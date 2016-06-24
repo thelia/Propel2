@@ -688,6 +688,21 @@ class Column extends MappingModel
     }
 
     /**
+     * Returns the full column legacy constant name (e.g. TableMapName::COLUMN_NAME).
+     *
+     * @return string A column constant name for insertion into PHP code
+     *
+     * @deprecated Legacy counterpart of getFQConstantName(). Do not use.
+     */
+    public function getFQLegacyConstantName()
+    {
+        $classname = $this->parentTable->getPhpName() . 'TableMap';
+        $const = $this->getLegacyConstantName();
+
+        return $classname.'::'.$const;
+    }
+
+    /**
      * Returns the full column constant name (e.g. TableMapName::COL_COLUMN_NAME).
      *
      * @return string A column constant name for insertion into PHP code
@@ -698,6 +713,23 @@ class Column extends MappingModel
         $const = $this->getConstantName();
 
         return $classname . '::' . $const;
+    }
+
+    /**
+     * Returns the column legacy constant name.
+     *
+     * @return string
+     *
+     * @deprecated Legacy counterpart of getConstantName(). Do not use.
+     */
+    public function getLegacyConstantName()
+    {
+        // was it overridden in schema.xml ?
+        if ($this->getTableMapName()) {
+            return strtoupper($this->getTableMapName());
+        }
+
+        return strtoupper($this->getName());
     }
 
     /**
