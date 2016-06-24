@@ -37,8 +37,15 @@
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
     const NUM_HYDRATE_COLUMNS = <?php echo $nbHydrateColumns ?>;
-<?php foreach ($columns as $col) : ?>
 
+<?php foreach ($columns as $col) : ?>
+    /**
+    * the column legacy name for the <?php echo $col->getName() ?> field
+    * @deprecated Legacy constant for compatibility. Use <?php echo $col->getConstantName() ?>.
+    */
+    const <?php echo $col->getLegacyConstantName() ?> = '<?php echo $tableName ?>.<?php echo $col->getName() ?>';
+<?php endforeach; ?>
+<?php foreach ($columns as $col) : ?>
     /**
      * the column name for the <?php echo $col->getName() ?> field
      */
