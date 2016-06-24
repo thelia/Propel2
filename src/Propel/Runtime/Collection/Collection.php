@@ -664,4 +664,227 @@ class Collection implements ArrayAccess, IteratorAggregate, Countable, Serializa
     {
         return spl_object_hash($this);
     }
+
+    //<editor-fold desc="Legacy methods">
+    /**
+     * Run a closure on a CollectionIterator synchronised with the data state of this Collection, before and after
+     * the closure is run. Used to redirect legacy iterator methods to their new implementation.
+     * @param \Closure $closure Closure to run. Will receive an instance of CollectionIterator as the first and only
+     *     argument.
+     * @return mixed Return value of the closure.
+     * @deprecated Used for backward compatibility only.
+     */
+    private function runOnBCIterator(\Closure $closure)
+    {
+        // get an iterator synchronized with the state of our data
+        $iterator = new CollectionIterator($this);
+        $iterator->seek(key($this->data));
+
+        $return = $closure($iterator);
+
+        // synchronize our data with the state of the iterator
+        $this->data = $iterator->getCollection()->getData();
+        $newPosition = $iterator->key();
+        reset($this->data);
+        while (key($this->data) !== $newPosition) {
+            next($this->data);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @see CollectionIterator::getPosition()
+     * @return int
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function getPosition()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->getPosition();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::seek()
+     * @param int $position
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function seek($position)
+    {
+        $this->runOnBCIterator(
+            function (CollectionIterator $i) use ($position) {
+                $i->seek($position);
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::rewind()
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function rewind()
+    {
+        $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                $i->rewind();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::current()
+     * @return mixed
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function current()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->current();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::key()
+     * @return mixed
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function key()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->key();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::next()
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function next()
+    {
+        $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                $i->next();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::valid()
+     * @return bool
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function valid()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->valid();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::isFirst()
+     * @return boolean
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function isFirst()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->isFirst();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::getPrevious()
+     * @return mixed
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function getPrevious()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->getPrevious();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::getCurrent()
+     * @return mixed
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function getCurrent()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->getCurrent();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::getNext()
+     * @return mixed
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function getNext()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->getNext();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::isLast()
+     * @return boolean
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on..
+     */
+    public function isLast()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->isLast();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::isOdd()
+     * @return boolean
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function isOdd()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->isOdd();
+            }
+        );
+    }
+
+    /**
+     * @see CollectionIterator::isEven()
+     * @return boolean
+     * @deprecated This class is no longer an iterator. Use getIterator() to obtain an iterator to work on.
+     */
+    public function isEven()
+    {
+        return $this->runOnBCIterator(
+            function (CollectionIterator $i) {
+                return $i->isEven();
+            }
+        );
+    }
+    //</editor-fold>
 }
