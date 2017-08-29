@@ -283,7 +283,7 @@ if (\$this->isInTree()) {
  *
  * @param  ConnectionInterface \$con Connection to use.
  */
-protected function processNestedSetQueries(ConnectionInterface \$con)
+protected function processNestedSetQueries(\$con)
 {
     foreach (\$this->nestedSetQueries as ['callable' => \$callable, 'arguments' => \$arguments]) {
         \$arguments[] = \$con;
