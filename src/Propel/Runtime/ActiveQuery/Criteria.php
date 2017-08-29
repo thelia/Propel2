@@ -2344,7 +2344,7 @@ class Criteria
      *
      * @throws PropelException
      */
-    public function doUpdate($updateValues, ConnectionInterface $con)
+    public function doUpdate($updateValues, $con)
     {
         /** @var PdoAdapter $db */
         $db = Propel::getServiceContainer()->getAdapter($this->getDbName());
@@ -2487,7 +2487,7 @@ class Criteria
         return $params;
     }
 
-    public function doCount(ConnectionInterface $con = null)
+    public function doCount($con = null)
     {
         $dbMap = Propel::getServiceContainer()->getDatabaseMap($this->getDbName());
         $db = Propel::getServiceContainer()->getAdapter($this->getDbName());
@@ -2626,7 +2626,7 @@ class Criteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function doSelect(ConnectionInterface $con = null)
+    public function doSelect($con = null)
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getReadConnection($this->getDbName());

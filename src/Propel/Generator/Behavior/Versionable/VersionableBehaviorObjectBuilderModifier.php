@@ -225,7 +225,7 @@ public function enforceVersioning()
  * @param   ConnectionInterface \$con The ConnectionInterface connection to use.
  * @return  boolean
  */
-public function isVersioningNecessary(ConnectionInterface \$con = null)
+public function isVersioningNecessary(\$con = null)
 {
     if (\$this->alreadyInSave) {
         return false;
@@ -310,7 +310,7 @@ public function isVersioningNecessary(ConnectionInterface \$con = null)
  *
  * @return  {$versionARClassName} A version object
  */
-public function addVersion(ConnectionInterface \$con = null)
+public function addVersion(\$con = null)
 {
     \$this->enforceVersion = false;
 
@@ -377,7 +377,7 @@ public function addVersion(ConnectionInterface \$con = null)
  *
  * @return  \$this|{$ARclassName} The current object (for fluent API support)
  */
-public function toVersion(\$versionNumber, ConnectionInterface \$con = null)
+public function toVersion(\$versionNumber, \$con = null)
 {
     \$version = \$this->getOneVersion(\$versionNumber, \$con);
     if (!\$version) {
@@ -501,7 +501,7 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
  *
  * @return  integer
  */
-public function getLastVersionNumber(ConnectionInterface \$con = null)
+public function getLastVersionNumber(\$con = null)
 {
     \$v = {$this->getVersionQueryClassName()}::create()
         ->filterBy{$this->table->getPhpName()}(\$this)
@@ -526,7 +526,7 @@ public function getLastVersionNumber(ConnectionInterface \$con = null)
  *
  * @return  Boolean
  */
-public function isLastVersion(ConnectionInterface \$con = null)
+public function isLastVersion(\$con = null)
 {
     return \$this->getLastVersionNumber(\$con) == \$this->getVersion();
 }
@@ -545,7 +545,7 @@ public function isLastVersion(ConnectionInterface \$con = null)
  *
  * @return  {$versionARClassName} A version object
  */
-public function getOneVersion(\$versionNumber, ConnectionInterface \$con = null)
+public function getOneVersion(\$versionNumber, \$con = null)
 {
     return {$this->getVersionQueryClassName()}::create()
         ->filterBy{$this->table->getPhpName()}(\$this)
@@ -572,7 +572,7 @@ public function getOneVersion(\$versionNumber, ConnectionInterface \$con = null)
  *
  * @return  ObjectCollection|{$versionARClassName}[] A list of {$versionARClassName} objects
  */
-public function getAllVersions(ConnectionInterface \$con = null)
+public function getAllVersions(\$con = null)
 {
     \$criteria = new Criteria();
     \$criteria->addAscendingOrderByColumn({$this->builder->getColumnConstant($versionForeignColumn)});
@@ -668,7 +668,7 @@ protected function computeDiff(\$fromVersion, \$toVersion, \$keys = 'columns', \
  *
  * @return  array A list of differences
  */
-public function compareVersion(\$versionNumber, \$keys = 'columns', ConnectionInterface \$con = null, \$ignoredColumns = array())
+public function compareVersion(\$versionNumber, \$keys = 'columns', \$con = null, \$ignoredColumns = array())
 {
     \$fromVersion = \$this->toArray();
     \$toVersion = \$this->getOneVersion(\$versionNumber, \$con)->toArray();
@@ -699,7 +699,7 @@ public function compareVersion(\$versionNumber, \$keys = 'columns', ConnectionIn
  *
  * @return  array A list of differences
  */
-public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys = 'columns', ConnectionInterface \$con = null, \$ignoredColumns = array())
+public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys = 'columns', \$con = null, \$ignoredColumns = array())
 {
     \$fromVersion = \$this->getOneVersion(\$fromVersionNumber, \$con)->toArray();
     \$toVersion = \$this->getOneVersion(\$toVersionNumber, \$con)->toArray();
@@ -730,7 +730,7 @@ public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys =
  *
  * @return PropelCollection|{$versionARClassName}[] List of {$versionARClassName} objects
  */
-public function getLastVersions(\$number = 10, \$criteria = null, ConnectionInterface \$con = null)
+public function getLastVersions(\$number = 10, \$criteria = null, \$con = null)
 {
     \$criteria = {$this->getVersionQueryClassName()}::create(null, \$criteria);
     \$criteria->addDescendingOrderByColumn({$versionTableMapClassName}::{$colPrefix}VERSION);

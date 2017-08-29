@@ -1634,7 +1634,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
         }
 
         $script .= "
-    ".$visibility." function set$cfc($typeHint\$v$null)
+    ".$visibility." function set$cfc(\$v$null)
     {";
     }
 
@@ -3856,7 +3856,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
      * @param      string \$joinBehavior optional join type to use (defaults to $joinBehavior)
      * @return ObjectCollection|{$className}[] List of $className objects
      */
-    public function get".$relCol."Join".$relCol2."(Criteria \$criteria = null, ConnectionInterface \$con = null, \$joinBehavior = $joinBehavior)
+    public function get".$relCol."Join".$relCol2."(Criteria \$criteria = null, \$con = null, \$joinBehavior = $joinBehavior)
     {";
                 $script .= "
         \$query = $fkQueryClassName::create(null, \$criteria);
@@ -4155,7 +4155,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
      * @return ObjectCollection|{$className}[] List of $className objects
      * @throws PropelException
      */
-    public function get$relCol(Criteria \$criteria = null, ConnectionInterface \$con = null)
+    public function get$relCol(\$criteria = null, ConnectionInterface \$con = null)
     {
         \$partial = \$this->{$collName}Partial && !\$this->isNew();
         if (null === \$this->$collName || null !== \$criteria  || \$partial) {
@@ -4285,7 +4285,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
     /**
      * @param {$className} \${$lowerRelatedObjectClassName} The $className object to add.
      */
-    protected function doAdd{$relatedObjectClassName}($className \${$lowerRelatedObjectClassName})
+    protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
         \$this->{$collName}[]= \${$lowerRelatedObjectClassName};
         \${$lowerRelatedObjectClassName}->set" . $this->getFKPhpNameAffix($refFK, $plural = false) . "(\$this);
@@ -4321,7 +4321,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
      * @param  {$className} \${$lowerRelatedObjectClassName} The $className object to remove.
      * @return \$this|". $this->getObjectClassname() ." The current object (for fluent API support)
      */
-    public function remove{$relatedObjectClassName}($className \${$lowerRelatedObjectClassName})
+    public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
         if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
             \$pos = \$this->{$collName}->search(\${$lowerRelatedObjectClassName});
@@ -5139,7 +5139,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
      *
      * @return ObjectCollection|{$relatedObjectClassName}[] List of {$relatedObjectClassName} objects
      */
-    public function get{$relatedName}(Criteria \$criteria = null, ConnectionInterface \$con = null)
+    public function get{$relatedName}(\$criteria = null, ConnectionInterface \$con = null)
     {
         \$partial = \$this->{$collName}Partial && !\$this->isNew();
         if (null === \$this->$collName || null !== \$criteria || \$partial) {
@@ -5290,7 +5290,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
      *
      * @return int the number of related $relatedObjectClassName objects
      */
-    public function count{$relatedName}(Criteria \$criteria = null, \$distinct = false, ConnectionInterface \$con = null)
+    public function count{$relatedName}(\$criteria = null, \$distinct = false, ConnectionInterface \$con = null)
     {
         \$partial = \$this->{$collName}Partial && !\$this->isNew();
         if (null === \$this->$collName || null !== \$criteria || \$partial) {
