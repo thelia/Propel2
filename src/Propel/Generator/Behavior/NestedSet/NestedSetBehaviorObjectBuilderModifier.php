@@ -225,7 +225,7 @@ if (\$this->isInTree()) {
  *
  * @param  ConnectionInterface \$con Connection to use.
  */
-protected function processNestedSetQueries(ConnectionInterface \$con)
+protected function processNestedSetQueries(\$con)
 {
     foreach (\$this->nestedSetQueries as \$query) {
         \$query['arguments'][] = \$con;
@@ -446,7 +446,7 @@ public function isLeaf()
  * @param      $objectClassName \$parent Propel node object
  * @return     bool
  */
-public function isDescendantOf($objectClassName \$parent)
+public function isDescendantOf(\$parent)
 {";
         if ($this->behavior->useScope()) {
             $script .= "
@@ -472,7 +472,7 @@ public function isDescendantOf($objectClassName \$parent)
  * @param      $objectClassName \$child Propel node object
  * @return     bool
  */
-public function isAncestorOf($objectClassName \$child)
+public function isAncestorOf(\$child)
 {
     return \$child->isDescendantOf(\$this);
 }
@@ -507,7 +507,7 @@ public function hasParent()
  * @param      $objectClassName \$parent
  * @return     \$this|{$objectClassName} The current object, for fluid interface
  */
-public function setParent($objectClassName \$parent = null)
+public function setParent(\$parent = null)
 {
     \$this->aNestedSetParent = \$parent;
 
@@ -704,7 +704,7 @@ public function initNestedSetChildren()
  *
  * @return     void
  */
-public function addNestedSetChild($objectClassName $objectName)
+public function addNestedSetChild($objectName)
 {
     if (null === \$this->collNestedSetChildren) {
         \$this->initNestedSetChildren();
@@ -745,7 +745,7 @@ public function hasChildren()
  * @param      ConnectionInterface \$con Connection to use.
  * @return     ObjectCollection|{$objectClassName}[] List of $objectClassName objects
  */
-public function getChildren(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function getChildren(\$criteria = null, ConnectionInterface \$con = null)
 {
     if (null === \$this->collNestedSetChildren || null !== \$criteria) {
         if (\$this->isLeaf() || (\$this->isNew() && null === \$this->collNestedSetChildren)) {
@@ -780,7 +780,7 @@ public function getChildren(Criteria \$criteria = null, ConnectionInterface \$co
  * @param      ConnectionInterface \$con Connection to use.
  * @return     int       Number of children
  */
-public function countChildren(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function countChildren(\$criteria = null, ConnectionInterface \$con = null)
 {
     if (null === \$this->collNestedSetChildren || null !== \$criteria) {
         if (\$this->isLeaf() || (\$this->isNew() && null === \$this->collNestedSetChildren)) {
@@ -809,7 +809,7 @@ public function countChildren(Criteria \$criteria = null, ConnectionInterface \$
  * @param      ConnectionInterface \$con Connection to use.
  * @return     $objectClassName|null First child or null if this is a leaf
  */
-public function getFirstChild(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function getFirstChild(\$criteria = null, ConnectionInterface \$con = null)
 {
     if (\$this->isLeaf()) {
         return null;
@@ -836,7 +836,7 @@ public function getFirstChild(Criteria \$criteria = null, ConnectionInterface \$
  * @param      ConnectionInterface \$con Connection to use.
  * @return     $objectClassName|null Last child or null if this is a leaf
  */
-public function getLastChild(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function getLastChild(\$criteria = null, ConnectionInterface \$con = null)
 {
     if (\$this->isLeaf()) {
         return null;
@@ -865,7 +865,7 @@ public function getLastChild(Criteria \$criteria = null, ConnectionInterface \$c
  *
  * @return ObjectCollection|{$objectClassName}[] List of $objectClassName objects
  */
-public function getSiblings(\$includeNode = false, Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function getSiblings(\$includeNode = false, \$criteria = null, ConnectionInterface \$con = null)
 {
     if (\$this->isRoot()) {
         return array();
@@ -896,7 +896,7 @@ public function getSiblings(\$includeNode = false, Criteria \$criteria = null, C
  * @param      ConnectionInterface \$con Connection to use.
  * @return     ObjectCollection|{$objectClassName}[] List of $objectClassName objects
  */
-public function getDescendants(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function getDescendants(\$criteria = null, ConnectionInterface \$con = null)
 {
     if (\$this->isLeaf()) {
         return array();
@@ -922,7 +922,7 @@ public function getDescendants(Criteria \$criteria = null, ConnectionInterface \
  * @param      ConnectionInterface \$con Connection to use.
  * @return     int         Number of descendants
  */
-public function countDescendants(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function countDescendants(\$criteria = null, ConnectionInterface \$con = null)
 {
     if (\$this->isLeaf()) {
         // save one query
@@ -949,7 +949,7 @@ public function countDescendants(Criteria \$criteria = null, ConnectionInterface
  * @param      ConnectionInterface \$con Connection to use.
  * @return     ObjectCollection|{$objectClassName}[] List of $objectClassName objects
  */
-public function getBranch(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function getBranch(\$criteria = null, ConnectionInterface \$con = null)
 {
     return $queryClassName::create(null, \$criteria)
         ->branchOf(\$this)
@@ -973,7 +973,7 @@ public function getBranch(Criteria \$criteria = null, ConnectionInterface \$con 
  * @param      ConnectionInterface \$con Connection to use.
  * @return     ObjectCollection|{$objectClassName}[] List of $objectClassName objects
  */
-public function getAncestors(Criteria \$criteria = null, ConnectionInterface \$con = null)
+public function getAncestors(\$criteria = null, ConnectionInterface \$con = null)
 {
     if (\$this->isRoot()) {
         // save one query
@@ -1030,7 +1030,7 @@ public function addChild($objectClassName \$child)
  *
  * @return     \$this|{$objectClassName} The current Propel object
  */
-public function insertAsFirstChildOf($objectClassName \$parent)
+public function insertAsFirstChildOf(\$parent)
 {
     if (\$this->isInTree()) {
         throw new PropelException('A $objectClassName object must not already be in the tree to be inserted. Use the moveToFirstChildOf() instead.');
@@ -1087,7 +1087,7 @@ public function insertAsFirstChildOf($objectClassName \$parent)
  *
  * @return     \$this|{$objectClassName} The current Propel object
  */
-public function insertAsPrevSiblingOf($objectClassName \$sibling)
+public function insertAsPrevSiblingOf(\$sibling)
 {
     if (\$this->isInTree()) {
         throw new PropelException('A $objectClassName object must not already be in the tree to be inserted. Use the moveToPrevSiblingOf() instead.');
@@ -1130,7 +1130,7 @@ public function insertAsPrevSiblingOf($objectClassName \$sibling)
  *
  * @return     \$this|{$objectClassName} The current Propel object
  */
-public function insertAsNextSiblingOf($objectClassName \$sibling)
+public function insertAsNextSiblingOf(\$sibling)
 {
     if (\$this->isInTree()) {
         throw new PropelException('A $objectClassName object must not already be in the tree to be inserted. Use the moveToNextSiblingOf() instead.');
@@ -1170,7 +1170,7 @@ public function insertAsNextSiblingOf($objectClassName \$sibling)
  *
  * @return     \$this|{$objectClassName} The current Propel object
  */
-public function moveToFirstChildOf($objectClassName \$parent, ConnectionInterface \$con = null)
+public function moveToFirstChildOf(\$parent, ConnectionInterface \$con = null)
 {
     if (!\$this->isInTree()) {
         throw new PropelException('A $objectClassName object must be already in the tree to be moved. Use the insertAsFirstChildOf() instead.');
@@ -1202,7 +1202,7 @@ public function moveToFirstChildOf($objectClassName \$parent, ConnectionInterfac
  *
  * @return     \$this|{$objectClassName} The current Propel object
  */
-public function moveToLastChildOf($objectClassName \$parent, ConnectionInterface \$con = null)
+public function moveToLastChildOf(\$parent, ConnectionInterface \$con = null)
 {
     if (!\$this->isInTree()) {
         throw new PropelException('A $objectClassName object must be already in the tree to be moved. Use the insertAsLastChildOf() instead.');
@@ -1234,7 +1234,7 @@ public function moveToLastChildOf($objectClassName \$parent, ConnectionInterface
  *
  * @return     \$this|{$objectClassName} The current Propel object
  */
-public function moveToPrevSiblingOf($objectClassName \$sibling, ConnectionInterface \$con = null)
+public function moveToPrevSiblingOf(\$sibling, ConnectionInterface \$con = null)
 {
     if (!\$this->isInTree()) {
         throw new PropelException('A $objectClassName object must be already in the tree to be moved. Use the insertAsPrevSiblingOf() instead.');
@@ -1269,7 +1269,7 @@ public function moveToPrevSiblingOf($objectClassName \$sibling, ConnectionInterf
  *
  * @return     \$this|{$objectClassName} The current Propel object
  */
-public function moveToNextSiblingOf($objectClassName \$sibling, ConnectionInterface \$con = null)
+public function moveToNextSiblingOf(\$sibling, ConnectionInterface \$con = null)
 {
     if (!\$this->isInTree()) {
         throw new PropelException('A $objectClassName object must be already in the tree to be moved. Use the insertAsNextSiblingOf() instead.');
@@ -1304,7 +1304,7 @@ public function moveToNextSiblingOf($objectClassName \$sibling, ConnectionInterf
  * @param      int    \$levelDelta Delta to add to the levels
  * @param      ConnectionInterface \$con        Connection to use.
  */
-protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->useScope() ? ", \$targetScope = null" : "") . ", ConnectionInterface \$con = null)
+protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->useScope() ? ", \$targetScope = null" : "") . ", PropelPDO \$con = null)
 {
     \$left  = \$this->getLeftValue();
     \$right = \$this->getRightValue();";

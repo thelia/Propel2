@@ -477,7 +477,7 @@ abstract class ".$this->getUnqualifiedClassName()." extends " . $parentClass . "
     protected function addFactoryOpen(&$script)
     {
         $script .= "
-    public static function create(\$modelAlias = null, Criteria \$criteria = null)
+    public static function create(\$modelAlias = null, \$criteria = null)
     {";
     }
 
@@ -551,7 +551,7 @@ abstract class ".$this->getUnqualifiedClassName()." extends " . $parentClass . "
      *
      * @return $class|array|mixed the result, formatted by the current formatter
      */
-    public function findPk(\$key, ConnectionInterface \$con = null)
+    public function findPk(\$key, \$con = null)
     {";
         if (!$table->hasPrimaryKey()) {
             $this->declareClass('Propel\\Runtime\\Exception\\LogicException');
@@ -654,7 +654,7 @@ abstract class ".$this->getUnqualifiedClassName()." extends " . $parentClass . "
      *
      * @return $ARClassName A model object, or null if the key is not found
      */
-    protected function findPkSimple(\$key, ConnectionInterface \$con)
+    protected function findPkSimple(\$key, \$con)
     {
         \$sql = '$query';
         try {
@@ -722,7 +722,7 @@ abstract class ".$this->getUnqualifiedClassName()." extends " . $parentClass . "
      *
      * @return " . $class . "|array|mixed the result, formatted by the current formatter
      */
-    protected function findPkComplex(\$key, ConnectionInterface \$con)
+    protected function findPkComplex(\$key, \$con)
     {
         // As the query uses a PK condition, no limit(1) is necessary.
         \$criteria = \$this->isKeepQuery() ? clone \$this : \$this;
@@ -767,7 +767,7 @@ abstract class ".$this->getUnqualifiedClassName()." extends " . $parentClass . "
      *
      * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
      */
-    public function findPks(\$keys, ConnectionInterface \$con = null)
+    public function findPks(\$keys, \$con = null)
     {";
         if (!$table->hasPrimaryKey()) {
             $this->declareClass('Propel\\Runtime\\Exception\\LogicException');

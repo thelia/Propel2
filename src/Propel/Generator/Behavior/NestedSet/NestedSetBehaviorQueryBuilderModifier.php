@@ -150,7 +150,7 @@ public function inTree(\$scope = null)
  *
  * @return    \$this|{$this->queryClassName} The current query, for fluid interface
  */
-public function descendantsOf($this->objectClassName $objectName)
+public function descendantsOf($objectName)
 {
     return \$this";
         if ($this->behavior->useScope()) {
@@ -176,7 +176,7 @@ public function descendantsOf($this->objectClassName $objectName)
  *
  * @return    \$this|{$this->queryClassName} The current query, for fluid interface
  */
-public function branchOf($this->objectClassName $objectName)
+public function branchOf($objectName)
 {
     return \$this";
         if ($this->behavior->useScope()) {
@@ -201,7 +201,7 @@ public function branchOf($this->objectClassName $objectName)
  *
  * @return    \$this|{$this->queryClassName} The current query, for fluid interface
  */
-public function childrenOf($this->objectClassName $objectName)
+public function childrenOf($objectName)
 {
     return \$this
         ->descendantsOf($objectName)
@@ -223,7 +223,7 @@ public function childrenOf($this->objectClassName $objectName)
  *
  * @return    \$this|{$this->queryClassName} The current query, for fluid interface
  */
-public function siblingsOf($this->objectClassName $objectName, ConnectionInterface \$con = null)
+public function siblingsOf($objectName, ConnectionInterface \$con = null)
 {
     if ({$objectName}->isRoot()) {
         return \$this->
@@ -248,7 +248,7 @@ public function siblingsOf($this->objectClassName $objectName, ConnectionInterfa
  *
  * @return    \$this|{$this->queryClassName} The current query, for fluid interface
  */
-public function ancestorsOf($this->objectClassName $objectName)
+public function ancestorsOf($objectName)
 {
     return \$this";
         if ($this->behavior->useScope()) {
@@ -274,7 +274,7 @@ public function ancestorsOf($this->objectClassName $objectName)
  *
  * @return    \$this|{$this->queryClassName} The current query, for fluid interface
  */
-public function rootsOf($this->objectClassName $objectName)
+public function rootsOf($objectName)
 {
     return \$this";
         if ($this->behavior->useScope()) {
@@ -353,7 +353,7 @@ public function orderByLevel(\$reverse = false)
  *
  * @return     {$this->objectClassName} The tree root object
  */
-public function findRoot(" . ($useScope ? "\$scope = null, " : "") . "ConnectionInterface \$con = null)
+public function findRoot(" . ($useScope ? "\$scope = null, " : "") . "\$con = null)
 {
     return \$this
         ->addUsingAlias({$this->objectClassName}::LEFT_COL, 1, Criteria::EQUAL)";
@@ -377,7 +377,7 @@ public function findRoot(" . ($useScope ? "\$scope = null, " : "") . "Connection
  *
  * @return    {$this->objectClassName}[]|ObjectCollection|mixed the list of results, formatted by the current formatter
  */
-public function findRoots(ConnectionInterface \$con = null)
+public function findRoots(\$con = null)
 {
     return \$this
         ->treeRoots()
@@ -403,7 +403,7 @@ public function findRoots(ConnectionInterface \$con = null)
  *
  * @return     {$this->objectClassName}[]|ObjectCollection|mixed the list of results, formatted by the current formatter
  */
-public function findTree(" . ($useScope ? "\$scope = null, " : "") . "ConnectionInterface \$con = null)
+public function findTree(" . ($useScope ? "\$scope = null, " : "") . "\$con = null)
 {
     return \$this";
         if ($useScope) {
