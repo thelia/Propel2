@@ -126,6 +126,9 @@ class MssqlAdapter extends PdoAdapter implements SqlAdapterInterface
      */
     public function applyLimit(&$sql, $offset, $limit)
     {
+        $offset = (int) $offset;
+        $limit = (int) $limit;
+
         // make sure offset and limit are numeric
         if (!is_numeric($offset) || !is_numeric($limit)) {
             throw new InvalidArgumentException('MssqlAdapter::applyLimit() expects a number for argument 2 and 3');
