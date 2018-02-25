@@ -100,6 +100,9 @@ class OracleAdapter extends PdoAdapter implements SqlAdapterInterface
      */
     public function applyLimit(&$sql, $offset, $limit, $criteria = null)
     {
+        $offset = (int) $offset;
+        $limit = (int) $limit;
+
         $params = array();
         if ($criteria && $criteria->needsSelectAliases()) {
             $crit = clone $criteria;
