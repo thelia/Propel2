@@ -267,6 +267,7 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
         $this->declareClassFromBuilder($this->getTableMapBuilder());
+        $this->declareClassFromBuilder($this->getEventBuilder());
 
         $this->declareClasses(
             '\Exception',
@@ -283,7 +284,8 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
             '\Propel\Runtime\ActiveRecord\ActiveRecordInterface',
             '\Propel\Runtime\Parser\AbstractParser',
             '\Propel\Runtime\Propel',
-            '\Propel\Runtime\Map\TableMap'
+            '\Propel\Runtime\Map\TableMap',
+            $this->getEventClassName(true)
         );
 
         $baseClass = $this->getBaseClass();
@@ -675,6 +677,9 @@ abstract class ".$this->getUnqualifiedClassName().$parentClass." implements Acti
                 $hooks[$hook.$action] = false === strpos($script, "function $hook.$action(");
             }
         }
+
+        $hooks['eventClass'] = $this->getEventClassName();
+
         $script .= $this->renderTemplate('baseObjectMethodHook', $hooks);
     }
 

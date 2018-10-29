@@ -549,6 +549,18 @@ abstract class AbstractOMBuilder extends DataModelBuilder
     }
 
     /**
+     * Returns the event classname for current table.
+     * This is the classname that is used whenever object or event classes want
+     * to invoke methods of the object classes.
+     * @param  boolean $fqcn
+     * @return string  (e.g. 'My')
+     */
+    public function getEventClassName($fqcn = false)
+    {
+        return $this->getClassNameFromBuilder($this->getEventBuilder(), $fqcn);
+    }
+
+    /**
      * Get the column constant name (e.g. TableMapName::COLUMN_NAME).
      *
      * @param Column $col       The column we need a name for.

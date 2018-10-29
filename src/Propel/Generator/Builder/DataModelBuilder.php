@@ -11,6 +11,7 @@
 namespace Propel\Generator\Builder;
 
 use Propel\Common\Pluralizer\PluralizerInterface;
+use Propel\Generator\Builder\Om\EventBuilder;
 use Propel\Generator\Builder\Om\MultiExtendObjectBuilder;
 use Propel\Generator\Builder\Om\ObjectBuilder;
 use Propel\Generator\Builder\Om\QueryBuilder;
@@ -196,6 +197,19 @@ abstract class DataModelBuilder
         }
 
         return $this->tablemapBuilder;
+    }
+
+    /**
+     * Returns new or existing Object builder class for this table.
+     * @return EventBuilder
+     */
+    public function getEventBuilder()
+    {
+        if (!isset($this->eventBuilder)) {
+            $this->eventBuilder = $this->getGeneratorConfig()->getConfiguredBuilder($this->getTable(), 'event');
+        }
+
+        return $this->eventBuilder;
     }
 
     /**

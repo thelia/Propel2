@@ -12,6 +12,7 @@ namespace Propel\Runtime\Connection;
 
 use Propel\Runtime\Exception\InvalidArgumentException;
 use Propel\Runtime\DataFetcher\PDODataFetcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * PDO extension that implements ConnectionInterface and builds \PDOStatement statements.
@@ -24,6 +25,12 @@ class PdoConnection extends \PDO implements ConnectionInterface
      * @var string The datasource name associated to this connection
      */
     protected $name;
+
+    /**
+     * @specificity thelia
+     * @var EventDispatcherInterface|null
+     * */
+    protected $eventDispatcher;
 
     /**
      * @param string $name The datasource name associated to this connection
@@ -39,6 +46,26 @@ class PdoConnection extends \PDO implements ConnectionInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @specificity thelia
+     * @param null|EventDispatcherInterface $eventDispatcher
+     * @return $this
+     */
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+        return $this;
+    }
+
+    /**
+     * @specificity thelia
+     * @return null|EventDispatcherInterface
+     */
+    public function getEventDispatcher()
+    {
+        return $this->eventDispatcher;
     }
 
     /**

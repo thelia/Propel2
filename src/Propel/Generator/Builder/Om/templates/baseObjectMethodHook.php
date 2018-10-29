@@ -10,6 +10,22 @@
         if (is_callable('parent::preSave')) {
 	        return parent::preSave($con);
         }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $event = new <?php echo $eventClass ?>($this);
+
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::PRE_SAVE,
+                    $event
+                );
+
+            return !$event->isPropagationStopped();
+        }
+
         return true;
     }
 
@@ -23,6 +39,17 @@
     {
         if (is_callable('parent::postSave')) {
 	        parent::postSave($con);
+        }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::POST_SAVE,
+                    new <?php echo $eventClass ?>($this)
+                );
         }
     }
 
@@ -38,6 +65,21 @@
         if (is_callable('parent::preInsert')) {
 	        return parent::preInsert($con);
         }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $event = new <?php echo $eventClass ?>($this);
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::PRE_INSERT,
+                    $event
+                );
+
+            return !$event->isPropagationStopped();
+        }
+
         return true;
     }
 
@@ -51,6 +93,17 @@
     {
         if (is_callable('parent::postInsert')) {
 	        parent::postInsert($con);
+        }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::POST_INSERT,
+                    new <?php echo $eventClass ?>($this)
+                );
         }
     }
 
@@ -66,6 +119,22 @@
         if (is_callable('parent::preUpdate')) {
 	        return parent::preUpdate($con);
         }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $event = new <?php echo $eventClass ?>($this);
+
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::PRE_UPDATE,
+                    $event
+                );
+
+            return !$event->isPropagationStopped();
+        }
+
         return true;
     }
 
@@ -79,6 +148,17 @@
     {
         if (is_callable('parent::postUpdate')) {
 	        parent::postUpdate($con);
+        }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::POST_UPDATE,
+                    new <?php echo $eventClass ?>($this)
+                );
         }
     }
 
@@ -94,6 +174,22 @@
         if (is_callable('parent::preDelete')) {
 	        return parent::preDelete($con);
         }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $event = new <?php echo $eventClass ?>($this);
+
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::PRE_DELETE,
+                    $event
+                );
+
+            return !$event->isPropagationStopped();
+        }
+
         return true;
     }
 
@@ -107,6 +203,17 @@
     {
         if (is_callable('parent::postDelete')) {
 	        parent::postDelete($con);
+        }
+
+        if (null !== $con
+            && method_exists($con, 'getEventDispatcher')
+            && null !== $con->getEventDispatcher()
+        ) {
+            $con->getEventDispatcher()
+                ->dispatch(
+                    <?php echo $eventClass ?>::POST_DELETE,
+                    new <?php echo $eventClass ?>($this)
+                );
         }
     }
 
