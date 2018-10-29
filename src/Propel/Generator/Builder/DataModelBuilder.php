@@ -226,6 +226,19 @@ abstract class DataModelBuilder
     }
 
     /**
+     * Returns new or existing Object builder class for this table.
+     * @return EventBuilder
+     */
+    public function getEventBuilder()
+    {
+        if (!isset($this->eventBuilder)) {
+            $this->eventBuilder = $this->getGeneratorConfig()->getConfiguredBuilder($this->getTable(), 'event');
+        }
+
+        return $this->eventBuilder;
+    }
+
+    /**
      * Returns new or existing stub Interface builder class for this table.
      *
      * @return \Propel\Generator\Builder\Om\AbstractOMBuilder

@@ -300,6 +300,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
         $this->declareClassFromBuilder($this->getTableMapBuilder());
+        $this->declareClassFromBuilder($this->getEventBuilder());
 
         $this->declareClasses(
             '\Exception',
@@ -317,6 +318,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             '\Propel\Runtime\Parser\AbstractParser',
             '\Propel\Runtime\Propel',
             '\Propel\Runtime\Map\TableMap',
+            $this->getEventClassName(true)
         );
 
         $baseClass = $this->getBaseClass();
@@ -760,6 +762,9 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         /** @var string|null $className */
         $className = ClassTools::classname($this->getBaseClass());
         $hooks['hasBaseClass'] = $this->getBehaviorContent('parentClass') !== null || $className !== null;
+
+
+        $hooks['eventClass'] = $this->getEventClassName();
 
         $script .= $this->renderTemplate('baseObjectMethodHook', $hooks);
     }
