@@ -13,6 +13,7 @@ use Propel\Runtime\Connection\Exception\RollbackException;
 use Propel\Runtime\Exception\InvalidArgumentException;
 use Propel\Runtime\Propel;
 use Psr\Log\LoggerAwareInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -43,7 +44,13 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
     protected $name;
 
     /**
-     * Whether the debug is enabled
+     * @specificity thelia
+     * @var EventDispatcherInterface|null
+     * */
+    protected $eventDispatcher;
+
+    /**
+     * Whether or not the debug is enabled
      *
      * @var bool
      */
@@ -142,6 +149,26 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @specificity thelia
+     * @param null|EventDispatcherInterface $eventDispatcher
+     * @return $this
+     */
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+        return $this;
+    }
+
+    /**
+     * @specificity thelia
+     * @return null|EventDispatcherInterface
+     */
+    public function getEventDispatcher()
+    {
+        return $this->eventDispatcher;
     }
 
     /**
