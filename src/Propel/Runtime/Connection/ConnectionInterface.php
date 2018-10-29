@@ -9,6 +9,7 @@
 namespace Propel\Runtime\Connection;
 
 use PDO;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Interface for Propel Connection class.
@@ -31,6 +32,19 @@ interface ConnectionInterface
      * @return string The datasource name associated to this connection.
      */
     public function getName();
+
+    /**
+     * @specificity thelia
+     * @param null|EventDispatcherInterface $eventDispatcher
+     * @return $this
+     */
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null);
+
+    /**
+     * @specificity thelia
+     * @return null|EventDispatcherInterface
+     */
+    public function getEventDispatcher();
 
     /**
      * Turns off autocommit mode.

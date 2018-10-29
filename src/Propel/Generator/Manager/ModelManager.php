@@ -67,11 +67,11 @@ class ModelManager extends AbstractManager
                         // -----------------------------------------------------------------------------------------
 
                         // these files are always created / overwrite any existing files
-                        foreach (['object', 'tablemap', 'query'] as $target) {
+                        foreach (['object', 'tablemap', 'query', 'event'] as $target) {
                             $builder = $generatorConfig->getConfiguredBuilder($table, $target);
+
                             $nbWrittenFiles += $this->doBuild($builder);
                         }
-
                         // -----------------------------------------------------------------------------------------
                         // Create [empty] stub Object classes if they don't exist
                         // -----------------------------------------------------------------------------------------
@@ -164,7 +164,8 @@ class ModelManager extends AbstractManager
     protected function doBuild(AbstractOMBuilder $builder, $overwrite = true)
     {
         $path = $builder->getClassFilePath();
-        $file = new SplFileInfo($this->getWorkingDirectory() . DIRECTORY_SEPARATOR . $path);
+
+        $file = new \SplFileInfo($this->getWorkingDirectory() . DIRECTORY_SEPARATOR . $path);
 
         $this->filesystem->mkdir($file->getPath());
 
