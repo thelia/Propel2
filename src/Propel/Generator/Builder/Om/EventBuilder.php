@@ -5,6 +5,7 @@ namespace Propel\Generator\Builder\Om;
 use Propel\Generator\Model\ForeignKey;
 
 use Propel\Generator\Model\IdMethod;
+use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
 
 /**
@@ -71,12 +72,11 @@ class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
      */
     protected function addClassBody(&$script)
     {
-
         $script .= $this->addConstants();
 
-        $this->addGetter($script);
+        $this->addConstruct($script);
 
-        $this->addSetter($script);
+        $this->addGetter($script);
     }
 
     /**
@@ -105,6 +105,19 @@ class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
     {
 $script .= 'use \Propel\Runtime\Event\ActiveRecordEvent;
 use \\' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName() . ';
+';
+    }
+
+    protected function addConstruct(&$script)
+    {
+        $script .= '
+    /**
+     * @param ' . $this->getTable()->getPhpName() . ' $' . lcfirst($this->getTable()->getPhpName()) . '
+     */
+    public function __construct(' . $this->getTable()->getPhpName() . ' $' . lcfirst($this->getTable()->getPhpName()) . ')
+    {
+        $this->' . lcfirst($this->getTable()->getPhpName()) . ' = $' . lcfirst($this->getTable()->getPhpName()) . ';
+    }
 ';
     }
 
