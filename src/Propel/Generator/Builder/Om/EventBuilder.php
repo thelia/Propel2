@@ -97,14 +97,15 @@ class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
     const POST_DELETE = \'propel.post.delete.' . $this->getTable()->getCommonName() . '\';
     
     /** @var ' . $this->getTable()->getPhpName() . ' */
-    protected $' . lcfirst($this->getTable()->getPhpName()) . ';
+    protected $model;
 ';
     }
 
     protected function addUseClasses(&$script)
     {
-$script .= 'use \Propel\Runtime\Event\ActiveRecordEvent;
-use \\' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName() . ';
+$script .= 'use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Propel\Runtime\Event\ActiveRecordEvent;
+use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName() . ';
 ';
     }
 
@@ -112,46 +113,24 @@ use \\' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpNa
     {
         $script .= '
     /**
-     * @param ' . $this->getTable()->getPhpName() . ' $' . lcfirst($this->getTable()->getPhpName()) . '
+     * @param ' . $this->getTable()->getPhpName() . '|ActiveRecordInterface $' . lcfirst($this->getTable()->getPhpName()) . '
      */
     public function __construct(' . $this->getTable()->getPhpName() . ' $' . lcfirst($this->getTable()->getPhpName()) . ')
     {
-        $this->' . lcfirst($this->getTable()->getPhpName()) . ' = $' . lcfirst($this->getTable()->getPhpName()) . ';
+        $this->model = $' . lcfirst($this->getTable()->getPhpName()) . ';
     }
 ';
     }
 
     protected function addGetter(&$script)
     {
-        $methodName = 'get' . $this->getTable()->getPhpName();
-
         $script .= '
     /**
-     * @return ' . $this->getTable()->getPhpName() . '
+     * @return ' . $this->getTable()->getPhpName() . '|ActiveRecordInterface
      */
-    public function ' . $methodName . '()
+    public function getModel()
     {
-        return $this->' . lcfirst($this->getTable()->getPhpName()) . ';
-    }
-';
-    }
-
-    /**
-     * @param $script
-     */
-    protected function addSetter(&$script)
-    {
-        $methodName = 'set' . $this->getTable()->getPhpName();
-
-        $script .= '
-    /**
-     * @param ' . $this->getTable()->getPhpName() . ' $' . lcfirst($this->getTable()->getPhpName()) . '
-     * @return $this
-     */
-    public function ' . $methodName . '(' . $this->getTable()->getPhpName() . ' $' . lcfirst($this->getTable()->getPhpName()) . ')
-    {
-        $this->' . lcfirst($this->getTable()->getPhpName()) . ' = $' . lcfirst($this->getTable()->getPhpName()) . ';
-        return $this;
+        return $this->model;
     }
 ';
     }
