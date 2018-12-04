@@ -125,7 +125,7 @@ abstract class AbstractManager
      */
     public function setWorkingDirectory($workingDirectory)
     {
-        $this->workingDirectory = $workingDirectory;
+        $this->workingDirectory = trim($workingDirectory, DIRECTORY_SEPARATOR);
     }
 
     /**
