@@ -250,11 +250,11 @@ class DefaultPlatform implements PlatformInterface
             $idMethodParams = $table->getIdMethodParameters();
             $maxIdentifierLength = $this->getMaxColumnNameLength();
             if (empty($idMethodParams)) {
-                if (strlen($table->getName() . '_SEQ') > $maxIdentifierLength) {
+                if (\strlen($table->getName() . '_SEQ') > $maxIdentifierLength) {
                     if (!isset($longNamesMap[$table->getName()])) {
-                        $longNamesMap[$table->getName()] = strval(count($longNamesMap) + 1);
+                        $longNamesMap[$table->getName()] = \strval(count($longNamesMap) + 1);
                     }
-                    $result = substr($table->getName(), 0, $maxIdentifierLength - strlen('_SEQ_' . $longNamesMap[$table->getName()])) . '_SEQ_' . $longNamesMap[$table->getName()];
+                    $result = substr($table->getName(), 0, $maxIdentifierLength - \strlen('_SEQ_' . $longNamesMap[$table->getName()])) . '_SEQ_' . $longNamesMap[$table->getName()];
                 } else {
                     $result = substr($table->getName(), 0, $maxIdentifierLength -4) . '_SEQ';
                 }
@@ -403,7 +403,7 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
             } else {
                 if ($col->isTextType()) {
                     $default .= $this->quote($defaultValue->getValue());
-                } elseif (in_array($col->getType(), [PropelTypes::BOOLEAN, PropelTypes::BOOLEAN_EMU])) {
+                } elseif (\in_array($col->getType(), [PropelTypes::BOOLEAN, PropelTypes::BOOLEAN_EMU])) {
                     $default .= $this->getBooleanString($defaultValue->getValue());
                 } elseif ($col->getType() == PropelTypes::ENUM) {
                     $default .= array_search($defaultValue->getValue(), $col->getValueSet());
@@ -1241,16 +1241,16 @@ ALTER TABLE %s ADD
      */
     public function getBooleanString($b)
     {
-        if (is_bool($b) && true === $b) {
+        if (\is_bool($b) && true === $b) {
             return '1';
         }
 
-        if (is_int($b) && 1 === $b) {
+        if (\is_int($b) && 1 === $b) {
             return '1';
         }
 
-        if (is_string($b)
-            && in_array(strtolower($b), ['1', 'true', 'y', 'yes'])) {
+        if (\is_string($b)
+            && \in_array(strtolower($b), ['1', 'true', 'y', 'yes'])) {
             return '1';
         }
 
@@ -1318,7 +1318,7 @@ ALTER TABLE %s ADD
             // we always need to make sure that the stream is rewound, otherwise nothing will
             // get written to database.
             $script .= "
-if (is_resource($columnValueAccessor)) {
+if (\is_resource($columnValueAccessor)) {
     rewind($columnValueAccessor);
 }";
         }
@@ -1409,7 +1409,7 @@ if (is_resource($columnValueAccessor)) {
 
         foreach ($table->getColumns() as $column) {
             if ($column->getSize() && $defaultSize = $this->getDefaultTypeSize($column->getType())) {
-                if (null === $column->getScale() && intval($column->getSize()) === $defaultSize) {
+                if (null === $column->getScale() && \intval($column->getSize()) === $defaultSize) {
                     $column->setSize(null);
                 }
             }

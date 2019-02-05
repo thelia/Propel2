@@ -83,7 +83,7 @@ class BaseModelCriteria extends Criteria implements \IteratorAggregate
      */
     public function setFormatter($formatter)
     {
-        if (is_string($formatter)) {
+        if (\is_string($formatter)) {
             $formatter = new $formatter($this);
         }
 
@@ -232,7 +232,7 @@ class BaseModelCriteria extends Criteria implements \IteratorAggregate
         if ($res instanceof \Traversable) {
             return $res;
         }
-        if (is_array($res)) {
+        if (\is_array($res)) {
             return new \ArrayIterator($res);
         }
         throw new LogicException('The current formatter doesn\'t return an iterable result');

@@ -189,7 +189,7 @@ class CsvParser extends AbstractParser
             $heading = array_shift($rows);
             $keys = explode($this->delimiter, $heading);
         } else {
-            $keys = range(0, count($this->getColumns($rows[0])) - 1);
+            $keys = range(0, \count($this->getColumns($rows[0])) - 1);
         }
         if ($isList) {
             $array = [];
@@ -204,9 +204,9 @@ class CsvParser extends AbstractParser
             if ($keys === [''] && $values === []) {
                 $array = [];
             } else {
-                if (count($keys) > count($values)) {
+                if (\count($keys) > \count($values)) {
                     // empty values at the end of the row are not match bu the getColumns() regexp
-                    $values = array_pad($values, count($keys), null);
+                    $values = array_pad($values, \count($keys), null);
                 }
                 $array = array_combine($keys, $values);
             }

@@ -153,7 +153,7 @@ class ModelCriteria extends BaseModelCriteria
     public function filterByArray($conditions)
     {
         foreach ($conditions as $column => $args) {
-            call_user_func_array([$this, 'filterBy' . $column], is_array($args) ? $args : [$args]);
+            \call_user_func_array([$this, 'filterBy' . $column], \is_array($args) ? $args : [$args]);
         }
 
         return $this;
@@ -181,7 +181,7 @@ class ModelCriteria extends BaseModelCriteria
      */
     public function where($clause, $value = null, $bindingType = null)
     {
-        if (is_array($clause)) {
+        if (\is_array($clause)) {
             // where(array('cond1', 'cond2'), Criteria::LOGICAL_OR)
             $criterion = $this->getCriterionForConditions($clause, $value);
         } else {
@@ -216,7 +216,7 @@ class ModelCriteria extends BaseModelCriteria
      */
     public function having($clause, $value = null, $bindingType = null)
     {
-        if (is_array($clause)) {
+        if (\is_array($clause)) {
             // having(array('cond1', 'cond2'), Criteria::LOGICAL_OR)
             $criterion = $this->getCriterionForConditions($clause, $value);
         } else {
@@ -284,7 +284,7 @@ class ModelCriteria extends BaseModelCriteria
             throw new PropelException('You must ask for at least one column');
         }
 
-        if (!is_array($columnName)) {
+        if (!\is_array($columnName)) {
             $columnName = array($columnName);
         }
 
@@ -405,7 +405,7 @@ class ModelCriteria extends BaseModelCriteria
 
         if ('*' === $columnArray) {
             $columnArray = [];
-            foreach (call_user_func([$this->modelTableMapName, 'getFieldNames'], TableMap::TYPE_PHPNAME) as $column) {
+            foreach (\call_user_func([$this->modelTableMapName, 'getFieldNames'], TableMap::TYPE_PHPNAME) as $column) {
                 $columnArray []= $this->modelName . '.' . $column;
             }
         }
@@ -614,7 +614,7 @@ class ModelCriteria extends BaseModelCriteria
             $join = $modelJoin;
         }
 
-        if (!in_array($join, $this->joins)) { // compare equality, NOT identity
+        if (!\in_array($join, $this->joins)) { // compare equality, NOT identity
             if (null === $name) {
                 $this->joins[] = $join;
             } else {
@@ -1157,7 +1157,7 @@ class ModelCriteria extends BaseModelCriteria
     private function createEntityNotFoundException()
     {
         if (!isset($this->entityNotFoundExceptionClass)) {
-            throw new PropelException('Please define a entityNotFoundExceptionClass property with the name of your NotFoundException-class in ' . get_class($this));
+            throw new PropelException('Please define a entityNotFoundExceptionClass property with the name of your NotFoundException-class in ' . \get_class($this));
         }
 
         return new $this->entityNotFoundExceptionClass("{$this->getModelShortName()} could not be found");
@@ -1672,7 +1672,7 @@ class ModelCriteria extends BaseModelCriteria
      */
     public function update($values, $con = null, $forceIndividualSaves = false)
     {
-        if (!is_array($values) && !($values instanceof Criteria)) {
+        if (!\is_array($values) && !($values instanceof Criteria)) {
             throw new PropelException(__METHOD__ .' expects an array or Criteria as first argument');
         }
 
@@ -1742,8 +1742,8 @@ class ModelCriteria extends BaseModelCriteria
                 // this criteria updates only one object defined by a concrete primary key,
                 // therefore there's no need to remove anything from the pool
             } else {
-                call_user_func([$this->modelTableMapName, 'clearInstancePool']);
-                call_user_func([$this->modelTableMapName, 'clearRelatedInstancePool']);
+                \call_user_func([$this->modelTableMapName, 'clearInstancePool']);
+                \call_user_func([$this->modelTableMapName, 'clearRelatedInstancePool']);
             }
         }
 
@@ -1786,7 +1786,7 @@ class ModelCriteria extends BaseModelCriteria
             /** @var ColumnMap $colMap */
             $colMap = $this->replacedColumns[0];
             $value = $this->convertValueForColumn($value, $colMap);
-            $clauseLen = strlen($clause);
+            $clauseLen = \strlen($clause);
             if (null !== $bindingType) {
                 return new RawModelCriterion($this, $clause, $colMap, $value, $this->currentAlias, $bindingType);
             }
@@ -1834,21 +1834,21 @@ class ModelCriteria extends BaseModelCriteria
      */
     protected function convertValueForColumn($value, ColumnMap $colMap)
     {
-        if ($colMap->getType() == 'OBJECT' && is_object($value)) {
-            if (is_array($value)) {
+        if ($colMap->getType() == 'OBJECT' && \is_object($value)) {
+            if (\is_array($value)) {
                 $value = array_map('serialize', $value);
             } else {
                 $value = serialize($value);
             }
-        } elseif ('ARRAY' === $colMap->getType() && is_array($value)) {
+        } elseif ('ARRAY' === $colMap->getType() && \is_array($value)) {
             $value = '| ' . implode(' | ', $value) . ' |';
-        } elseif (PropelTypes::ENUM === $colMap->getType() && !is_null($value)) {
-            if (is_array($value)) {
+        } elseif (PropelTypes::ENUM === $colMap->getType() && !\is_null($value)) {
+            if (\is_array($value)) {
                 $value = array_map([$colMap, 'getValueSetKey'], $value);
             } else {
                 $value = $colMap->getValueSetKey($value);
             }
-        } elseif ($colMap->isSetType() && !is_null($value)) {
+        } elseif ($colMap->isSetType() && !\is_null($value)) {
             try {
                 $value = SetColumnConverter::convertToInt($value, $colMap->getValueSet());
             } catch (SetColumnConverterException $e) {
@@ -2008,13 +2008,13 @@ class ModelCriteria extends BaseModelCriteria
 
     public function configureSelectColumns()
     {
-        if (is_null($this->select)) {
+        if (\is_null($this->select)) {
             // leave early
             return;
         }
 
         // select() needs the PropelSimpleArrayFormatter if no formatter given
-        if (is_null($this->formatter)) {
+        if (\is_null($this->formatter)) {
             $this->setFormatter('\Propel\Runtime\Formatter\SimpleArrayFormatter');
         }
 
@@ -2029,7 +2029,7 @@ class ModelCriteria extends BaseModelCriteria
         }
 
         // Add requested columns which are not withColumns
-        $columnNames = is_array($this->select) ? $this->select : [$this->select];
+        $columnNames = \is_array($this->select) ? $this->select : [$this->select];
         foreach ($columnNames as $columnName) {
             // check if the column was added by a withColumn, if not add it
             if (!array_key_exists($columnName, $this->getAsColumns())) {
@@ -2196,8 +2196,8 @@ class ModelCriteria extends BaseModelCriteria
         static $methods = ['findBy', 'findOneBy', 'requireOneBy', 'filterBy', 'orderBy', 'groupBy'];
         foreach ($methods as $method) {
             if (0 === strpos($name, $method)) {
-                $columns = substr($name, strlen($method));
-                if (in_array($method, ['findBy', 'findOneBy', 'requireOneBy']) && strpos($columns, 'And') !== false) {
+                $columns = substr($name, \strlen($method));
+                if (\in_array($method, ['findBy', 'findOneBy', 'requireOneBy']) && strpos($columns, 'And') !== false) {
                     $method = $method . 'Array';
                     $columns = explode('And', $columns);
                     $conditions = [];
@@ -2209,7 +2209,7 @@ class ModelCriteria extends BaseModelCriteria
                     array_unshift($arguments, $columns);
                 }
 
-                return call_user_func_array([$this, $method], $arguments);
+                return \call_user_func_array([$this, $method], $arguments);
             }
         }
 
@@ -2218,7 +2218,7 @@ class ModelCriteria extends BaseModelCriteria
             $joinType = null;
 
             $type = substr($name, 0, $pos);
-            if (in_array($type, ['left', 'right', 'inner'])) {
+            if (\in_array($type, ['left', 'right', 'inner'])) {
                 $joinType = strtoupper($type) . ' JOIN';
             }
 
@@ -2236,7 +2236,7 @@ class ModelCriteria extends BaseModelCriteria
         // Maybe it's a magic call to a qualified join method, e.g. 'leftJoin'
         if (($pos = strpos($name, 'Join')) > 0) {
             $type = substr($name, 0, $pos);
-            if (in_array($type, ['left', 'right', 'inner'])) {
+            if (\in_array($type, ['left', 'right', 'inner'])) {
                 $joinType = strtoupper($type) . ' JOIN';
                 // Test if first argument is supplied, else don't provide an alias to joinXXX (default value)
                 if (!isset($arguments[0])) {
@@ -2245,7 +2245,7 @@ class ModelCriteria extends BaseModelCriteria
                 array_push($arguments, $joinType);
                 $method = lcfirst(substr($name, $pos));
 
-                return call_user_func_array([$this, $method], $arguments);
+                return \call_user_func_array([$this, $method], $arguments);
             }
         }
 

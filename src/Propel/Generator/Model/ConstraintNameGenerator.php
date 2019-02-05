@@ -50,13 +50,13 @@ class ConstraintNameGenerator implements NameGeneratorInterface
         // Calculate maximum RDBMS-specific column character limit.
         try {
             $maxColumnNameLength = (int) $db->getMaxColumnNameLength();
-            $maxBodyLength = ($maxColumnNameLength - strlen($namePostfix) - strlen($constraintNbr) - 2);
+            $maxBodyLength = ($maxColumnNameLength - \strlen($namePostfix) - \strlen($constraintNbr) - 2);
         } catch (EngineException $e) {
             throw $e;
         }
 
         // Do any necessary trimming.
-        if ($maxBodyLength !== -1 && strlen($name) > $maxBodyLength) {
+        if ($maxBodyLength !== -1 && \strlen($name) > $maxBodyLength) {
             $name = substr($name, 0, $maxBodyLength);
         }
 

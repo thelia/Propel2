@@ -307,14 +307,14 @@ class TableComparator
         }
 
         foreach ($fromTableFks as $fromTableFk) {
-            if (!$fromTableFk->isSkipSql() && !$fromTableFk->isPolymorphic() && !in_array($fromTableFk, $toTableFks)) {
+            if (!$fromTableFk->isSkipSql() && !$fromTableFk->isPolymorphic() && !\in_array($fromTableFk, $toTableFks)) {
                 $this->tableDiff->addRemovedFk($fromTableFk->getName(), $fromTableFk);
                 $fkDifferences++;
             }
         }
 
         foreach ($toTableFks as $toTableFk) {
-            if (!$toTableFk->isSkipSql() && !$toTableFk->isPolymorphic() && !in_array($toTableFk, $fromTableFks)) {
+            if (!$toTableFk->isSkipSql() && !$toTableFk->isPolymorphic() && !\in_array($toTableFk, $fromTableFks)) {
                 $this->tableDiff->addAddedFk($toTableFk->getName(), $toTableFk);
                 $fkDifferences++;
             }

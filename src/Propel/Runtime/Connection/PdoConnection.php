@@ -76,7 +76,7 @@ class PdoConnection extends \PDO implements ConnectionInterface
 
         // Convert option keys from a string to a \PDO:: constant
         $pdoOptions = [];
-        if (is_array($options)) {
+        if (\is_array($options)) {
             foreach ($options as $key => $option) {
                 $index = (is_numeric($key)) ? $key : constant('self::' . $key);
                 $pdoOptions[$index] = $option;
@@ -101,9 +101,9 @@ class PdoConnection extends \PDO implements ConnectionInterface
      */
     public function setAttribute($attribute, $value)
     {
-        if (is_string($attribute) && false === strpos($attribute, '::')) {
+        if (\is_string($attribute) && false === strpos($attribute, '::')) {
             $attribute = '\PDO::' . $attribute;
-            if (!defined($attribute)) {
+            if (!\defined($attribute)) {
                 throw new InvalidArgumentException(sprintf('Invalid PDO option/attribute name specified: "%s"', $attribute));
             }
             $attribute = constant($attribute);

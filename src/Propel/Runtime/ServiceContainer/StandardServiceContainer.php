@@ -173,7 +173,7 @@ class StandardServiceContainer implements ServiceContainerInterface
     public function setAdapter($name, AdapterInterface $adapter)
     {
         $this->adapters[$name] = $adapter;
-        $this->adapterClasses[$name] = get_class($adapter);
+        $this->adapterClasses[$name] = \get_class($adapter);
     }
 
     /**

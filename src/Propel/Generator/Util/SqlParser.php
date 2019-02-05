@@ -36,7 +36,7 @@ class SqlParser
     {
         $this->sql = $sql;
         $this->pos = 0;
-        $this->len = strlen($sql);
+        $this->len = \strlen($sql);
     }
 
     /**
@@ -242,7 +242,7 @@ class SqlParser
                     }
                     $this->delimiter = trim($this->delimiter);
                     // store delimiter length for better performance
-                    $this->delimiterLength = strlen($this->delimiter);
+                    $this->delimiterLength = \strlen($this->delimiter);
                     // delimiter has changed so return current sql if any
                     if ($parsedString) {
                         return $parsedString;

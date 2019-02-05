@@ -25,7 +25,7 @@ class SeveralModelCriterion extends AbstractModelCriterion
      */
     protected function appendPsForUniqueClauseTo(&$sb, array &$params)
     {
-        if (!is_array($this->value)) {
+        if (!\is_array($this->value)) {
             throw new InvalidValueException('Only array values are supported by this Criterion');
         }
         $clause = $this->clause;
@@ -55,7 +55,7 @@ class SeveralModelCriterion extends AbstractModelCriterion
         $firstChar = strpos($subject, $search);
         if (false !== $firstChar) {
             $beforeStr = substr($subject, 0, $firstChar);
-            $afterStr = substr($subject, $firstChar + strlen($search));
+            $afterStr = substr($subject, $firstChar + \strlen($search));
 
             return $beforeStr.$replace.$afterStr;
         }

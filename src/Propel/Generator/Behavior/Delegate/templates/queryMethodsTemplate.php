@@ -10,7 +10,7 @@
 *
 * @param     mixed $value The value to use as filter.
 *              Use scalar values for equality.
-*              Use array values for in_array() equivalent.
+*              Use array values for \in_array() equivalent.
 *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
 * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
 *

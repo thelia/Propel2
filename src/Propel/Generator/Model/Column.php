@@ -518,7 +518,7 @@ class Column extends MappingModel
     public function setAccessorVisibility($visibility)
     {
         $visibility = strtolower($visibility);
-        if (!in_array($visibility, self::$validVisibilities)) {
+        if (!\in_array($visibility, self::$validVisibilities)) {
             $visibility = self::DEFAULT_VISIBILITY;
         }
 
@@ -547,7 +547,7 @@ class Column extends MappingModel
     public function setMutatorVisibility($visibility)
     {
         $visibility = strtolower($visibility);
-        if (!in_array($visibility, self::$validVisibilities)) {
+        if (!\in_array($visibility, self::$validVisibilities)) {
             $visibility = self::DEFAULT_VISIBILITY;
         }
 
@@ -1035,7 +1035,7 @@ class Column extends MappingModel
      */
     public function hasReferrers()
     {
-        return is_array($this->referrers) && count($this->referrers) > 0;
+        return \is_array($this->referrers) && count($this->referrers) > 0;
     }
 
     /**
@@ -1047,7 +1047,7 @@ class Column extends MappingModel
      */
     public function hasReferrer(ForeignKey $fk)
     {
-        return $this->hasReferrers() && in_array($fk, $this->referrers, true);
+        return $this->hasReferrers() && \in_array($fk, $this->referrers, true);
     }
 
     /**
@@ -1091,7 +1091,7 @@ class Column extends MappingModel
     {
         $this->getDomain()->setType($mappingType);
 
-        if (in_array($mappingType, [ PropelTypes::VARBINARY, PropelTypes::LONGVARBINARY, PropelTypes::BLOB ])) {
+        if (\in_array($mappingType, [ PropelTypes::VARBINARY, PropelTypes::LONGVARBINARY, PropelTypes::BLOB ])) {
             $this->needsTransactionInPostgres = true;
         }
     }
@@ -1227,7 +1227,7 @@ class Column extends MappingModel
      */
     public function setValueSet($valueSet)
     {
-        if (is_string($valueSet)) {
+        if (\is_string($valueSet)) {
             $valueSet = explode(',', $valueSet);
             $valueSet = array_map('trim', $valueSet);
         }

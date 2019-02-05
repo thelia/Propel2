@@ -443,9 +443,9 @@ class QuickBuilder
 
         for ($i = 0, $max = count($tokens); $i < $max; $i++) {
             $token = $tokens[$i];
-            if (is_string($token)) {
+            if (\is_string($token)) {
                 $output .= $token;
-            } elseif (in_array($token[0], [T_COMMENT, T_DOC_COMMENT])) {
+            } elseif (\in_array($token[0], [T_COMMENT, T_DOC_COMMENT])) {
                 // strip comments
                 $output .= $token[1];
             } elseif (T_NAMESPACE === $token[0]) {
@@ -455,10 +455,10 @@ class QuickBuilder
                 $output .= $token[1];
 
                 // namespace name and whitespaces
-                while (($t = $tokens[++$i]) && is_array($t) && in_array($t[0], [T_WHITESPACE, T_NS_SEPARATOR, T_STRING])) {
+                while (($t = $tokens[++$i]) && \is_array($t) && \in_array($t[0], [T_WHITESPACE, T_NS_SEPARATOR, T_STRING])) {
                     $output .= $t[1];
                 }
-                if (is_string($t) && '{' === $t) {
+                if (\is_string($t) && '{' === $t) {
                     $inNamespace = false;
                     --$i;
                 } else {

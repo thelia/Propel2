@@ -103,16 +103,16 @@ class XmlParser extends AbstractParser
 
                 // Books => Book
                 if (substr($key, -1, 1) === 's') {
-                    $key = substr($key, 0, strlen($key) - 1);
+                    $key = substr($key, 0, \strlen($key) - 1);
                 }
             }
 
             $element = $rootElement->ownerDocument->createElement($key);
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 if (!empty($value)) {
                     $element = $this->arrayToDOM($value, $element, $charset);
                 }
-            } elseif (is_string($value)) {
+            } elseif (\is_string($value)) {
                 $charset = $charset ? $charset : 'utf-8';
                 if (function_exists('iconv') && strcasecmp($charset, 'utf-8') !== 0 && strcasecmp($charset, 'utf8') !== 0) {
                     $value = iconv($charset, 'UTF-8', $value);

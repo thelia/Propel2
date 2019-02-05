@@ -35,7 +35,7 @@ class GraphvizManager extends AbstractManager
 
                 foreach ($tbl->getColumns() as $col) {
                     $dotSyntax .= $col->getName() . ' (' . $col->getType()  . ')';
-                    if (count($col->getForeignKeys()) > 0) {
+                    if (\count($col->getForeignKeys()) > 0) {
                         $dotSyntax .= ' [FK]';
                     } elseif ($col->isPrimaryKey()) {
                         $dotSyntax .= ' [PK]';

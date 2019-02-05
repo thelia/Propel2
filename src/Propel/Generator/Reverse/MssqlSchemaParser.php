@@ -109,7 +109,7 @@ class MssqlSchemaParser extends AbstractSchemaParser
             $this->addPrimaryKey($table);
         }
 
-        return count($tables);
+        return \count($tables);
     }
 
     /**

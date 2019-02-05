@@ -204,7 +204,7 @@ class Index extends MappingModel
      */
     public function hasColumn($name)
     {
-        return in_array($name, $this->columns);
+        return \in_array($name, $this->columns);
     }
 
     /**

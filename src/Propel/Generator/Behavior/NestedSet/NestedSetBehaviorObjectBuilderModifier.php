@@ -229,7 +229,7 @@ protected function processNestedSetQueries(\$con)
 {
     foreach (\$this->nestedSetQueries as \$query) {
         \$query['arguments'][] = \$con;
-        call_user_func_array(\$query['callable'], \$query['arguments']);
+        \call_user_func_array(\$query['callable'], \$query['arguments']);
     }
     \$this->nestedSetQueries = array();
 }
@@ -709,7 +709,7 @@ public function addNestedSetChild($objectName)
     if (null === \$this->collNestedSetChildren) {
         \$this->initNestedSetChildren();
     }
-    if (!in_array($objectName, \$this->collNestedSetChildren->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+    if (!\in_array($objectName, \$this->collNestedSetChildren->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
         \$this->collNestedSetChildren[]= $objectName;
         {$objectName}->setParent(\$this);
     }

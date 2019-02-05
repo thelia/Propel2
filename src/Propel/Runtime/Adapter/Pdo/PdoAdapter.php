@@ -52,11 +52,11 @@ abstract class PdoAdapter
         // load any driver options from the config file
         // driver options are those PDO settings that have to be passed during the connection construction
         $driver_options = [];
-        if (isset($conparams['options']) && is_array($conparams['options'])) {
+        if (isset($conparams['options']) && \is_array($conparams['options'])) {
             foreach ($conparams['options'] as $option => $optiondata) {
                 $value = $optiondata;
-                if (is_string($value) && false !== strpos($value, '::')) {
-                    if (!defined($value)) {
+                if (\is_string($value) && false !== strpos($value, '::')) {
+                    if (!\defined($value)) {
                         throw new InvalidArgumentException(sprintf('Error processing driver options for dsn "%s"', $dsn));
                     }
                     $value = constant($value);
@@ -67,7 +67,7 @@ abstract class PdoAdapter
 
         try {
             $con = new PdoConnection($dsn, $user, $password, $driver_options);
-            $this->initConnection($con, isset($conparams['settings']) && is_array($conparams['settings']) ? $conparams['settings'] : []);
+            $this->initConnection($con, isset($conparams['settings']) && \is_array($conparams['settings']) ? $conparams['settings'] : []);
         } catch (\PDOException $e) {
             throw new AdapterException("Unable to open PDO connection", 0, $e);
         }
@@ -88,7 +88,7 @@ abstract class PdoAdapter
      */
     public function getAdapterId()
     {
-        $class = str_replace('Adapter', '', get_called_class());
+        $class = str_replace('Adapter', '', \get_called_class());
         $lastSlash = strrpos($class, '\\');
 
         return strtolower(substr($class, $lastSlash + 1));
@@ -126,7 +126,7 @@ abstract class PdoAdapter
             $this->setCharset($con, $settings['charset']);
         }
 
-        if (isset($settings['queries']) && is_array($settings['queries'])) {
+        if (isset($settings['queries']) && \is_array($settings['queries'])) {
             foreach ($settings['queries'] as $query) {
                 $con->exec($query);
             }
@@ -488,7 +488,7 @@ abstract class PdoAdapter
         }
 
         foreach ($criteria->getAsColumns() as $alias => $col) {
-            if (false === strpos($col, '(') && !in_array($col, $selected)) {
+            if (false === strpos($col, '(') && !\in_array($col, $selected)) {
                 $selected[] = $col;
             }
         }
@@ -593,7 +593,7 @@ abstract class PdoAdapter
     {
         if ($cMap->isTemporal()) {
             $value = $this->formatTemporalValue($value, $cMap);
-        } elseif (is_resource($value) && $cMap->isLob()) {
+        } elseif (\is_resource($value) && $cMap->isLob()) {
             // we always need to make sure that the stream is rewound, otherwise nothing will
             // get written to database.
             rewind($value);

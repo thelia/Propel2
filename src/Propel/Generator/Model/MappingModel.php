@@ -103,7 +103,7 @@ abstract class MappingModel implements MappingModelInterface
      */
     protected function booleanValue($value)
     {
-        if (is_bool($value)) {
+        if (\is_bool($value)) {
             return $value;
         }
 
@@ -111,7 +111,7 @@ abstract class MappingModel implements MappingModelInterface
             return (Boolean) $value;
         }
 
-        return in_array(strtolower($value),  [ 'true', 't', 'y', 'yes' ], true);
+        return \in_array(strtolower($value),  [ 'true', 't', 'y', 'yes' ], true);
     }
 
     protected function getDefaultValueForArray($stringValue)
@@ -154,7 +154,7 @@ abstract class MappingModel implements MappingModelInterface
         foreach (explode(',', $stringValue) as $v) {
             $values[] = trim($v);
         }
-        if (count($values) === 0) {
+        if (\count($values) === 0) {
             return null;
         }
         return $values;
