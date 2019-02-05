@@ -983,7 +983,7 @@ ALTER TABLE %s ADD %s %s;
      */
     public function hasSize(string $sqlType): bool
     {
-        return !in_array($sqlType, [
+        return !\in_array($sqlType, [
             'MEDIUMTEXT',
             'LONGTEXT',
             'BLOB',

@@ -113,7 +113,7 @@ abstract class FileLoader extends BaseFileLoader
      */
     protected static function checkSupports($ext, $resource): bool
     {
-        if (!is_string($resource)) {
+        if (!\is_string($resource)) {
             return false;
         }
 
@@ -125,11 +125,11 @@ abstract class FileLoader extends BaseFileLoader
             $extension = pathinfo($filename, PATHINFO_EXTENSION);
         }
 
-        if (is_string($ext)) {
+        if (\is_string($ext)) {
             return ($ext === $extension);
         }
 
-        if (!is_array($ext)) {
+        if (!\is_array($ext)) {
             throw new InvalidArgumentException('$ext must be string or string[]');
         }
 
@@ -146,7 +146,7 @@ abstract class FileLoader extends BaseFileLoader
      */
     private function resolveValue($value, array $resolving = [])
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $args = [];
             foreach ($value as $k => $v) {
                 $args[$this->resolveValue($k, $resolving)] = $this->resolveValue($v, $resolving);
@@ -155,7 +155,7 @@ abstract class FileLoader extends BaseFileLoader
             return $args;
         }
 
-        if (!is_string($value)) {
+        if (!\is_string($value)) {
             return $value;
         }
 
@@ -233,11 +233,11 @@ abstract class FileLoader extends BaseFileLoader
      */
     private function unescapeValue($value)
     {
-        if (is_string($value)) {
+        if (\is_string($value)) {
             return str_replace('%%', '%', $value);
         }
 
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $result = [];
             foreach ($value as $k => $v) {
                 $result[$k] = $this->unescapeValue($v);

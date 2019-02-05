@@ -190,7 +190,7 @@ class ModelManager extends AbstractManager
 
         // write / overwrite new / changed files
         $action = $file->isFile() ? 'Updating' : 'Creating';
-        $this->log(sprintf("\t-> %s %s (table: %s, builder: %s)", $action, $builder->getClassFilePath(), $builder->getTable()->getName(), get_class($builder)));
+        $this->log(sprintf("\t-> %s %s (table: %s, builder: %s)", $action, $builder->getClassFilePath(), $builder->getTable()->getName(), \get_class($builder)));
         file_put_contents($file->getPathname(), $script);
 
         return 1;

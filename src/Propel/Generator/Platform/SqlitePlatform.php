@@ -597,7 +597,7 @@ PRAGMA foreign_keys = ON;
      */
     public function hasSize(string $sqlType): bool
     {
-        return !in_array($sqlType, [
+        return !\in_array($sqlType, [
             'MEDIUMTEXT',
             'LONGTEXT',
             'BLOB',

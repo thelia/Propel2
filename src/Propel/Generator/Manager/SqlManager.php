@@ -205,7 +205,7 @@ class SqlManager extends AbstractManager
                 }
             });
 
-            $this->log(sprintf('%d queries executed for %s database.', count($sqls), $database));
+            $this->log(sprintf('%d queries executed for %s database.', \count($sqls), $database));
         }
 
         return true;

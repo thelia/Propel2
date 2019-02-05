@@ -394,7 +394,7 @@ class Collection implements ArrayAccess, IteratorAggregate, Countable, Serializa
      */
     public function contains($element): bool
     {
-        return in_array($element, $this->getArrayCopy(), true);
+        return \in_array($element, $this->getArrayCopy(), true);
     }
 
     /**

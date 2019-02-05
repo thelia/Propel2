@@ -217,7 +217,7 @@ class PropelModelPager implements IteratorAggregate, Countable
             $links[] = $i++;
         }
 
-        $this->currentMaxLink = count($links) ? $links[count($links) - 1] : 1;
+        $this->currentMaxLink = \count($links) ? $links[\count($links) - 1] : 1;
 
         return $links;
     }
@@ -454,7 +454,7 @@ class PropelModelPager implements IteratorAggregate, Countable
      */
     public function count(): int
     {
-        return count($this->getResults());
+        return \count($this->getResults());
     }
 
     /**

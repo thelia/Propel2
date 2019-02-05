@@ -148,7 +148,7 @@ abstract class AbstractCriterion
                 $this->column = $column;
             } else {
                 $this->table = substr($column, 0, $dotPos);
-                $this->column = substr($column, $dotPos + 1, strlen($column));
+                $this->column = substr($column, $dotPos + 1, \strlen($column));
             }
         }
     }

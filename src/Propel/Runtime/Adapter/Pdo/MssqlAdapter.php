@@ -148,12 +148,12 @@ class MssqlAdapter extends PdoAdapter implements SqlAdapterInterface
         $selectStatement = '';
         $fromStatement = '';
         $selectText = 'SELECT ';
-        $selectTextLen = strlen($selectText);
+        $selectTextLen = \strlen($selectText);
 
         // Ensure that subqueries are ignored while iterating the SELECT list
         // and that the first non-subquery FROM statement is our split
         $parenthesisMatch = 0;
-        $len = strlen($sql);
+        $len = \strlen($sql);
 
         for ($i = $selectTextLen; $i < $len; $i++) {
             if ($sql[$i] === '(') {
@@ -199,7 +199,7 @@ class MssqlAdapter extends PdoAdapter implements SqlAdapterInterface
             $order = str_ireplace('ORDER BY', '', $orderStatement);
             $orders = explode(',', $order);
 
-            $nbOrders = count($orders);
+            $nbOrders = \count($orders);
             for ($i = 0; $i < $nbOrders; $i++) {
                 $orderArr[trim((string)preg_replace('/\s+(ASC|DESC)$/i', '', $orders[$i]))] = [
                     'sort' => (stripos($orders[$i], ' DESC') !== false) ? 'DESC' : 'ASC',
@@ -214,7 +214,7 @@ class MssqlAdapter extends PdoAdapter implements SqlAdapterInterface
         $firstColumnOrderStatement = null;
         foreach (explode(', ', $selectStatement) as $selCol) {
             $selColArr = explode(' ', $selCol);
-            $selColCount = count($selColArr) - 1;
+            $selColCount = \count($selColArr) - 1;
 
             // make sure the current column isn't * or an aggregate
             if ($selColArr[0] !== '*' && !strstr($selColArr[0], '(')) {
@@ -260,7 +260,7 @@ class MssqlAdapter extends PdoAdapter implements SqlAdapterInterface
             }
         }
 
-        if (is_array($orders)) {
+        if (\is_array($orders)) {
             $orderStatement = 'ORDER BY ' . implode(', ', $orders);
         } else {
             // use the first non aggregate column in our select statement if no ORDER BY clause present
@@ -303,7 +303,7 @@ class MssqlAdapter extends PdoAdapter implements SqlAdapterInterface
                  * to the query string directly.  If it goes through PDOStatement::bindValue quotes will cause
                  * an error with the insert or update.
                  */
-                if (is_resource($param['value']) && $column->isLob()) {
+                if (\is_resource($param['value']) && $column->isLob()) {
                     // we always need to make sure that the stream is rewound, otherwise nothing will
                     // get written to database.
                     rewind($param['value']);
