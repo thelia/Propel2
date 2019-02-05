@@ -322,7 +322,7 @@ class RelationMap
      */
     public function countColumnMappings()
     {
-        return count($this->localColumns);
+        return \count($this->localColumns);
     }
 
     /**

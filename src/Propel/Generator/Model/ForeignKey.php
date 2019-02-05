@@ -246,7 +246,7 @@ class ForeignKey extends MappingModel
      */
     public function hasLocalColumn(Column $column)
     {
-        return in_array($column, $this->getLocalColumnObjects(), true);
+        return \in_array($column, $this->getLocalColumnObjects(), true);
     }
 
     /**
@@ -593,9 +593,9 @@ class ForeignKey extends MappingModel
             return;
         }
 
-        if (is_string($ref1)) {
+        if (\is_string($ref1)) {
             $this->localColumns[] = $ref1;
-            $this->foreignColumns[] = is_string($ref2) ? $ref2 : null;
+            $this->foreignColumns[] = \is_string($ref2) ? $ref2 : null;
             $this->localValues[] = null;
 
             return;

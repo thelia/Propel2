@@ -118,7 +118,7 @@ class XmlParser extends AbstractParser
             }
 
             $element = $rootElement->ownerDocument->createElement($key);
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 if (!empty($value)) {
                     $element = $this->arrayToDOM($value, $element, $charset);
                 }

@@ -27,7 +27,7 @@ class ArrayToPhpConverter
         // set datasources
         if (isset($c['connections'])) {
             foreach ($c['connections'] as $name => $params) {
-                if (!is_array($params)) {
+                if (!\is_array($params)) {
                     continue;
                 }
 
@@ -61,7 +61,7 @@ class ArrayToPhpConverter
             // set default datasource
             if (isset($c['defaultConnection'])) {
                 $defaultDatasource = $c['defaultConnection'];
-            } elseif (isset($c['connections']) && is_array($c['connections'])) {
+            } elseif (isset($c['connections']) && \is_array($c['connections'])) {
                 // fallback to the first datasource
                 $datasourceNames = array_keys($c['connections']);
                 $defaultDatasource = $datasourceNames[0];

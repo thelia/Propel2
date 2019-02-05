@@ -127,7 +127,7 @@ class DatabaseDiff
      */
     public function countAddedTables()
     {
-        return count($this->addedTables);
+        return \count($this->addedTables);
     }
 
     /**
@@ -196,7 +196,7 @@ class DatabaseDiff
      */
     public function countRemovedTables()
     {
-        return count($this->removedTables);
+        return \count($this->removedTables);
     }
 
     /**
@@ -243,7 +243,7 @@ class DatabaseDiff
      */
     public function countModifiedTables()
     {
-        return count($this->modifiedTables);
+        return \count($this->modifiedTables);
     }
 
     /**
@@ -298,7 +298,7 @@ class DatabaseDiff
      */
     public function countRenamedTables()
     {
-        return count($this->renamedTables);
+        return \count($this->renamedTables);
     }
 
     /**

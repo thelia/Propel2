@@ -907,7 +907,7 @@ class TableMap
     public function extractPrimaryKey(Criteria $criteria)
     {
         $pkCols = $this->getPrimaryKeys();
-        if (count($pkCols) !== count($criteria->getMap())) {
+        if (\count($pkCols) !== \count($criteria->getMap())) {
             return null;
         }
 

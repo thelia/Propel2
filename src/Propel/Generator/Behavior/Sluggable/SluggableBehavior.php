@@ -316,7 +316,7 @@ protected static function cleanupSlugPart(\$slug, \$replacement = '" . $this->ge
 protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
 {
     // check length, as suffix could put it over maximum
-    if (strlen(\$slug) > ($size - \$incrementReservedSpace)) {
+    if (\strlen(\$slug) > ($size - \$incrementReservedSpace)) {
         \$slug = substr(\$slug, 0, $size - \$incrementReservedSpace);
     }
 
@@ -409,7 +409,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         return \$slug2 . '1';
     }
 
-    \$slugNum = substr(\$object->" . $getter . "(), strlen(\$slug) + 1);
+    \$slugNum = substr(\$object->" . $getter . "(), \strlen(\$slug) + 1);
     if (0 == \$slugNum[0]) {
         \$slugNum[0] = 1;
     }

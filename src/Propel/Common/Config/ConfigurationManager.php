@@ -108,7 +108,7 @@ class ConfigurationManager
      */
     public function getConfigProperty($name)
     {
-        if (!is_string($name)) {
+        if (!\is_string($name)) {
             throw new InvalidArgumentException("Invalid configuration property name '$name'.");
         }
 
@@ -134,7 +134,7 @@ class ConfigurationManager
      */
     public function getConnectionParametersArray($section = 'runtime'): ?array
     {
-        if (!in_array($section, ['runtime', 'generator'], true)) {
+        if (!\in_array($section, ['runtime', 'generator'], true)) {
             return null;
         }
 

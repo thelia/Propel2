@@ -46,7 +46,7 @@ class OracleAdapter extends PdoAdapter implements SqlAdapterInterface
     {
         $con->exec("ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD'");
         $con->exec("ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS'");
-        if (isset($settings['queries']) && is_array($settings['queries'])) {
+        if (isset($settings['queries']) && \is_array($settings['queries'])) {
             foreach ($settings['queries'] as $queries) {
                 foreach ((array)$queries as $query) {
                     $con->exec($query);
@@ -225,12 +225,12 @@ class OracleAdapter extends PdoAdapter implements SqlAdapterInterface
     public function bindValue(StatementInterface $stmt, $parameter, $value, ColumnMap $cMap, $position = null)
     {
         if ($cMap->getType() === PropelTypes::CLOB_EMU) {
-            return $stmt->bindParam(':p' . $position, $value, $cMap->getPdoType(), strlen($value));
+            return $stmt->bindParam(':p' . $position, $value, $cMap->getPdoType(), \strlen($value));
         }
 
         if ($cMap->isTemporal()) {
             $value = $this->formatTemporalValue($value, $cMap);
-        } elseif (is_resource($value) && $cMap->isLob()) {
+        } elseif (\is_resource($value) && $cMap->isLob()) {
             // we always need to make sure that the stream is rewound, otherwise nothing will
             // get written to database.
             rewind($value);

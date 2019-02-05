@@ -206,7 +206,7 @@ class ArrayFormatter extends AbstractFormatter
             if ($modelWith->isAdd()) {
                 if (
                     !isset($arrayToAugment[$modelWith->getRelationName()]) ||
-                    !in_array(
+                    !\in_array(
                         $this->alreadyHydratedObjects[$relAlias][$key],
                         $arrayToAugment[$modelWith->getRelationName()],
                         true,

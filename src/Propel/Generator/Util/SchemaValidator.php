@@ -76,7 +76,7 @@ class SchemaValidator
 
                 $list = &$namespaces[$table->getNamespace()];
             }
-            if (in_array($table->getPhpName(), $list)) {
+            if (\in_array($table->getPhpName(), $list)) {
                 $this->errors[] = sprintf('Table "%s" declares a phpName already used in another table', $table->getName());
             }
             $list[] = $table->getPhpName();
@@ -94,7 +94,7 @@ class SchemaValidator
     {
         $reservedTableNames = ['table_name'];
         $tableName = strtolower($table->getName());
-        if (in_array($tableName, $reservedTableNames)) {
+        if (\in_array($tableName, $reservedTableNames)) {
             $this->errors[] = sprintf('Table "%s" uses a reserved keyword as name', $table->getName());
         }
     }
@@ -111,7 +111,7 @@ class SchemaValidator
         }
         $phpNames = [];
         foreach ($table->getColumns() as $column) {
-            if (in_array($column->getPhpName(), $phpNames)) {
+            if (\in_array($column->getPhpName(), $phpNames)) {
                 $this->errors[] = sprintf('Column "%s" declares a phpName already used in table "%s"', $column->getName(), $table->getName());
             }
             $phpNames[] = $column->getPhpName();

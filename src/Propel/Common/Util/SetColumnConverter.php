@@ -32,7 +32,7 @@ class SetColumnConverter
         if ($val === null) {
             return 0;
         }
-        if (!is_array($val)) {
+        if (!\is_array($val)) {
             $val = [$val];
         }
         $bitValue = str_repeat('0', count($valueSet));

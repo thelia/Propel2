@@ -45,7 +45,7 @@ class ObjectCombinationCollection extends ObjectCollection
      */
     public function push($value)
     {
-        parent::push(func_get_args());
+        parent::push(\func_get_args());
     }
 
     /**
@@ -72,7 +72,7 @@ class ObjectCombinationCollection extends ObjectCollection
     {
         $hashes = [];
         $isActiveRecord = [];
-        foreach (func_get_args() as $pos => $obj) {
+        foreach (\func_get_args() as $pos => $obj) {
             if ($obj instanceof ActiveRecordInterface) {
                 $hashes[$pos] = $obj->hashCode();
                 $isActiveRecord[$pos] = true;

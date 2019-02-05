@@ -440,7 +440,7 @@ class ObjectCollection extends Collection
     public function offsetUnset($offset): void
     {
         if (isset($this->data[$offset])) {
-            if (is_object($this->data[$offset])) {
+            if (\is_object($this->data[$offset])) {
                 unset($this->indexSplHash[spl_object_hash($this->data[$offset])]);
                 unset($this->index[$this->getHashCode($this->data[$offset])]);
             }
@@ -467,7 +467,7 @@ class ObjectCollection extends Collection
      */
     public function append($value)
     {
-        if (!is_object($value)) {
+        if (!\is_object($value)) {
             parent::append($value);
 
             return;
@@ -490,7 +490,7 @@ class ObjectCollection extends Collection
      */
     public function offsetSet($offset, $value): void
     {
-        if (!is_object($value)) {
+        if (!\is_object($value)) {
             parent::offsetSet($offset, $value);
 
             return;
@@ -522,7 +522,7 @@ class ObjectCollection extends Collection
      */
     public function contains($element)
     {
-        if (!is_object($element)) {
+        if (!\is_object($element)) {
             return parent::contains($element);
         }
 
@@ -538,7 +538,7 @@ class ObjectCollection extends Collection
      */
     protected function getHashCode($object)
     {
-        if (is_object($object) && is_callable([$object, 'hashCode'])) {
+        if (\is_object($object) && is_callable([$object, 'hashCode'])) {
             return $object->hashCode();
         }
 

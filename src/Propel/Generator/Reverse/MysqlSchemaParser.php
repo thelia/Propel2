@@ -134,7 +134,7 @@ class MysqlSchemaParser extends AbstractSchemaParser
             $this->addColumnDescriptionsToTable($table);
         }
 
-        return count($database->getTables());
+        return \count($database->getTables());
     }
 
     /**
@@ -278,7 +278,7 @@ class MysqlSchemaParser extends AbstractSchemaParser
                     $default = 'false';
                 }
             }
-            if (in_array($default, ['CURRENT_TIMESTAMP', 'current_timestamp()'])) {
+            if (\in_array($default, ['CURRENT_TIMESTAMP', 'current_timestamp()'])) {
                 $default = 'CURRENT_TIMESTAMP';
                 $type = ColumnDefaultValue::TYPE_EXPR;
             } else {
@@ -461,7 +461,7 @@ EOT;
                     $foreignKeys[$name] = $fk;
                 }
 
-                $max = count($localColumns);
+                $max = \count($localColumns);
                 for ($i = 0; $i < $max; $i++) {
                     $foreignKeys[$name]->addReference($localColumns[$i], $foreignColumns[$i]);
                 }

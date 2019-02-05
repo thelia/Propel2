@@ -1499,7 +1499,7 @@ class " . $this->getUnqualifiedClassName() . " extends TableMap
 
         if (\$values instanceof Criteria) {
             {$this->getTableMapClassName()}::clearInstancePool();
-        } elseif (!is_object(\$values)) { // it's a primary key, or an array of pks
+        } elseif (!\is_object(\$values)) { // it's a primary key, or an array of pks
             foreach ((array) \$values as \$singleval) {
                 {$this->getTableMapClassName()}::removeInstanceFromPool(\$singleval);
             }

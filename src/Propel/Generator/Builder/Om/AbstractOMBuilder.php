@@ -464,7 +464,7 @@ abstract class AbstractOMBuilder extends DataModelBuilder
      */
     public function declareClasses()
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         foreach ($args as $class) {
             $this->declareClass($class);
         }
@@ -738,7 +738,7 @@ abstract class AbstractOMBuilder extends DataModelBuilder
         $fks = $crossFKs->getCrossForeignKeys();
 
         foreach ($crossFKs->getMiddleTable()->getForeignKeys() as $fk) {
-            if ($fk !== $excludeFK && ($fk === $crossFKs->getIncomingForeignKey() || in_array($fk, $fks))) {
+            if ($fk !== $excludeFK && ($fk === $crossFKs->getIncomingForeignKey() || \in_array($fk, $fks))) {
                 $names[] = $this->getFKPhpNameAffix($fk, false);
             }
         }
@@ -838,7 +838,7 @@ abstract class AbstractOMBuilder extends DataModelBuilder
         &$phpDoc
     ) {
         foreach ($crossFKs->getCrossForeignKeys() as $fk) {
-            if (is_array($crossFKToIgnore) && in_array($fk, $crossFKToIgnore)) {
+            if (\is_array($crossFKToIgnore) && \in_array($fk, $crossFKToIgnore)) {
                 continue;
             } elseif ($fk === $crossFKToIgnore) {
                 continue;
@@ -1149,8 +1149,8 @@ abstract class AbstractOMBuilder extends DataModelBuilder
         }
 
         // end of line
-        if (strlen($content) && substr($content, -1) != "\n") {
-            $content = $content . "\n";
+        if (\strlen($content) && "\n" != substr($content, -1)) {
+            $content = $content."\n";
         }
 
         return $content;

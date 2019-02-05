@@ -45,7 +45,7 @@ class YamlFileLoader extends FileLoader
             $content = [];
         }
 
-        if (!is_array($content)) {
+        if (!\is_array($content)) {
             throw new ParseException('Unable to parse the configuration file: wrong yaml content.');
         }
 

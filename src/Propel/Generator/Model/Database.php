@@ -352,7 +352,7 @@ class Database extends ScopedMappingModel
         $formats = static::getSupportedStringFormats();
 
         $format = strtoupper($format);
-        if (!in_array($format, $formats)) {
+        if (!\in_array($format, $formats)) {
             throw new InvalidArgumentException(sprintf('Given "%s" default string format is not supported. Only "%s" are valid string formats.', $format, implode(', ', $formats)));
         }
 
@@ -651,7 +651,7 @@ class Database extends ScopedMappingModel
      */
     public function hasSequence($sequence)
     {
-        return $this->sequences && in_array($sequence, $this->sequences);
+        return $this->sequences && \in_array($sequence, $this->sequences);
     }
 
     /**
@@ -868,7 +868,7 @@ class Database extends ScopedMappingModel
             }
         }
         ksort($behaviors);
-        if (count($behaviors)) {
+        if (\count($behaviors)) {
             $nextBehavior = $behaviors[key($behaviors)][0];
         }
 

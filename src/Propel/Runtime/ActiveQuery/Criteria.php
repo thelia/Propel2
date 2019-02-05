@@ -712,7 +712,7 @@ class Criteria
      */
     public function getNewCriterion($column, $value = null, $comparison = self::EQUAL)
     {
-        if (is_int($comparison)) {
+        if (\is_int($comparison)) {
             // $comparison is a PDO::PARAM_* constant value
             // something like $c->add('foo like ?', '%bar%', PDO::PARAM_STR);
             return new RawCriterion($this, $column, $value, $comparison);
@@ -934,7 +934,7 @@ class Criteria
      */
     public function putAll($t)
     {
-        if (is_array($t)) {
+        if (\is_array($t)) {
             foreach ($t as $key => $value) {
                 if ($value instanceof AbstractCriterion) {
                     $this->map[$key] = $value;
@@ -1071,7 +1071,7 @@ class Criteria
      */
     public function addJoin($left, $right, $joinType = null)
     {
-        if (is_array($left)) {
+        if (\is_array($left)) {
             $conditions = [];
             foreach ($left as $key => $value) {
                 $condition = [$value, $right[$key]];
@@ -1202,7 +1202,7 @@ class Criteria
      */
     public function addJoinObject(Join $join)
     {
-        if (!in_array($join, $this->joins)) { // compare equality, NOT identity
+        if (!\in_array($join, $this->joins)) { // compare equality, NOT identity
             $this->joins[] = $join;
         }
 
@@ -1384,7 +1384,7 @@ class Criteria
      */
     public function hasSelectModifier($modifier)
     {
-        return in_array($modifier, $this->selectModifiers);
+        return \in_array($modifier, $this->selectModifiers);
     }
 
     /**
@@ -2237,7 +2237,7 @@ class Criteria
         $stringQuotes = '';
         $parsedString = '';
         $stringToTransform = '';
-        $len = strlen($sql);
+        $len = \strlen($sql);
         $pos = 0;
         while ($pos < $len) {
             $char = $sql[$pos];

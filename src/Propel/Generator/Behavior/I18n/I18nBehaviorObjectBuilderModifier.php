@@ -308,7 +308,7 @@ class I18nBehaviorObjectBuilderModifier
      */
     protected function isDateType($columnType)
     {
-        return in_array($columnType, [
+        return \in_array($columnType, [
             PropelTypes::DATE,
             PropelTypes::TIME,
             PropelTypes::TIMESTAMP,

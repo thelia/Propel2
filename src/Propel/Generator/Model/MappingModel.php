@@ -97,7 +97,7 @@ abstract class MappingModel implements MappingModelInterface
      */
     protected function booleanValue($value)
     {
-        if (is_bool($value)) {
+        if (\is_bool($value)) {
             return $value;
         }
 
