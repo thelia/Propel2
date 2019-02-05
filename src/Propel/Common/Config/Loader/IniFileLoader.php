@@ -79,7 +79,7 @@ class IniFileLoader extends FileLoader
         $config = [];
 
         foreach ($data as $section => $value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 if (strpos($section, $this->nestSeparator) !== false) {
                     $sections = explode($this->nestSeparator, $section);
                     $config = array_merge_recursive($config, $this->buildNestedSection($sections, $value));
@@ -104,7 +104,7 @@ class IniFileLoader extends FileLoader
      */
     private function buildNestedSection($sections, $value)
     {
-        if (count($sections) == 0) {
+        if (\count($sections) == 0) {
             return $this->parseSection($value);
         }
 
@@ -150,7 +150,7 @@ class IniFileLoader extends FileLoader
         if (strpos($key, $this->nestSeparator) !== false) {
             $pieces = explode($this->nestSeparator, $key, 2);
 
-            if (!strlen($pieces[0]) || !strlen($pieces[1])) {
+            if (!\strlen($pieces[0]) || !\strlen($pieces[1])) {
                 throw new IniParseException(sprintf('Invalid key "%s"', $key));
             }
             if (!isset($config[$pieces[0]])) {
@@ -159,7 +159,7 @@ class IniFileLoader extends FileLoader
                 } else {
                     $config[$pieces[0]] = [];
                 }
-            } elseif (!is_array($config[$pieces[0]])) {
+            } elseif (!\is_array($config[$pieces[0]])) {
                 throw new IniParseException(sprintf(
                     'Cannot create sub-key for "%s", as key already exists',
                     $pieces[0]
@@ -167,12 +167,12 @@ class IniFileLoader extends FileLoader
             }
 
             $this->parseKey($pieces[1], $value, $config[$pieces[0]]);
-        } elseif (is_string($value) && in_array(strtolower($value), ['true', 'false'], true)) {
-            $config[$key] = (strtolower($value) === 'true');
-        } elseif ($value === (string)(int)$value) {
-            $config[$key] = (int)$value;
-        } elseif ($value === (string)(float)$value) {
-            $config[$key] = (float)$value;
+        } else if (\is_string($value) && \in_array(strtolower($value), array("true", "false"))) {
+            $config[$key] = (strtolower($value) === "true");
+        } else if ($value === (string)(int) $value) {
+            $config[$key] = (int) $value;
+        } else if ($value === (string)(float) $value) {
+            $config[$key] = (float) $value;
         } else {
             $config[$key] = $value;
         }

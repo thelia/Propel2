@@ -900,7 +900,7 @@ ALTER TABLE %s ADD %s %s;
      */
     public function hasSize($sqlType)
     {
-        return !in_array($sqlType, [
+        return !\in_array($sqlType, [
             'MEDIUMTEXT',
             'LONGTEXT',
             'BLOB',

@@ -405,14 +405,14 @@ class Table extends ScopedMappingModel implements IdMethod
     private function doHeavyIndexing()
     {
         $pk = $this->getPrimaryKey();
-        $size = count($pk);
+        $size = \count($pk);
 
         // We start at an offset of 1 because the entire column
         // list is generally implicitly indexed by the fact that
         // it's a primary key.
         for ($i = 1; $i < $size; $i++) {
             $idx = new Index();
-            $idx->setColumns(array_slice($pk, $i, $size));
+            $idx->setColumns(\array_slice($pk, $i, $size));
             $this->addIndex($idx);
         }
     }
@@ -649,7 +649,7 @@ class Table extends ScopedMappingModel implements IdMethod
             $this->columnsByName[$col->getName()] = $col;
             $this->columnsByLowercaseName[strtolower($col->getName())] = $col;
             $this->columnsByPhpName[$col->getPhpName()] = $col;
-            $col->setPosition(count($this->columns));
+            $col->setPosition(\count($this->columns));
 
             if ($col->requiresTransactionInPostgres()) {
                 $this->needsTransactionInPostgres = true;
@@ -690,7 +690,7 @@ class Table extends ScopedMappingModel implements IdMethod
      */
     public function removeColumn($column)
     {
-        if (is_string($column)) {
+        if (\is_string($column)) {
             $column = $this->getColumn($column);
         }
 
@@ -762,7 +762,7 @@ class Table extends ScopedMappingModel implements IdMethod
             $this->foreignKeys[] = $fk;
             $this->foreignKeysByName[$name] = $fk;
 
-            if (!in_array($fk->getForeignTableName(), $this->foreignTableNames)) {
+            if (!\in_array($fk->getForeignTableName(), $this->foreignTableNames)) {
                 $this->foreignTableNames[] = $fk->getForeignTableName();
             }
 
@@ -817,7 +817,7 @@ class Table extends ScopedMappingModel implements IdMethod
 
         $names = [];
         foreach ($this->inheritanceColumn->getChildren() as $child) {
-            $names[] = get_class($child);
+            $names[] = \get_class($child);
         }
 
         return $names;
@@ -865,7 +865,7 @@ class Table extends ScopedMappingModel implements IdMethod
 
             if ($foreignTable !== null) {
                 $referrers = $foreignTable->getReferrers();
-                if ($referrers === null || !in_array($foreignKey, $referrers, true)) {
+                if (null === $referrers || !\in_array($foreignKey, $referrers, true) ) {
                     $foreignTable->addReferrer($foreignKey);
                 }
             } elseif ($throwErrors) {
@@ -983,7 +983,7 @@ class Table extends ScopedMappingModel implements IdMethod
     {
         $pks = [];
         foreach ($this->getPrimaryKey() as $primaryKey) {
-            if ($primaryKey->isNotNull() && !$primaryKey->hasDefaultValue() && !in_array($primaryKey, $primaryKeys, true)) {
+            if ($primaryKey->isNotNull() && !$primaryKey->hasDefaultValue() && !\in_array($primaryKey, $primaryKeys, true)) {
                 $pks = $primaryKey;
             }
         }
@@ -1385,7 +1385,7 @@ class Table extends ScopedMappingModel implements IdMethod
         $formats = Database::getSupportedStringFormats();
 
         $format = strtoupper($format);
-        if (!in_array($format, $formats)) {
+        if (!\in_array($format, $formats)) {
             throw new InvalidArgumentException(sprintf('Given "%s" default string format is not supported. Only "%s" are valid string formats.', $format, implode(', ', $formats)));
         }
 
@@ -1634,7 +1634,7 @@ class Table extends ScopedMappingModel implements IdMethod
      */
     public function getNumColumns()
     {
-        return count($this->columns);
+        return \count($this->columns);
     }
 
     /**
@@ -1721,32 +1721,32 @@ class Table extends ScopedMappingModel implements IdMethod
      */
     public function isUnique(array $keys)
     {
-        if (count($keys) === 1) {
+        if (1 === \count($keys)) {
             $column = $keys[0] instanceof Column ? $keys[0] : $this->getColumn($keys[0]);
             if ($column) {
                 if ($column->isUnique()) {
                     return true;
                 }
 
-                if ($column->isPrimaryKey() && count($column->getTable()->getPrimaryKey()) === 1) {
+                if ($column->isPrimaryKey() && 1 === \count($column->getTable()->getPrimaryKey())) {
                     return true;
                 }
             }
         }
 
         // check if pk == $keys
-        if (count($this->getPrimaryKey()) === count($keys)) {
+        if (\count($this->getPrimaryKey()) === \count($keys)) {
             $allPk = true;
-            $stringArray = is_string($keys[0]);
+            $stringArray = \is_string($keys[0]);
             foreach ($this->getPrimaryKey() as $pk) {
                 if ($stringArray) {
-                    if (!in_array($pk->getName(), $keys)) {
+                    if (!\in_array($pk->getName(), $keys)) {
                         $allPk = false;
 
                         break;
                     }
                 } else {
-                    if (!in_array($pk, $keys)) {
+                    if (!\in_array($pk, $keys)) {
                         $allPk = false;
 
                         break;
@@ -1762,7 +1762,7 @@ class Table extends ScopedMappingModel implements IdMethod
         // check if there is a unique constrains that contains exactly the $keys
         if ($this->unices) {
             foreach ($this->unices as $unique) {
-                if (count($unique->getColumns()) === count($keys)) {
+                if (\count($unique->getColumns()) === \count($keys)) {
                     $allAvailable = true;
                     foreach ($keys as $key) {
                         if (!$unique->hasColumn($key instanceof Column ? $key->getName() : $key)) {
@@ -1794,7 +1794,7 @@ class Table extends ScopedMappingModel implements IdMethod
     {
         if ($this->indices) {
             foreach ($this->indices as $index) {
-                if (count($keys) === count($index->getColumns())) {
+                if (\count($keys) === \count($index->getColumns())) {
                     $allAvailable = true;
                     foreach ($keys as $key) {
                         if (!$index->hasColumn($key instanceof Column ? $key->getName() : $key)) {
@@ -1906,7 +1906,7 @@ class Table extends ScopedMappingModel implements IdMethod
     {
         $matches = [];
         foreach ($this->foreignKeys as $fk) {
-            if (in_array($column, $fk->getLocalColumns())) {
+            if (\in_array($column, $fk->getLocalColumns())) {
                 $matches[] = $fk;
             }
         }
@@ -2020,7 +2020,7 @@ class Table extends ScopedMappingModel implements IdMethod
      */
     public function hasPrimaryKey()
     {
-        return count($this->getPrimaryKey()) > 0;
+        return \count($this->getPrimaryKey()) > 0;
     }
 
     /**
@@ -2030,7 +2030,7 @@ class Table extends ScopedMappingModel implements IdMethod
      */
     public function hasCompositePrimaryKey()
     {
-        return count($this->getPrimaryKey()) > 1;
+        return \count($this->getPrimaryKey()) > 1;
     }
 
     /**
@@ -2147,7 +2147,7 @@ class Table extends ScopedMappingModel implements IdMethod
      */
     public function hasForeignKeys()
     {
-        return count($this->foreignKeys) !== 0;
+        return 0 !== \count($this->foreignKeys);
     }
 
     /**
@@ -2157,7 +2157,7 @@ class Table extends ScopedMappingModel implements IdMethod
      */
     public function hasCrossForeignKeys()
     {
-        return count($this->getCrossFks()) !== 0;
+        return 0 !== \count($this->getCrossFks());
     }
 
     /**

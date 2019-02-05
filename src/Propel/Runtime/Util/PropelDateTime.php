@@ -47,7 +47,8 @@ class PropelDateTime extends DateTime
         if (!is_numeric($value)) {
             return false;
         }
-        if (strlen((string)$value) === 8) {
+
+        if (8 === \strlen((string) $value)) {
             return false;
         }
 

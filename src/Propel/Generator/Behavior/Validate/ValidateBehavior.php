@@ -186,7 +186,7 @@ class ValidateBehavior extends Behavior
         $parser = new Parser();
         $params = $this->getParameters();
         foreach ($params as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $params[$key] = $parser->parse($value);
             }
         }
@@ -217,7 +217,7 @@ class ValidateBehavior extends Behavior
             $classConstraint = $this->getClassConstraint($properties);
 
             if (isset($properties['options'])) {
-                if (!is_array($properties['options'])) {
+                if (!\is_array($properties['options'])) {
                     throw new InvalidArgumentException('The options value, in <parameter> tag must be an array');
                 }
 

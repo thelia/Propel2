@@ -47,7 +47,7 @@ class PhpFileLoader extends FileLoader
         $content = include $path;
         ob_end_clean();
 
-        if (!is_array($content)) {
+        if (!\is_array($content)) {
             throw new InvalidArgumentException("The configuration file '$resource' has invalid content.");
         }
 

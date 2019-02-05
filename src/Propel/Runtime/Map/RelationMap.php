@@ -276,8 +276,8 @@ class RelationMap
             $direction = RelationMap::LOCAL_TO_FOREIGN;
         }
 
-        for ($i = 0, $size = count($this->localColumns); $i < $size; $i++) {
-            if ($direction === RelationMap::LOCAL_TO_FOREIGN) {
+        for ($i = 0, $size = \count($this->localColumns); $i < $size; $i++) {
+            if (RelationMap::LOCAL_TO_FOREIGN === $direction) {
                 $h[$this->localColumns[$i]->getFullyQualifiedName()] = $this->foreignColumns[$i]->getFullyQualifiedName();
             } else {
                 $h[$this->foreignColumns[$i]->getFullyQualifiedName()] = $this->localColumns[$i]->getFullyQualifiedName();
@@ -304,7 +304,7 @@ class RelationMap
      */
     public function countColumnMappings()
     {
-        return count($this->localColumns);
+        return \count($this->localColumns);
     }
 
     /**

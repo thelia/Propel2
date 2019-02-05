@@ -8,7 +8,7 @@
 
 namespace Propel\Generator\Util;
 
-if (!defined('T_ML_COMMENT')) {
+if (!\defined('T_ML_COMMENT')) {
     define('T_ML_COMMENT', T_COMMENT);
 } else {
     define('T_DOC_COMMENT', T_ML_COMMENT);
@@ -115,7 +115,7 @@ class PhpParser
         // Iterate over all tokens
         foreach ($tokens as $token) {
             // Single-character tokens.
-            if (is_string($token)) {
+            if (\is_string($token)) {
                 if (!$isInFunction) {
                     if ($token === '{' || $token === ';') {
                         // class-opening bracket or end of line

@@ -19,7 +19,7 @@ class XmlParseException extends RuntimeException implements ExceptionInterface
      */
     public function __construct(array $errors)
     {
-        $numErrors = count($errors);
+        $numErrors = \count($errors);
 
         $message = '';
         if ($numErrors == 1) {

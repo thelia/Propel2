@@ -288,7 +288,7 @@ class PgsqlSchemaParser extends AbstractSchemaParser
             $autoincrement = null;
 
             // if column has a default
-            if ((strlen(trim($default)) > 0)) {
+            if ((\strlen(trim($default)) > 0)) {
                 if (!preg_match('/^nextval\(/', $default)) {
                     $strDefault = preg_replace('/::[\W\D]*/', '', $default);
                 } else {
@@ -520,7 +520,7 @@ class PgsqlSchemaParser extends AbstractSchemaParser
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $name = $row['idxname'];
-            $unique = (in_array($row['indisunique'], ['t', true, 1, '1']) ? true : false);
+            $unique = (\in_array($row['indisunique'], ['t', true, 1, '1']) ? true : false);
 
             if (!isset($indexes[$name])) {
                 if ($unique) {

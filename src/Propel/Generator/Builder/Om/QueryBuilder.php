@@ -586,7 +586,7 @@ abstract class " . $this->getUnqualifiedClassName() . ' extends ' . $parentClass
      *";
         if ($table->hasCompositePrimaryKey()) {
             $pks = $table->getPrimaryKey();
-            $examplePk = array_slice([12, 34, 56, 78, 91], 0, count($pks));
+            $examplePk = \array_slice([12, 34, 56, 78, 91], 0, count($pks));
             $colNames = [];
             foreach ($pks as $col) {
                 $colNames[] = '$' . $col->getName();
@@ -1026,7 +1026,7 @@ abstract class " . $this->getUnqualifiedClassName() . ' extends ' . $parentClass
      *
      * @param     mixed \$$variableName The value to use as filter.
      *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
+     *              Use array values for \in_array() equivalent.
      *              Use associative array('min' => \$minValue, 'max' => \$maxValue) for intervals.";
         } elseif ($col->isTemporalType()) {
             $script .= "
@@ -1041,7 +1041,7 @@ abstract class " . $this->getUnqualifiedClassName() . ' extends ' . $parentClass
      *              Values can be integers (unix timestamps), DateTime objects, or strings.
      *              Empty strings are treated as NULL.
      *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
+     *              Use array values for \in_array() equivalent.
      *              Use associative array('min' => \$minValue, 'max' => \$maxValue) for intervals.";
         } elseif ($col->getType() == PropelTypes::PHP_ARRAY) {
             $script .= "
@@ -1081,7 +1081,7 @@ abstract class " . $this->getUnqualifiedClassName() . ' extends ' . $parentClass
     {";
         if ($col->isNumericType() || $col->isTemporalType()) {
             $script .= "
-        if (is_array(\$$variableName)) {
+        if (\is_array(\$$variableName)) {
             \$useMinMax = false;
             if (isset(\${$variableName}['min'])) {
                 \$this->addUsingAlias($qualifiedName, \${$variableName}['min'], Criteria::GREATER_EQUAL);
@@ -1100,7 +1100,7 @@ abstract class " . $this->getUnqualifiedClassName() . ' extends ' . $parentClass
         }";
         } elseif ($col->getType() == PropelTypes::OBJECT) {
             $script .= "
-        if (is_object(\$$variableName)) {
+        if (\is_object(\$$variableName)) {
             \$$variableName = serialize(\$$variableName);
         }";
         } elseif ($col->getType() == PropelTypes::PHP_ARRAY) {
@@ -1176,14 +1176,14 @@ abstract class " . $this->getUnqualifiedClassName() . ' extends ' . $parentClass
             $script .= "
         \$valueSet = " . $this->getTableMapClassName() . '::getValueSet(' . $this->getColumnConstant($col) . ");
         if (is_scalar(\$$variableName)) {
-            if (!in_array(\$$variableName, \$valueSet)) {
+            if (!\in_array(\$$variableName, \$valueSet)) {
                 throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$$variableName));
             }
             \$$variableName = array_search(\$$variableName, \$valueSet);
-        } elseif (is_array(\$$variableName)) {
+        } elseif (\is_array(\$$variableName)) {
             \$convertedValues = array();
             foreach (\$$variableName as \$value) {
-                if (!in_array(\$value, \$valueSet)) {
+                if (!\in_array(\$value, \$valueSet)) {
                     throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$value));
                 }
                 \$convertedValues []= array_search(\$value, \$valueSet);
@@ -1196,14 +1196,14 @@ abstract class " . $this->getUnqualifiedClassName() . ' extends ' . $parentClass
         } elseif ($col->isTextType()) {
             $script .= "
         if (null === \$comparison) {
-            if (is_array(\$$variableName)) {
+            if (\is_array(\$$variableName)) {
                 \$comparison = Criteria::IN;
             }
         }";
         } elseif ($col->isBooleanType()) {
             $script .= "
-        if (is_string(\$$variableName)) {
-            \$$variableName = in_array(strtolower(\$$variableName), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        if (\is_string(\$$variableName)) {
+            \$$variableName = \in_array(strtolower(\$$variableName), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
         }";
         }
         $script .= "

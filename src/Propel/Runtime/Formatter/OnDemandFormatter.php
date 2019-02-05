@@ -104,13 +104,13 @@ class OnDemandFormatter extends ObjectFormatter
         $col = 0;
 
         // main object
-        $class = $this->isSingleTableInheritance ? call_user_func([$this->tableMap, 'getOMClass'], $row, $col, false) : $this->class;
+        $class = $this->isSingleTableInheritance ? \call_user_func([$this->tableMap, 'getOMClass'], $row, $col, false) : $this->class;
         $obj = $this->getSingleObjectFromRow($row, $class, $col);
         // related objects using 'with'
         foreach ($this->getWith() as $modelWith) {
             if ($modelWith->isSingleTableInheritance()) {
-                $class = call_user_func([$modelWith->getTableMap(), 'getOMClass'], $row, $col, false);
-                $refl = new ReflectionClass($class);
+                $class = \call_user_func([$modelWith->getTableMap(), 'getOMClass'], $row, $col, false);
+                $refl = new \ReflectionClass($class);
                 if ($refl->isAbstract()) {
                     $col += constant('Map\\' . $class . 'TableMap::NUM_COLUMNS');
 
@@ -131,7 +131,7 @@ class OnDemandFormatter extends ObjectFormatter
             // in which case it should not be related to the previous object
             if ($endObject->isPrimaryKeyNull()) {
                 if ($modelWith->isAdd()) {
-                    call_user_func([$startObject, $modelWith->getInitMethod()], false);
+                    \call_user_func([$startObject, $modelWith->getInitMethod()], false);
                 }
 
                 continue;
@@ -141,7 +141,7 @@ class OnDemandFormatter extends ObjectFormatter
             } else {
                 $hydrationChain = [$modelWith->getRightPhpName() => $endObject];
             }
-            call_user_func([$startObject, $modelWith->getRelationMethod()], $endObject);
+            \call_user_func([$startObject, $modelWith->getRelationMethod()], $endObject);
         }
         foreach ($this->getAsColumns() as $alias => $clause) {
             $obj->setVirtualColumn($alias, $row[$col]);

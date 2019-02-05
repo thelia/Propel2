@@ -88,7 +88,7 @@ class ConfigurationManager
      */
     public function getConfigProperty($name)
     {
-        if (!is_string($name)) {
+        if (!\is_string($name)) {
             throw new InvalidArgumentException("Invalid configuration property name '$name'.");
         }
 
@@ -114,7 +114,7 @@ class ConfigurationManager
      */
     public function getConnectionParametersArray($section = 'runtime')
     {
-        if (!in_array($section, ['runtime', 'generator'], true)) {
+        if (!\in_array($section, ['runtime', 'generator'], true)) {
             return null;
         }
 
@@ -155,8 +155,8 @@ class ConfigurationManager
             $files = $this->getFiles($dirs, $fileName);
             $distFiles = $this->getFiles($dirs, $fileName, true);
 
-            $numFiles = count($files);
-            $numDistFiles = count($distFiles);
+            $numFiles = \count($files);
+            $numDistFiles = \count($distFiles);
 
             //allow to load only .dist file
             if ($numFiles === 0 && $numDistFiles === 1) {
@@ -189,14 +189,14 @@ class ConfigurationManager
      */
     protected function process($extraConf = null)
     {
-        if ($extraConf === null && count($this->config) <= 0) {
+        if ($extraConf === null && \count($this->config) <= 0) {
             return;
         }
 
         $processor = new Processor();
         $configuration = new PropelConfiguration();
 
-        if (is_array($extraConf)) {
+        if (\is_array($extraConf)) {
             $this->config = array_replace_recursive($this->config, $extraConf);
         }
 
@@ -229,7 +229,7 @@ class ConfigurationManager
         $finder->in($dirs)->depth(0)->files()->name($fileName);
         $files = iterator_to_array($finder);
 
-        if (count($files) > 1) {
+        if (\count($files) > 1) {
             throw new InvalidArgumentException('Propel expects only one configuration file');
         }
 
@@ -292,7 +292,7 @@ class ConfigurationManager
     private function cleanupSlaveConnections()
     {
         foreach ($this->config['database']['connections'] as $name => $connection) {
-            if (count($connection['slaves']) <= 0) {
+            if (\count($connection['slaves']) <= 0) {
                 unset($this->config['database']['connections'][$name]['slaves']);
             }
         }
@@ -309,7 +309,7 @@ class ConfigurationManager
     private function cleanupConnections()
     {
         foreach (['runtime', 'generator'] as $section) {
-            if (!isset($this->config[$section]['connections']) || count($this->config[$section]['connections']) === 0) {
+            if (!isset($this->config[$section]['connections']) || \count($this->config[$section]['connections']) === 0) {
                 $this->config[$section]['connections'] = array_keys($this->config['database']['connections']);
             }
 

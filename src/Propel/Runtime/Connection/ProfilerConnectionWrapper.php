@@ -105,9 +105,9 @@ class ProfilerConnectionWrapper extends ConnectionWrapper
     public function query($statement = '')
     {
         $this->getProfiler()->start();
-        $args = func_get_args();
+        $args = \func_get_args();
 
-        return call_user_func_array('parent::query', $args);
+        return \call_user_func_array('parent::query', $args);
     }
 
     /**

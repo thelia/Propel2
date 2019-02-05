@@ -29,8 +29,8 @@ class XmlToArrayConverter
      */
     public static function convert($xmlToParse)
     {
-        if (!is_string($xmlToParse)) {
-            throw new InvalidArgumentException('XmlToArrayConverter::convert method expects an xml file to parse, or a string containing valid xml');
+        if (!\is_string($xmlToParse)) {
+            throw new InvalidArgumentException("XmlToArrayConverter::convert method expects an xml file to parse, or a string containing valid xml");
         }
 
         $isFile = file_exists($xmlToParse);
@@ -66,7 +66,7 @@ class XmlToArrayConverter
         libxml_clear_errors();
         libxml_use_internal_errors($currentInternalErrors);
 
-        if (count($errors) > 0) {
+        if (\count($errors) > 0) {
             throw new XmlParseException($errors);
         }
 
@@ -92,7 +92,7 @@ class XmlToArrayConverter
             $child = self::simpleXmlToArray($v);
 
             // if it's not an array, then it was empty, thus a value/string
-            if (count($child) == 0) {
+            if (\count($child) == 0) {
                 $child = self::getConvertedXmlValue($v);
             }
 
@@ -104,7 +104,7 @@ class XmlToArrayConverter
                     $k = self::getConvertedXmlValue($av);
                 } else {
                     // otherwise, just add the attribute like a child element
-                    if (is_string($child)) {
+                    if (\is_string($child)) {
                         $child = [];
                     }
                     $child[$ak] = self::getConvertedXmlValue($av);
@@ -113,7 +113,7 @@ class XmlToArrayConverter
 
             // if the $k is already in our children list, we need to transform
             // it into an array, else we add it as a value
-            if (!in_array($k, array_keys($ar))) {
+            if (!\in_array($k, array_keys($ar))) {
                 $ar[$k] = $child;
             } else {
                 // (This only applies to nested nodes that do not have an @id attribute)
@@ -122,7 +122,7 @@ class XmlToArrayConverter
                 // this is a bit of a hack, but here we check to also make sure that if it is an
                 // array, that it has numeric keys.  this distinguishes it from simply having other
                 // nested element data.
-                if (!is_array($ar[$k]) || !isset($ar[$k][0])) {
+                if (!\is_array($ar[$k]) || !isset($ar[$k][0])) {
                     $ar[$k] = [$ar[$k]];
                 }
 

@@ -222,7 +222,7 @@ class ColumnMap
      */
     public function isLob()
     {
-        return in_array($this->type, [
+        return \in_array($this->type, [
             PropelTypes::BLOB,
             PropelTypes::VARBINARY,
             PropelTypes::LONGVARBINARY,
@@ -236,7 +236,7 @@ class ColumnMap
      */
     public function isTemporal()
     {
-        return in_array($this->type, [
+        return \in_array($this->type, [
             PropelTypes::TIMESTAMP,
             PropelTypes::DATE,
             PropelTypes::TIME,
@@ -252,7 +252,7 @@ class ColumnMap
      */
     public function isNumeric()
     {
-        return in_array($this->type, [
+        return \in_array($this->type, [
             PropelTypes::NUMERIC,
             PropelTypes::DECIMAL,
             PropelTypes::TINYINT,
@@ -282,7 +282,7 @@ class ColumnMap
      */
     public function isText()
     {
-        return in_array($this->type, [
+        return \in_array($this->type, [
             PropelTypes::VARCHAR,
             PropelTypes::LONGVARCHAR,
             PropelTypes::CHAR,
@@ -517,7 +517,7 @@ class ColumnMap
      */
     public function isInValueSet($value)
     {
-        return in_array($value, $this->valueSet);
+        return \in_array($value, $this->valueSet);
     }
 
     /**

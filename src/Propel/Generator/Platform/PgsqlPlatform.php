@@ -583,7 +583,7 @@ ALTER TABLE %s RENAME TO %s;
      */
     public function hasSize($sqlType)
     {
-        return !in_array($sqlType, ['BYTEA', 'TEXT', 'DOUBLE PRECISION']);
+        return !\in_array($sqlType, ['BYTEA', 'TEXT', 'DOUBLE PRECISION']);
     }
 
     /**
@@ -740,7 +740,7 @@ DROP SEQUENCE %s CASCADE;
     {
         $strings = ['VARCHAR'];
 
-        return in_array(strtoupper($type), $strings);
+        return \in_array(strtoupper($type), $strings);
     }
 
     /**
@@ -752,7 +752,7 @@ DROP SEQUENCE %s CASCADE;
     {
         $numbers = ['INTEGER', 'INT4', 'INT2', 'NUMBER', 'NUMERIC', 'SMALLINT', 'BIGINT', 'DECIMAL', 'REAL', 'DOUBLE PRECISION', 'SERIAL', 'BIGSERIAL'];
 
-        return in_array(strtoupper($type), $numbers);
+        return \in_array(strtoupper($type), $numbers);
     }
 
     /**

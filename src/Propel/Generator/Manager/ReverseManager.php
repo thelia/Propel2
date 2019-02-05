@@ -225,7 +225,7 @@ class ReverseManager extends AbstractManager
         $this->log(sprintf('Reading database structure of database `%s` using dsn `%s`', $this->getDatabaseName(), $buildConnection['dsn']));
 
         $parser = $config->getConfiguredSchemaParser($connection, $databaseName);
-        $this->log(sprintf('SchemaParser `%s` chosen', get_class($parser)));
+        $this->log(sprintf('SchemaParser `%s` chosen', \get_class($parser)));
         $nbTables = $parser->parse($database);
 
         $excludeTables = $config->getConfigProperty('exclude_tables');
@@ -235,7 +235,7 @@ class ReverseManager extends AbstractManager
             $skip = false;
             $tableName = $table->getName();
 
-            if (in_array($tableName, $excludeTables, true)) {
+            if (\in_array($tableName, $excludeTables, true)) {
                 $skip = true;
             } else {
                 foreach ($excludeTables as $excludeTable) {

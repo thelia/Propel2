@@ -191,7 +191,7 @@ class GeneratorConfig extends ConfigurationManager implements GeneratorConfigInt
             $connectionNames = $this->get()['generator']['connections'];
 
             $reverseConnection = $this->getConfigProperty('reverse.connection');
-            if ($reverseConnection !== null && !in_array($reverseConnection, $connectionNames, true)) {
+            if (null !== $reverseConnection && !\in_array($reverseConnection, $connectionNames, true)) {
                 $connectionNames[] = $reverseConnection;
             }
 
@@ -248,7 +248,7 @@ class GeneratorConfig extends ConfigurationManager implements GeneratorConfigInt
         $password = isset($buildConnection['password']) && $buildConnection['password'] ? $buildConnection['password'] : null;
 
         // Get options from and config and default to null
-        $options = isset($buildConnection['options']) && is_array($buildConnection['options']) ? $buildConnection['options'] : null;
+        $options = isset($buildConnection['options']) && \is_array($buildConnection['options']) ? $buildConnection['options'] : null;
 
         $con = ConnectionFactory::create(['dsn' => $dsn, 'user' => $username, 'password' => $password, 'options' => $options], AdapterFactory::create($buildConnection['adapter']));
 

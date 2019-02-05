@@ -111,7 +111,7 @@ class ColumnDefaultValue
 
         // special case for current timestamp
         $equivalents = [ 'CURRENT_TIMESTAMP', 'NOW()' ];
-        if (in_array(strtoupper($this->getValue()), $equivalents) && in_array(strtoupper($other->getValue()), $equivalents)) {
+        if (\in_array(strtoupper($this->getValue()), $equivalents) && \in_array(strtoupper($other->getValue()), $equivalents)) {
             return true;
         }
 

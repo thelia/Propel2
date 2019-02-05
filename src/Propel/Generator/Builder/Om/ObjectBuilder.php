@@ -193,7 +193,7 @@ class ObjectBuilder extends AbstractObjectBuilder
             }
         } elseif ($column->isEnumType()) {
             $valueSet = $column->getValueSet();
-            if (!in_array($val, $valueSet)) {
+            if (!\in_array($val, $valueSet)) {
                 throw new EngineException(sprintf('Default Value "%s" is not among the enumerated values', $val));
             }
             $defaultValue = (string)array_search($val, $valueSet);
@@ -1060,7 +1060,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         }
 
         $script .= "
-        if (null == \$this->$cloUnserialized && is_resource(\$this->$clo)) {
+        if (null == \$this->$cloUnserialized && \is_resource(\$this->$clo)) {
             if (\$serialisedString = stream_get_contents(\$this->$clo)) {
                 \$this->$cloUnserialized = unserialize(\$serialisedString);
             }
@@ -1203,7 +1203,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
     protected function addBooleanAccessor(&$script, Column $column)
     {
         $name = self::getBooleanAccessorName($column);
-        if (in_array($name, ClassTools::getPropelReservedMethods())) {
+        if (\in_array($name, ClassTools::getPropelReservedMethods())) {
             //TODO: Issue a warning telling the user to use default accessors
             return; // Skip boolean accessors for reserved names
         }
@@ -1458,7 +1458,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
 
         $script .= ")
     {
-        return in_array(\$value, \$this->get$cfc(";
+        return \in_array(\$value, \$this->get$cfc(";
         if ($column->isLazyLoad()) {
             $script .= '$con';
         }
@@ -1962,7 +1962,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         // Because BLOB columns are streams in PDO we have to assume that they are
         // always modified when a new value is passed in.  For example, the contents
         // of the stream itself may have changed externally.
-        if (!is_resource(\$v) && \$v !== null) {
+        if (!\is_resource(\$v) && \$v !== null) {
             \$this->$clo = fopen('php://memory', 'r+');
             fwrite(\$this->$clo, \$v);
             rewind(\$this->$clo);
@@ -2101,7 +2101,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         $this->addJsonMutatorOpen($script, $col);
 
         $script .= "
-        if (is_string(\$v)) {
+        if (\is_string(\$v)) {
             // JSON as string needs to be decoded/encoded to get a reliable comparison (spaces, ...)
             \$v = json_decode(\$v);
         }
@@ -2259,7 +2259,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         $script .= "
         if (\$v !== null) {
             \$valueSet = " . $this->getTableMapClassName() . '::getValueSet(' . $this->getColumnConstant($col) . ");
-            if (!in_array(\$v, \$valueSet)) {
+            if (!\in_array(\$v, \$valueSet)) {
                 throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$v));
             }
             \$v = array_search(\$v, \$valueSet);
@@ -2382,8 +2382,8 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
 
         $script .= "
         if (\$v !== null) {
-            if (is_string(\$v)) {
-                \$v = in_array(strtolower(\$v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+            if (\is_string(\$v)) {
+                \$v = \in_array(strtolower(\$v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
             } else {
                 \$v = (boolean) \$v;
             }
@@ -3363,7 +3363,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
                 ";
             } elseif ($col->getType() === PropelTypes::PHP_ARRAY) {
                 $script .= "
-                if (!is_array(\$value)) {
+                if (!\is_array(\$value)) {
                     \$v = trim(substr(\$value, 2, -2));
                     \$value = \$v ? explode(' | ', \$v) : array();
                 }";
@@ -5653,7 +5653,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
                 if (\$partial && \$this->{$collVarName}) {
                     //make sure that already added objects gets added to the list of the database.
                     foreach (\$this->{$collVarName} as \$obj) {
-                        if (!call_user_func_array([\${$collVarName}, 'contains'], \$obj)) {
+                        if (!\call_user_func_array([\${$collVarName}, 'contains'], \$obj)) {
                             \${$collVarName}[] = \$obj;
                         }
                     }
@@ -5812,7 +5812,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         foreach (\${$scheduledForDeletionVarName} as \$toDelete) {";
         if ($multi) {
             $script .= "
-            call_user_func_array([\$this, 'remove{$relatedName}'], \$toDelete);";
+            \call_user_func_array([\$this, 'remove{$relatedName}'], \$toDelete);";
         } else {
             $script .= "
             \$this->remove{$relatedName}(\$toDelete);";
@@ -5823,8 +5823,8 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         foreach (\${$inputCollection} as \${$foreachItem}) {";
         if ($multi) {
             $script .= "
-            if (!call_user_func_array([\$current{$relatedNamePlural}, 'contains'], \${$foreachItem})) {
-                call_user_func_array([\$this, 'doAdd{$relatedName}'], \${$foreachItem});
+            if (!\call_user_func_array([\$current{$relatedNamePlural}, 'contains'], \${$foreachItem})) {
+                \call_user_func_array([\$this, 'doAdd{$relatedName}'], \${$foreachItem});
             }";
         } else {
             $script .= "
@@ -6125,7 +6125,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         $fks = $crossFKs->getCrossForeignKeys();
 
         foreach ($crossFKs->getMiddleTable()->getForeignKeys() as $fk) {
-            if ($fk !== $excludeFK && ($fk === $crossFKs->getIncomingForeignKey() || in_array($fk, $fks))) {
+            if ($fk !== $excludeFK && ($fk === $crossFKs->getIncomingForeignKey() || \in_array($fk, $fks))) {
                 if ($fk === $crossFKs->getIncomingForeignKey()) {
                     $names[] = '$this';
                 } else {
@@ -6326,7 +6326,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             if ($col->isLobType()) {
                 $script .= "
                 // Rewind the $clo LOB column, since PDO does not rewind after inserting value.
-                if (\$this->$clo !== null && is_resource(\$this->$clo)) {
+                if (\$this->$clo !== null && \is_resource(\$this->$clo)) {
                     rewind(\$this->$clo);
                 }
 ";
@@ -6971,8 +6971,8 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
      */
     public function copy(\$deepCopy = false)
     {
-        // we use get_class(), because this might be a subclass
-        \$clazz = get_class(\$this);
+        // we use \get_class(), because this might be a subclass
+        \$clazz = \get_class(\$this);
         " . $this->buildObjectInstanceCreationCode('$copyObj', '$clazz') . "
         \$this->copyInto(\$copyObj, \$deepCopy);
 
@@ -7017,7 +7017,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         }
 
         foreach ($table->getColumns() as $col) {
-            if (!in_array($col, $autoIncCols, true)) {
+            if (!\in_array($col, $autoIncCols, true)) {
                 $script .= "
         \$copyObj->set" . $col->getPhpName() . '($this->get' . $col->getPhpName() . '());';
             }

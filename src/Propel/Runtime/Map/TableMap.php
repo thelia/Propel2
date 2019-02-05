@@ -846,7 +846,7 @@ class TableMap
     {
         $callable = [$classname::TABLE_MAP, 'getFieldnames'];
 
-        return call_user_func($callable, $type);
+        return \call_user_func($callable, $type);
     }
 
     /**
@@ -862,7 +862,7 @@ class TableMap
         $callable = [$classname::TABLE_MAP, 'translateFieldname'];
         $args = [$fieldname, $fromType, $toType];
 
-        return call_user_func_array($callable, $args);
+        return \call_user_func_array($callable, $args);
     }
 
     /**
@@ -891,7 +891,7 @@ class TableMap
     public function extractPrimaryKey(Criteria $criteria)
     {
         $pkCols = $this->getPrimaryKeys();
-        if (count($pkCols) !== count($criteria->getMap())) {
+        if (\count($pkCols) !== \count($criteria->getMap())) {
             return null;
         }
 

@@ -67,13 +67,13 @@ class DelegateBehavior extends Behavior
                     $table->getName()
                 ));
             }
-            if (in_array($delegate, $table->getForeignTableNames())) {
+            if (\in_array($delegate, $table->getForeignTableNames())) {
                 // existing many-to-one relationship
                 $type = self::MANY_TO_ONE;
             } else {
                 // one_to_one relationship
                 $delegateTable = $this->getDelegateTable($delegate);
-                if (in_array($table->getName(), $delegateTable->getForeignTableNames())) {
+                if (\in_array($table->getName(), $delegateTable->getForeignTableNames())) {
                     // existing one-to-one relationship
                     $fks = $delegateTable->getForeignKeysReferencingTable($this->getTable()->getName());
                     $fk = $fks[0];
@@ -166,7 +166,7 @@ if (method_exists({$ARFQCN}::class, \$name)) {
         \$this->set$relationName(\$delegate);
     }
 
-    return call_user_func_array(array(\$delegate, \$name), \$params);
+    return \call_user_func_array(array(\$delegate, \$name), \$params);
 }";
         }
 
@@ -248,7 +248,7 @@ if (method_exists({$ARFQCN}::class, \$name)) {
             $fks[] = $fk->getForeignColumnName();
         }
 
-        if (in_array($column->getName(), $fks) || $table->hasColumn($column->getName())) {
+        if (\in_array($column->getName(), $fks) || $table->hasColumn($column->getName())) {
             return true;
         }
 

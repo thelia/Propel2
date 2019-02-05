@@ -371,15 +371,15 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
      */
     public function setAttribute($attribute, $value)
     {
-        if (is_string($attribute)) {
-            if (strpos($attribute, '::') === false) {
-                if (defined('\PDO::' . $attribute)) {
+        if (\is_string($attribute)) {
+            if (false === strpos($attribute, '::')) {
+                if (\defined('\PDO::' . $attribute)) {
                     $attribute = '\PDO::' . $attribute;
                 } else {
                     $attribute = self::class . '::' . $attribute;
                 }
             }
-            if (!defined($attribute)) {
+            if (!\defined($attribute)) {
                 throw new InvalidArgumentException(sprintf(
                     'Invalid connection option/attribute name specified: "%s"',
                     $attribute
@@ -464,10 +464,10 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
      */
     public function query($statement)
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         $sql = array_shift($args);
         $statementWrapper = $this->createStatementWrapper($sql);
-        $return = call_user_func_array([$statementWrapper, 'query'], $args);
+        $return = \call_user_func_array([$statementWrapper, 'query'], $args);
 
         if ($this->useDebug) {
             $this->log($sql);
@@ -648,7 +648,7 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
      */
     protected function isLogEnabledForMethod($methodName)
     {
-        return in_array($methodName, $this->getLogMethods());
+        return \in_array($methodName, $this->getLogMethods());
     }
 
     /**
@@ -714,7 +714,7 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
      */
     public function __call($method, $args)
     {
-        return call_user_func_array([$this->connection, $method], $args);
+        return \call_user_func_array([$this->connection, $method], $args);
     }
 
     /**

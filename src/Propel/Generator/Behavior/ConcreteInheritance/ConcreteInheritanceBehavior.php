@@ -191,7 +191,7 @@ class ConcreteInheritanceBehavior extends Behavior
     public function parentClass($builder)
     {
         $parentTable = $this->getParentTable();
-        switch (get_class($builder)) {
+        switch (\get_class($builder)) {
             case 'Propel\Generator\Builder\Om\ObjectBuilder':
                 return $builder->declareClassFromBuilder($builder->getNewStubObjectBuilder($parentTable), true);
             case 'Propel\Generator\Builder\Om\QueryBuilder':

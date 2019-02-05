@@ -441,6 +441,6 @@ class StatementWrapper implements StatementInterface, IteratorAggregate
      */
     public function __call(string $method, $args)
     {
-        return call_user_func_array([$this->statement, $method], $args);
+        return \call_user_func_array([$this->statement, $method], $args);
     }
 }

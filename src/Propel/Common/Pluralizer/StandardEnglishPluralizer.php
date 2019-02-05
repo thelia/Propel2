@@ -124,7 +124,7 @@ class StandardEnglishPluralizer implements PluralizerInterface
     public function getPluralForm($root)
     {
         // save some time in the case that singular and plural are the same
-        if (in_array(strtolower($root), $this->uncountable)) {
+        if (\in_array(strtolower($root), $this->uncountable)) {
             return $root;
         }
 

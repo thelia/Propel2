@@ -300,7 +300,7 @@ class Profiler
         $absBytes = abs($bytes);
         $sign = ($bytes == $absBytes) ? 1 : -1;
         $suffix = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        $total = count($suffix);
+        $total = \count($suffix);
 
         for ($i = 0; $absBytes > 1024 && $i < $total; $i++) {
             $absBytes /= 1024;

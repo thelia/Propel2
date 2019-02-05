@@ -580,7 +580,7 @@ class Criteria
      */
     public function getNewCriterion($column, $value = null, $comparison = self::EQUAL)
     {
-        if (is_int($comparison)) {
+        if (\is_int($comparison)) {
             // $comparison is a PDO::PARAM_* constant value
             // something like $c->add('foo like ?', '%bar%', PDO::PARAM_STR);
             return new RawCriterion($this, $column, $value, $comparison);
@@ -802,7 +802,7 @@ class Criteria
      */
     public function putAll($t)
     {
-        if (is_array($t)) {
+        if (\is_array($t)) {
             foreach ($t as $key => $value) {
                 if ($value instanceof AbstractCriterion) {
                     $this->map[$key] = $value;
@@ -939,7 +939,7 @@ class Criteria
      */
     public function addJoin($left, $right, $joinType = null)
     {
-        if (is_array($left)) {
+        if (\is_array($left)) {
             $conditions = [];
             foreach ($left as $key => $value) {
                 $condition = [$value, $right[$key]];
@@ -1070,7 +1070,7 @@ class Criteria
      */
     public function addJoinObject(Join $join)
     {
-        if (!in_array($join, $this->joins)) { // compare equality, NOT identity
+        if (!\in_array($join, $this->joins)) { // compare equality, NOT identity
             $this->joins[] = $join;
         }
 
@@ -1252,7 +1252,7 @@ class Criteria
      */
     public function hasSelectModifier($modifier)
     {
-        return in_array($modifier, $this->selectModifiers);
+        return \in_array($modifier, $this->selectModifiers);
     }
 
     /**
@@ -2081,7 +2081,7 @@ class Criteria
         // tables should not exist in both the from and join clauses
         if ($joinTables && $fromClause) {
             foreach ($fromClause as $fi => $ftable) {
-                if (in_array($ftable, $joinTables)) {
+                if (\in_array($ftable, $joinTables)) {
                     unset($fromClause[$fi]);
                 }
             }
@@ -2316,7 +2316,7 @@ class Criteria
         $stringQuotes = '';
         $parsedString = '';
         $stringToTransform = '';
-        $len = strlen($sql);
+        $len = \strlen($sql);
         $pos = 0;
         while ($pos < $len) {
             $char = $sql[$pos];
@@ -2585,12 +2585,12 @@ class Criteria
                     } else {
                         $param = $updateValues->get($col);
                         $sql .= $updateColumnName . ' = ';
-                        if (is_array($param)) {
+                        if (\is_array($param)) {
                             if (isset($param['raw'])) {
                                 $raw = $param['raw'];
                                 $rawcvt = '';
                                 // parse the $params['raw'] for ? chars
-                                for ($r = 0, $len = strlen($raw); $r < $len; $r++) {
+                                for ($r = 0, $len = \strlen($raw); $r < $len; $r++) {
                                     if ($raw[$r] === '?') {
                                         $rawcvt .= ':p' . $p++;
                                     } else {
@@ -2697,7 +2697,7 @@ class Criteria
             || $this->getOffset()
             || $this->getLimit() >= 0
             || $this->getHaving()
-            || in_array(Criteria::DISTINCT, $this->getSelectModifiers())
+            || \in_array(Criteria::DISTINCT, $this->getSelectModifiers())
             || count($this->selectQueries) > 0;
 
         $params = [];
