@@ -182,7 +182,7 @@ class PropelModelPager implements \IteratorAggregate, \Countable
             $links[] = $i++;
         }
 
-        $this->currentMaxLink = count($links) ? $links[count($links) - 1] : 1;
+        $this->currentMaxLink = \count($links) ? $links[\count($links) - 1] : 1;
 
         return $links;
     }
@@ -406,13 +406,13 @@ class PropelModelPager implements \IteratorAggregate, \Countable
      */
     public function count()
     {
-        return count($this->getResults());
+        return \count($this->getResults());
     }
 
     public function __call($name, $params)
     {
         try {
-            return call_user_func_array([$this->getResults(), $name], $params);
+            return \call_user_func_array([$this->getResults(), $name], $params);
         } catch (BadMethodCallException $exception) {
             throw new BadMethodCallException('Call to undefined method: ' . $name);
         }

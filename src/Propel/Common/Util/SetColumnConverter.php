@@ -34,12 +34,12 @@ class SetColumnConverter
 
             return 0;
         }
-        if (!is_array($val)) {
+        if (!\is_array($val)) {
             $val = [$val];
         }
-        $bitValueArr = array_pad([], count($valueSet), '0');
+        $bitValueArr = array_pad([], \count($valueSet), '0');
         foreach ($val as $value) {
-            if (!in_array($value, $valueSet)) {
+            if (!\in_array($value, $valueSet)) {
                 throw new SetColumnConverterException(sprintf('Value "%s" is not among the valueSet', $value), $value);
             }
             $bitValueArr[array_search($value, $valueSet)] = '1';

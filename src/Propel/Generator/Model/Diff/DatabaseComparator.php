@@ -274,7 +274,7 @@ class DatabaseComparator
     protected function isTableExcluded(Table $table)
     {
         $tablename = $table->getName();
-        if (in_array($tablename, $this->excludedTables)) {
+        if (\in_array($tablename, $this->excludedTables)) {
             return true;
         }
 

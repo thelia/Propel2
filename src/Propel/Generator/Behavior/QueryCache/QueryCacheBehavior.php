@@ -231,7 +231,7 @@ public function doCount(\$con = null)
             || \$this->getOffset()
             || \$this->getLimit() >= 0
             || \$this->getHaving()
-            || in_array(Criteria::DISTINCT, \$this->getSelectModifiers())
+            || \in_array(Criteria::DISTINCT, \$this->getSelectModifiers())
             || count(\$this->selectQueries) > 0
         ;
 

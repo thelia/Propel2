@@ -326,7 +326,7 @@ class StatementWrapper extends \PDOStatement implements \IteratorAggregate
 
     public function __call($method, $args)
     {
-        return call_user_func_array([$this->statement, $method], $args);
+        return \call_user_func_array([$this->statement, $method], $args);
     }
 
 }

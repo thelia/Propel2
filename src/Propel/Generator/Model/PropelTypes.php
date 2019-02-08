@@ -269,7 +269,7 @@ class PropelTypes
      */
     public static function isTemporalType($type)
     {
-        return in_array($type, [
+        return \in_array($type, [
             self::DATE,
             self::TIME,
             self::TIMESTAMP,
@@ -286,7 +286,7 @@ class PropelTypes
      */
     public static function isTextType($mappingType)
     {
-        return in_array($mappingType, [
+        return \in_array($mappingType, [
             self::CHAR,
             self::VARCHAR,
             self::LONGVARCHAR,
@@ -308,7 +308,7 @@ class PropelTypes
      */
     public static function isNumericType($mappingType)
     {
-        return in_array($mappingType, [
+        return \in_array($mappingType, [
             self::SMALLINT,
             self::TINYINT,
             self::INTEGER,
@@ -329,7 +329,7 @@ class PropelTypes
      */
     public static function isBooleanType($mappingType)
     {
-        return in_array($mappingType, [ self::BOOLEAN, self::BOOLEAN_EMU ]);
+        return \in_array($mappingType, [ self::BOOLEAN, self::BOOLEAN_EMU ]);
     }
 
     /**
@@ -340,7 +340,7 @@ class PropelTypes
      */
     public static function isLobType($mappingType)
     {
-        return in_array($mappingType, [ self::VARBINARY, self::LONGVARBINARY, self::BLOB, self::OBJECT, self::GEOMETRY ]);
+        return \in_array($mappingType, [ self::VARBINARY, self::LONGVARBINARY, self::BLOB, self::OBJECT, self::GEOMETRY ]);
     }
 
     /**
@@ -351,7 +351,7 @@ class PropelTypes
      */
     public static function isPhpPrimitiveType($phpType)
     {
-        return in_array($phpType, [ 'boolean', 'int', 'double', 'float', 'string' ]);
+        return \in_array($phpType, [ 'boolean', 'int', 'double', 'float', 'string' ]);
     }
 
     /**
@@ -362,7 +362,7 @@ class PropelTypes
      */
     public static function isPhpPrimitiveNumericType($phpType)
     {
-        return in_array($phpType, [ 'boolean', 'int', 'double', 'float' ]);
+        return \in_array($phpType, [ 'boolean', 'int', 'double', 'float' ]);
     }
 
     /**
@@ -373,7 +373,7 @@ class PropelTypes
      */
     public static function isPhpObjectType($phpType)
     {
-        return !self::isPhpPrimitiveType($phpType) && !in_array($phpType, [ 'resource', 'array' ]);
+        return !self::isPhpPrimitiveType($phpType) && !\in_array($phpType, [ 'resource', 'array' ]);
     }
 
     /**

@@ -116,7 +116,7 @@ class MysqlSchemaParser extends AbstractSchemaParser
             $this->addTableVendorInfo($table);
         }
 
-        return count($database->getTables());
+        return \count($database->getTables());
     }
 
     protected function parseTables(Database $database, $filterTable = null)
@@ -251,7 +251,7 @@ class MysqlSchemaParser extends AbstractSchemaParser
                     $default = 'false';
                 }
             }
-            if (in_array($default, ['CURRENT_TIMESTAMP', 'current_timestamp()'])) {
+            if (\in_array($default, ['CURRENT_TIMESTAMP', 'current_timestamp()'])) {
                 $default = 'CURRENT_TIMESTAMP';
                 $type = ColumnDefaultValue::TYPE_EXPR;
             } else {
@@ -314,7 +314,7 @@ class MysqlSchemaParser extends AbstractSchemaParser
                     foreach (array_keys($fkactions) as $fkaction) {
                         $result = null;
                         preg_match('/' . $fkaction . ' (' . ForeignKey::CASCADE . '|' . ForeignKey::SETNULL . ')/', $fkey, $result);
-                        if ($result && is_array($result) && isset($result[1])) {
+                        if ($result && \is_array($result) && isset($result[1])) {
                             $fkactions[$fkaction] = $result[1];
                         }
                     }
@@ -358,7 +358,7 @@ class MysqlSchemaParser extends AbstractSchemaParser
                     $foreignKeys[$name] = $fk;
                 }
 
-                $max = count($localColumns);
+                $max = \count($localColumns);
                 for ($i = 0; $i < $max; $i++) {
                     $foreignKeys[$name]->addReference($localColumns[$i], $foreignColumns[$i]);
                 }

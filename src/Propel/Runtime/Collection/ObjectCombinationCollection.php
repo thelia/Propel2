@@ -48,7 +48,7 @@ class ObjectCombinationCollection extends ObjectCollection
      */
     public function push($value)
     {
-        parent::push(func_get_args());
+        parent::push(\func_get_args());
     }
 
     /**
@@ -73,7 +73,7 @@ class ObjectCombinationCollection extends ObjectCollection
     {
         $hashes = [];
         $isActiveRecord = [];
-        foreach (func_get_args() as $pos => $obj) {
+        foreach (\func_get_args() as $pos => $obj) {
             if ($obj instanceof ActiveRecordInterface) {
                 $hashes[$pos] = $obj->hashCode();
                 $isActiveRecord[$pos] = true;
@@ -108,7 +108,7 @@ class ObjectCombinationCollection extends ObjectCollection
      */
     public function removeObject($element)
     {
-        if (false !== ($pos = call_user_func_array([$this, 'search'], func_get_args()))) {
+        if (false !== ($pos = \call_user_func_array([$this, 'search'], \func_get_args()))) {
             $this->remove($pos);
         }
     }
@@ -118,7 +118,7 @@ class ObjectCombinationCollection extends ObjectCollection
      */
     public function contains($element)
     {
-        return false !== call_user_func_array([$this, 'search'], func_get_args());
+        return false !== \call_user_func_array([$this, 'search'], \func_get_args());
     }
 
 }

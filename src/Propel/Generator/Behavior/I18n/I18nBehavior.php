@@ -194,7 +194,7 @@ class I18nBehavior extends Behavior
         if ($this->getParameter('i18n_pk_column')) {
             // custom i18n table pk name
             $i18nColumn->setName($this->getParameter('i18n_pk_column'));
-        } else if (in_array($table->getName(), $i18nTable->getForeignTableNames())) {
+        } else if (\in_array($table->getName(), $i18nTable->getForeignTableNames())) {
             // custom i18n table pk name not set, but some fk already exists
             return;
         }

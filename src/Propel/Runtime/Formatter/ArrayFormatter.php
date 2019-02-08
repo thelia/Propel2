@@ -145,7 +145,7 @@ class ArrayFormatter extends AbstractFormatter
 
             // determine class to use
             if ($modelWith->isSingleTableInheritance()) {
-                $class = call_user_func([$modelWith->getTableMap(), 'getOMClass'], $row, $col, false);
+                $class = \call_user_func([$modelWith->getTableMap(), 'getOMClass'], $row, $col, false);
                 $refl = new \ReflectionClass($class);
                 if ($refl->isAbstract()) {
                     $col += constant('Map\\'.$class . 'TableMap::NUM_COLUMNS');
@@ -156,7 +156,7 @@ class ArrayFormatter extends AbstractFormatter
             }
 
             // hydrate related object or take it from registry
-            $key = call_user_func(
+            $key = \call_user_func(
                 [$modelWith->getTableMap(), 'getPrimaryKeyHashFromRow'],
                 $row,
                 $col,
@@ -182,7 +182,7 @@ class ArrayFormatter extends AbstractFormatter
 
             if ($modelWith->isAdd()) {
                 if (!isset($arrayToAugment[$modelWith->getRelationName()]) ||
-                    !in_array(
+                    !\in_array(
                         $this->alreadyHydratedObjects[$relAlias][$key],
                         $arrayToAugment[$modelWith->getRelationName()]
                     )

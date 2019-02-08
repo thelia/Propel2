@@ -122,7 +122,7 @@ abstract class AbstractCommand extends Command
     {
         $pos  = strpos($connection, '=');
         $name = substr($connection, 0, $pos);
-        $dsn  = substr($connection, $pos + 1, strlen($connection));
+        $dsn  = substr($connection, $pos + 1, \strlen($connection));
 
         $pos  = strpos($dsn, ':');
         $adapter = substr($dsn, 0, $pos);

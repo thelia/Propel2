@@ -624,7 +624,7 @@ protected function computeDiff(\$fromVersion, \$toVersion, \$keys = 'columns', \
     ), \$ignoredColumns);
     \$diff = array();
     foreach (\$fromVersion as \$key => \$value) {
-        if (in_array(\$key, \$ignoredColumns)) {
+        if (\in_array(\$key, \$ignoredColumns)) {
             continue;
         }
         if (\$toVersion[\$key] != \$value) {

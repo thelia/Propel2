@@ -106,7 +106,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable, \Seria
      */
     public function offsetSet($offset, $value)
     {
-        if (is_null($offset)) {
+        if (\is_null($offset)) {
             $this->data[] = $value;
         } else {
             $this->data[$offset] = $value;
@@ -339,7 +339,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable, \Seria
      */
     public function contains($element)
     {
-        return in_array($element, $this->getArrayCopy(), true);
+        return \in_array($element, $this->getArrayCopy(), true);
     }
 
     /**
@@ -576,7 +576,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable, \Seria
     public function __clone()
     {
         foreach ($this as $key => $obj) {
-            if (is_object($obj)) {
+            if (\is_object($obj)) {
                 $this[$key] = clone $obj;
             }
         }

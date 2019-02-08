@@ -313,7 +313,7 @@ CREATE TABLE %s
             }
 
             // if we have a param value, then parse it out
-            if (!is_null($parameterValue)) {
+            if (!\is_null($parameterValue)) {
                 // if the value is numeric or is parameter is in $noQuotedValue, then there is no need for quotes
                 if (!is_numeric($parameterValue) && !isset($noQuotedValue[$name])) {
                     $parameterValue = $this->quote($parameterValue);
@@ -756,7 +756,7 @@ ALTER TABLE %s ADD %s %s;
 
     public function hasSize($sqlType)
     {
-        return !in_array($sqlType, [
+        return !\in_array($sqlType, [
             'MEDIUMTEXT',
             'LONGTEXT',
             'BLOB',

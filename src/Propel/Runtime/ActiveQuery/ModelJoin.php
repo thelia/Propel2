@@ -187,7 +187,7 @@ class ModelJoin extends Join
     public function __toString()
     {
         return parent::toString()
-            . ' tableMap: ' . ($this->tableMap ? get_class($this->tableMap) : 'null')
+            . ' tableMap: ' . ($this->tableMap ? \get_class($this->tableMap) : 'null')
             . ' relationMap: ' . $this->relationMap->getName()
             . ' previousJoin: ' . ($this->previousJoin ? '(' . $this->previousJoin . ')' : 'null')
             . ' relationAlias: ' . $this->rightTableAlias;

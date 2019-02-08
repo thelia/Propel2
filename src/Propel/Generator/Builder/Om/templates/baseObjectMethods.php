@@ -174,7 +174,7 @@
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
     {
-        return Propel::log(get_class($this) . ': ' . $msg, $priority);
+        return Propel::log(\get_class($this) . ': ' . $msg, $priority);
     }
 
     /**

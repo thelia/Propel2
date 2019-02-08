@@ -29,10 +29,10 @@ trait InstancePoolTrait
 
     public static function getInstanceKey($value)
     {
-        if (!($value instanceof Criteria) && is_object($value)) {
+        if (!($value instanceof Criteria) && \is_object($value)) {
             $pk = $value->getPrimaryKey();
-            if (((is_array($pk) || $pk instanceof \Countable) && count($pk) > 1)
-                || is_object($pk)) {
+            if (((\is_array($pk) || $pk instanceof \Countable) && count($pk) > 1)
+                || \is_object($pk)) {
                 $pk = serialize($pk);
             }
 

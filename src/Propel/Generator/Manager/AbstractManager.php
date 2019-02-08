@@ -327,7 +327,7 @@ abstract class AbstractManager
             $this->dataModelDbMap[$schema->getName()] = $schema->getDatabase(null, false)->getName();
         }
 
-        if (count($schemas) > 1 && $this->getGeneratorConfig()->get()['generator']['packageObjectModel']) {
+        if (\count($schemas) > 1 && $this->getGeneratorConfig()->get()['generator']['packageObjectModel']) {
             $schema = $this->joinDataModels($schemas);
             $this->dataModels = [$schema];
         } else {
@@ -457,7 +457,7 @@ abstract class AbstractManager
         foreach ($lines as $line) {
             $line = trim($line);
 
-            if (empty($line) || in_array($line[0], ['#', ';'])) {
+            if (empty($line) || \in_array($line[0], ['#', ';'])) {
                 continue;
             }
 

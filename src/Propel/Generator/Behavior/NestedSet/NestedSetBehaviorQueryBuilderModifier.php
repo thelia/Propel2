@@ -527,7 +527,7 @@ static public function retrieveTree(" . ($useScope ? "\$scope = null, " : "") . 
  */
 static public function isValid($objectClassName \$node = null)
 {
-    if (is_object(\$node) && \$node->getRightValue() > \$node->getLeftValue()) {
+    if (\is_object(\$node) && \$node->getRightValue() > \$node->getLeftValue()) {
         return true;
     } else {
         return false;

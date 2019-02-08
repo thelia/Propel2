@@ -135,7 +135,7 @@ class MigrationStatusCommand extends AbstractCommand
                         ' %s %s %s',
                         $timestamp == $oldestMigrationTimestamp ? '>' : ' ',
                         $manager->getMigrationClassName($timestamp),
-                        !in_array($timestamp, $validTimestamps) ? '(executed)' : ''
+                        !\in_array($timestamp, $validTimestamps) ? '(executed)' : ''
                     ));
                 }
             }

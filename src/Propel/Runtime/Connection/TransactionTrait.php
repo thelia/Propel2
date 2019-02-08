@@ -32,7 +32,7 @@ trait TransactionTrait
         $this->beginTransaction();
 
         try {
-            $result = call_user_func($callable);
+            $result = \call_user_func($callable);
 
             $this->commit();
 
