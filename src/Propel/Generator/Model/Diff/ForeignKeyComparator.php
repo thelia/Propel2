@@ -68,11 +68,35 @@ class ForeignKeyComparator
             return true;
         }
 
+        $fromOnUpdate = $fromFk->getOnUpdate();
+
+        if ($fromOnUpdate === ForeignKey::NOACTION) {
+            $fromOnUpdate = ForeignKey::RESTRICT;
+        }
+
+        $toOnUpdate = $toFk->getOnUpdate();
+
+        if ($toOnUpdate === ForeignKey::NOACTION) {
+            $toOnUpdate = ForeignKey::RESTRICT;
+        }
+
+        $fromOnDelete = $fromFk->getOnDelete();
+
+        if ($fromOnDelete === ForeignKey::NOACTION) {
+            $fromOnDelete = ForeignKey::RESTRICT;
+        }
+
+        $toOnDelete = $toFk->getOnDelete();
+
+        if ($toOnDelete === ForeignKey::NOACTION) {
+            $toOnDelete = ForeignKey::RESTRICT;
+        }
+
         // compare on
-        if ($fromFk->normalizeFKey($fromFk->getOnUpdate()) !== $toFk->normalizeFKey($toFk->getOnUpdate())) {
+        if ($fromFk->normalizeFKey($fromOnUpdate) !== $toFk->normalizeFKey($toOnUpdate)) {
             return true;
         }
-        if ($fromFk->normalizeFKey($fromFk->getOnDelete()) !== $toFk->normalizeFKey($toFk->getOnDelete())) {
+        if ($fromFk->normalizeFKey($fromOnDelete) !== $toFk->normalizeFKey($toOnDelete)) {
             return true;
         }
 
