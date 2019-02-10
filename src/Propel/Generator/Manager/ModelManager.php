@@ -158,7 +158,7 @@ class ModelManager extends AbstractManager
         }
     }
 
-    protected function buildResolver(Database $database)
+    protected function buildResolver(Database $database, $overwrite = true)
     {
         $totalNbFiles    = 0;
         $generatorConfig = $this->getGeneratorConfig();
