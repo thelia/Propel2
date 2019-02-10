@@ -8,6 +8,10 @@
 
 namespace Propel\Generator\Manager;
 
+use Propel\Generator\Builder\ResolverBuilder;
+use Propel\Generator\Model\Database;
+use Propel\Generator\Model\Table;
+use Symfony\Component\Filesystem\Filesystem;
 use Propel\Generator\Builder\Om\AbstractOMBuilder;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
@@ -57,6 +61,8 @@ class ModelManager extends AbstractManager
             foreach ($dataModel->getDatabases() as $database) {
                 $this->log(' - Database: ' . $database->getName());
 
+                $this->buildResolver($database);
+
                 foreach ($database->getTables() as $table) {
                     if (!$table->isForReferenceOnly()) {
                         $nbWrittenFiles = 0;
@@ -72,6 +78,7 @@ class ModelManager extends AbstractManager
 
                             $nbWrittenFiles += $this->doBuild($builder);
                         }
+
                         // -----------------------------------------------------------------------------------------
                         // Create [empty] stub Object classes if they don't exist
                         // -----------------------------------------------------------------------------------------
@@ -149,6 +156,49 @@ class ModelManager extends AbstractManager
         } else {
             $this->log('Object model generation complete - All files already up to date');
         }
+    }
+
+    protected function buildResolver(Database $database)
+    {
+        $totalNbFiles    = 0;
+        $generatorConfig = $this->getGeneratorConfig();
+
+        $class = $generatorConfig->getConfigProperty('generator.builders.resolver');
+
+        /** @var ResolverBuilder $builder */
+        $builder = new $class($database);
+        $builder->setGeneratorConfig($generatorConfig);
+
+        $script = $builder->build();
+
+        $path = $builder->getClassFilePath();
+
+        $file = new \SplFileInfo($this->getWorkingDirectory() . DIRECTORY_SEPARATOR . $path);
+
+        // skip files already created once
+        if ($file->isFile() && !$overwrite) {
+            $this->log("\t-> (exists) " . $builder->getClassFilePath());
+
+            return 0;
+        }
+
+        $script = $builder->build();
+
+        // skip unchanged files
+        if ($file->isFile() && $script == file_get_contents($file->getPathname())) {
+            $this->log("\t-> (unchanged) " . $builder->getClassFilePath());
+
+            return 0;
+        }
+
+        $this->filesystem->mkdir($file->getPath());
+
+        // write / overwrite new / changed files
+        $action = $file->isFile() ? 'Updating' : 'Creating';
+        $this->log(sprintf("\t-> %s %s (resolver: %s, builder: %s)", $action, $builder->getClassFilePath(), $database->getName(), \get_class($builder)));
+        file_put_contents($file->getPathname(), $script);
+
+        return $totalNbFiles;
     }
 
     /**

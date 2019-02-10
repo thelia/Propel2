@@ -758,6 +758,7 @@ RENAME TABLE %s TO %s;
         $pattern = "
 ALTER TABLE %s DROP %s;
 ";
+        
 
         return sprintf(
             $pattern,
