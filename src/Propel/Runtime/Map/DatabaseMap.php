@@ -142,7 +142,15 @@ class DatabaseMap
     public function getTable($name)
     {
         if (!isset($this->tables[$name])) {
-            throw new TableNotFoundException(sprintf('Cannot fetch TableMap for undefined table: %s.', $name));
+            $class = ucfirst($this->getName()) . '\\' . 'PropelResolver';
+
+            if (null !== $tableMap = $class::getTableMapByTableName($name)) {
+                $tableMap::buildTableMap();
+            }
+
+            if (!isset($this->tables[$name])) {
+                throw new TableNotFoundException(sprintf('Cannot fetch TableMap for undefined table: %s.', $name));
+            }
         }
 
         return $this->tables[$name];

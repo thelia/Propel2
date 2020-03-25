@@ -70,25 +70,25 @@ class ForeignKeyComparator
 
         $fromOnUpdate = $fromFk->getOnUpdate();
 
-        if ($fromOnUpdate === ForeignKey::NOACTION) {
+        if ($fromOnUpdate === ForeignKey::NOACTION || empty($fromOnUpdate)) {
             $fromOnUpdate = ForeignKey::RESTRICT;
         }
 
         $toOnUpdate = $toFk->getOnUpdate();
 
-        if ($toOnUpdate === ForeignKey::NOACTION) {
+        if ($toOnUpdate === ForeignKey::NOACTION || empty($toOnUpdate)) {
             $toOnUpdate = ForeignKey::RESTRICT;
         }
 
         $fromOnDelete = $fromFk->getOnDelete();
 
-        if ($fromOnDelete === ForeignKey::NOACTION) {
+        if ($fromOnDelete === ForeignKey::NOACTION || empty($fromOnDelete)) {
             $fromOnDelete = ForeignKey::RESTRICT;
         }
 
         $toOnDelete = $toFk->getOnDelete();
 
-        if ($toOnDelete === ForeignKey::NOACTION) {
+        if ($toOnDelete === ForeignKey::NOACTION || empty($toOnDelete)) {
             $toOnDelete = ForeignKey::RESTRICT;
         }
 
