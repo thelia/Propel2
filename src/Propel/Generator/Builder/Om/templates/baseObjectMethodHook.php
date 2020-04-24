@@ -7,10 +7,6 @@
      */
     public function preSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preSave')) {
-	        return parent::preSave($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
@@ -37,10 +33,6 @@
      */
     public function postSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postSave')) {
-	        parent::postSave($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
@@ -62,10 +54,6 @@
      */
     public function preInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preInsert')) {
-	        return parent::preInsert($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
@@ -91,10 +79,6 @@
      */
     public function postInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postInsert')) {
-	        parent::postInsert($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
@@ -116,10 +100,6 @@
      */
     public function preUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preUpdate')) {
-	        return parent::preUpdate($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
@@ -146,10 +126,6 @@
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postUpdate')) {
-	        parent::postUpdate($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
@@ -171,10 +147,6 @@
      */
     public function preDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preDelete')) {
-	        return parent::preDelete($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
@@ -201,10 +173,6 @@
      */
     public function postDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postDelete')) {
-	        parent::postDelete($con);
-        }
-
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
             && null !== $con->getEventDispatcher()
