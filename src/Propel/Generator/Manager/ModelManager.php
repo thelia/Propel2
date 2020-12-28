@@ -15,7 +15,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Propel\Generator\Builder\Om\AbstractOMBuilder;
 use Propel\Generator\Builder\Om\TableMapLoaderScriptBuilder;
 use SplFileInfo;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This manager creates the Object Model classes based on the XML schema file.
@@ -27,14 +26,14 @@ class ModelManager extends AbstractManager
     /**
      * A Filesystem object.
      *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     private $filesystem;
 
     /**
      * Sets the filesystem object.
      *
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param Filesystem $filesystem
      *
      * @return void
      */
@@ -76,7 +75,6 @@ class ModelManager extends AbstractManager
                         // these files are always created / overwrite any existing files
                         foreach (['object', 'tablemap', 'query', 'event'] as $target) {
                             $builder = $generatorConfig->getConfiguredBuilder($table, $target);
-
                             $nbWrittenFiles += $this->doBuild($builder);
                         }
 
