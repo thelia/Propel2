@@ -2528,7 +2528,7 @@ class Criteria
      *             Note that the return value does require that this information is returned
      *             (supported) by the Propel db driver.
      */
-    public function doUpdate($updateValues, $con)
+    public function doUpdate($updateValues, ConnectionInterface $con)
     {
         /** @var \Propel\Runtime\Adapter\Pdo\PdoAdapter $db */
         $db = Propel::getServiceContainer()->getAdapter($this->getDbName());

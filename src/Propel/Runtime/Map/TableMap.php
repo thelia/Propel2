@@ -37,13 +37,6 @@ class TableMap
     const TYPE_STUDLYPHPNAME = 'camelName';
 
     /**
-     * studlyphpname type
-     * e.g. 'authorId'
-     * @deprecated Legacy constant for compatibility. Use TYPE_CAMELNAME.
-     */
-    const TYPE_STUDLYPHPNAME = 'camelName';
-
-    /**
      * camelCase type
      * e.g. 'authorId'
      */
@@ -54,13 +47,6 @@ class TableMap
      * e.g. 'book.AUTHOR_ID'
      */
     public const TYPE_COLNAME = 'colName';
-
-    /**
-     * column part of the column tableMap name
-     * e.g. 'AUTHOR_ID'
-     * @deprecated Legacy constant, was removed. Do not use.
-     */
-    const TYPE_RAW_COLNAME = 'rawColName';
 
     /**
      * column part of the column tableMap name
