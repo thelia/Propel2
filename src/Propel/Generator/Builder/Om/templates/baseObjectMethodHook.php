@@ -220,10 +220,6 @@
             parent::postDelete($con);
         }
         <?php endif?>
-    }
-
-<?php endif;
-
 
         if (null !== $con
             && method_exists($con, 'getEventDispatcher')
