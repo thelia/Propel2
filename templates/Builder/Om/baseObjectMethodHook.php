@@ -21,8 +21,8 @@
 
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::PRE_SAVE,
-                    $event
+                    $event,
+                    <?php echo $eventClass ?>::PRE_SAVE
                 );
 
             return !$event->isPropagationStopped();
@@ -52,8 +52,8 @@
         ) {
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::POST_SAVE,
-                    new <?php echo $eventClass ?>($this)
+                    new <?php echo $eventClass ?>($this),
+                    <?php echo $eventClass ?>::POST_SAVE
                 );
         }
     }
@@ -80,8 +80,8 @@
             $event = new <?php echo $eventClass ?>($this);
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::PRE_INSERT,
-                    $event
+                    $event,
+                    <?php echo $eventClass ?>::PRE_INSERT
                 );
 
             return !$event->isPropagationStopped();
@@ -111,8 +111,8 @@
         ) {
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::POST_INSERT,
-                    new <?php echo $eventClass ?>($this)
+                    new <?php echo $eventClass ?>($this),
+                    <?php echo $eventClass ?>::POST_INSERT
                 );
         }
     }
@@ -140,8 +140,8 @@
 
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::PRE_UPDATE,
-                    $event
+                    $event,
+                    <?php echo $eventClass ?>::PRE_UPDATE
                 );
 
             return !$event->isPropagationStopped();
@@ -171,8 +171,8 @@
         ) {
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::POST_UPDATE,
-                    new <?php echo $eventClass ?>($this)
+                    new <?php echo $eventClass ?>($this),
+                    <?php echo $eventClass ?>::POST_UPDATE
                 );
         }
     }
@@ -200,8 +200,8 @@
 
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::PRE_DELETE,
-                    $event
+                    $event,
+                    <?php echo $eventClass ?>::PRE_DELETE
                 );
 
             return !$event->isPropagationStopped();
@@ -231,8 +231,8 @@
         ) {
             $con->getEventDispatcher()
                 ->dispatch(
-                    <?php echo $eventClass ?>::POST_DELETE,
-                    new <?php echo $eventClass ?>($this)
+                    new <?php echo $eventClass ?>($this),
+                    <?php echo $eventClass ?>::POST_DELETE
                 );
         }
     }
