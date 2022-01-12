@@ -24,7 +24,7 @@ class EventBuilder extends AbstractOMBuilder
         return parent::getPackage() . '.Event';
     }
 
-    public function getNamespace()
+    public function getNamespace(): ?string
     {
         if (!$namespace = parent::getNamespace()) {
             return 'Event';
