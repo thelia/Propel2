@@ -118,6 +118,9 @@ abstract class DataModelBuilder
      */
     protected ?PlatformInterface $platform = null;
 
+    protected ?EventBuilder $eventBuilder = null;
+
+
     /**
      * Creates new instance of DataModelBuilder subclass.
      *
