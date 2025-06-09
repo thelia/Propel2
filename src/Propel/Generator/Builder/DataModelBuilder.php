@@ -18,6 +18,7 @@ use Propel\Generator\Config\GeneratorConfigInterface;
 use Propel\Generator\Model\Inheritance;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
+use Thelia\Core\Propel\Generator\Builder\Om\EventBuilder;
 
 /**
  * This is the base class for any builder class that is using the data model.
