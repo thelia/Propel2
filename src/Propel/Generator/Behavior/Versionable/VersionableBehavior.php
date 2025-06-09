@@ -41,6 +41,8 @@ class VersionableBehavior extends Behavior
 
     protected $tableModificationOrder = 80;
 
+    protected bool $isVersionTable = false;
+
     public function modifyDatabase()
     {
         foreach ($this->getDatabase()->getTables() as $table) {
