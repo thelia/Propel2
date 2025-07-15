@@ -17,9 +17,8 @@ class EventBuilder extends AbstractOMBuilder
 {
     /**
      * Gets the package for the map builder classes.
-     * @return string
      */
-    public function getPackage()
+    public function getPackage(): ?string
     {
         return parent::getPackage() . '.Event';
     }
@@ -38,25 +37,23 @@ class EventBuilder extends AbstractOMBuilder
         return $namespace .'Event';
     }
 
-    public function getBaseTableMapClassName()
+    public function getBaseTableMapClassName(): string
     {
         return "Event";
     }
 
     /**
      * Returns the name of the current class being built.
-     * @return string
      */
-    public function getUnprefixedClassName()
+    public function getUnprefixedClassName(): string
     {
         return $this->getTable()->getPhpName() . 'Event';
     }
 
     /**
      * Adds class phpdoc comment and opening of class.
-     * @param string &$script The script will be modified in this method.
      */
-    protected function addClassOpen(&$script)
+    protected function addClassOpen(&$script): void
     {
         $this->addUseClasses($script);
 
@@ -70,7 +67,7 @@ class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
      * This can be overridden by subclasses that wish to add more methods.
      * @see ObjectBuilder::addClassBody()
      */
-    protected function addClassBody(&$script)
+    protected function addClassBody(&$script): void
     {
         $script .= $this->addConstants();
 
@@ -84,7 +81,7 @@ class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
      *
      * @return string
      */
-    protected function addConstants()
+    protected function addConstants(): string
     {
         return '
     const PRE_SAVE = \'propel.pre.save.' . $this->getTable()->getCommonName() . '\';
@@ -95,13 +92,13 @@ class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
     const POST_UPDATE = \'propel.post.update.' . $this->getTable()->getCommonName() . '\';
     const PRE_DELETE = \'propel.pre.delete.' . $this->getTable()->getCommonName() . '\';
     const POST_DELETE = \'propel.post.delete.' . $this->getTable()->getCommonName() . '\';
-    
+
     /** @var ' . $this->getTable()->getPhpName() . ' */
     protected $model;
 ';
     }
 
-    protected function addUseClasses(&$script)
+    protected function addUseClasses(&$script): void
     {
 $script .= 'use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Event\ActiveRecordEvent;
@@ -109,7 +106,7 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
 ';
     }
 
-    protected function addConstruct(&$script)
+    protected function addConstruct(&$script): void
     {
         $script .= '
     /**
@@ -122,7 +119,7 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
 ';
     }
 
-    protected function addGetter(&$script)
+    protected function addGetter(&$script): void
     {
         $script .= '
     /**
@@ -135,7 +132,7 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
 ';
     }
 
-    protected function addClassClose(&$script)
+    protected function addClassClose(&$script): void
     {
         $script .= '}';
     }
