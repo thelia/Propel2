@@ -113,7 +113,7 @@
     /**
      * Get the associative array of the virtual columns in this object
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getVirtualColumns(): array
     {
