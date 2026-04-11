@@ -1657,6 +1657,30 @@ class Column extends MappingModel
     }
 
     /**
+     * Returns the native PHP type declaration keyword for this column.
+     *
+     * Converts PHPDoc-style types to valid PHP type declaration keywords
+     * (e.g. 'boolean' → 'bool', 'double' → 'float').
+     * Returns null for temporal types (handled separately by builders)
+     * and for types that cannot be natively typed (resource, object).
+     *
+     * When a typeHint is explicitly set (e.g. for OBJECT columns), it is
+     * returned directly as a FQCN.
+     */
+    public function getNativeTypeDeclaration(): ?string
+    {
+        if ($this->typeHint !== null) {
+            return $this->typeHint;
+        }
+
+        if ($this->isTemporalType()) {
+            return null;
+        }
+
+        return PropelTypes::getNativeTypeDeclaration($this->getPhpType());
+    }
+
+    /**
      * Returns whether the column PHP native type is primitive type (aka
      * a boolean, an integer, a long, a float, a double or a string).
      *

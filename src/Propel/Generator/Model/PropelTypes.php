@@ -443,6 +443,47 @@ class PropelTypes
     ];
 
     /**
+     * Mapping between Propel PHP native types and PHP type declaration keywords.
+     *
+     * Maps PHPDoc-style types ('boolean', 'double') to valid PHP native type
+     * declaration keywords ('bool', 'float'). Returns null for types that
+     * cannot be expressed as native PHP type declarations (resource, object).
+     *
+     * @var array<string, string|null>
+     */
+    private static array $mappingToNativeTypeDeclarationMap = [
+        'boolean' => 'bool',
+        'int' => 'int',
+        'double' => 'float',
+        'float' => 'float',
+        'string' => 'string',
+        'array' => 'array',
+        'resource' => null,
+        '' => null,
+    ];
+
+    /**
+     * Returns the native PHP type declaration keyword for the given PHP type.
+     *
+     * Converts PHPDoc-style types ('boolean', 'double') to valid PHP type
+     * declaration keywords ('bool', 'float'). Returns null for types that
+     * cannot be natively typed (resource, object).
+     */
+    public static function getNativeTypeDeclaration(string $phpType): ?string
+    {
+        return self::$mappingToNativeTypeDeclarationMap[$phpType] ?? null;
+    }
+
+    /**
+     * Returns whether the given PHP type can be expressed as a native PHP type declaration.
+     */
+    public static function isNativelyTypable(string $phpType): bool
+    {
+        return isset(self::$mappingToNativeTypeDeclarationMap[$phpType])
+            && self::$mappingToNativeTypeDeclarationMap[$phpType] !== null;
+    }
+
+    /**
      * Mapping between mapping types and PDO type constants (for prepared
      * statement settings).
      *
