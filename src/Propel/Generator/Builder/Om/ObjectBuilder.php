@@ -558,9 +558,27 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
     protected function addColumnAttributeDeclaration(string &$script, Column $column): void
     {
         $clo = $column->getLowercasedName();
-        $script .= "
+        $nativeType = $column->getNativeTypeDeclaration();
+
+        if ($nativeType !== null) {
+            if ($column->isPhpPrimitiveType() || $nativeType === 'array') {
+                $typeDeclaration = '?' . $nativeType;
+            } else {
+                $typeDeclaration = '?' . $this->declareClass($nativeType);
+            }
+            $script .= "
+    protected " . $typeDeclaration . " \$" . $clo . " = null;
+";
+        } elseif ($column->isTemporalType()) {
+            $dateTimeClass = $this->getDateTimeClass($column);
+            $script .= "
+    protected ?" . $dateTimeClass . " \$" . $clo . " = null;
+";
+        } else {
+            $script .= "
     protected \$" . $clo . ";
 ";
+        }
     }
 
     /**
@@ -986,12 +1004,14 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             $format = 'null';
         }
 
+        $dateTimeClass = $this->getDateTimeClass($column);
+
         $script .= "
     " . $visibility . " function get$cfc(?string \$format = " . $format;
         if ($column->isLazyLoad()) {
             $script .= ', ?ConnectionInterface $con = null';
         }
-        $script .= ")
+        $script .= "): string|" . $dateTimeClass . "|null
     {";
     }
 
@@ -1286,7 +1306,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             $script .= '?ConnectionInterface $con = null';
         }
 
-        $script .= ")
+        $script .= "): ?bool
     {";
     }
 
@@ -1565,8 +1585,17 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             $script .= '?ConnectionInterface $con = null';
         }
 
-        $script .= ")
+        $nativeType = $column->getNativeTypeDeclaration();
+        if ($nativeType !== null) {
+            if (!$column->isPhpPrimitiveType() && $nativeType !== 'array') {
+                $nativeType = $this->declareClass($nativeType);
+            }
+            $script .= "): ?" . $nativeType . "
     {";
+        } else {
+            $script .= ")
+    {";
+        }
     }
 
     /**
@@ -1849,6 +1878,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         $null = '';
 
         if ($column->getTypeHint()) {
+            // Explicit typeHint from schema XML (FQCN for object columns)
             $typeHint = $column->getTypeHint();
             if ($typeHint !== 'array') {
                 $typeHint = $this->declareClass($typeHint);
@@ -1860,10 +1890,20 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
                 $typeHint = '?' . $typeHint;
                 $null = ' = null';
             }
+        } elseif ($column->isTemporalType()) {
+            $dateTimeClass = $this->getDateTimeClass($column);
+            $typeHint = 'string|int|' . $dateTimeClass . '|null ';
+            $null = ' = null';
+        } elseif (!$column->isEnumType() && !$column->isSetType() && !$column->isBooleanType()) {
+            $nativeType = $column->getNativeTypeDeclaration();
+            if ($nativeType !== null) {
+                $typeHint = '?' . $nativeType . ' ';
+                $null = ' = null';
+            }
         }
 
         $script .= "
-    " . $visibility . " function set$cfc($typeHint\$v$null)
+    " . $visibility . " function set$cfc($typeHint\$v$null): static
     {";
     }
 
