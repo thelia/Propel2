@@ -1891,8 +1891,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
                 $null = ' = null';
             }
         } elseif ($column->isTemporalType()) {
-            $dateTimeClass = $this->getDateTimeClass($column);
-            $typeHint = 'string|int|' . $dateTimeClass . '|null ';
+            $typeHint = 'string|int|\DateTimeInterface|null ';
             $null = ' = null';
         } elseif (!$column->isEnumType() && !$column->isSetType() && !$column->isBooleanType()) {
             $nativeType = $column->getNativeTypeDeclaration();
