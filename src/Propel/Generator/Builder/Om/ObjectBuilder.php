@@ -570,9 +570,8 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
     protected " . $typeDeclaration . " \$" . $clo . " = null;
 ";
         } elseif ($column->isTemporalType()) {
-            $dateTimeClass = $this->getDateTimeClass($column);
             $script .= "
-    protected ?" . $dateTimeClass . " \$" . $clo . " = null;
+    protected ?\DateTimeInterface \$" . $clo . " = null;
 ";
         } else {
             $script .= "
@@ -1004,14 +1003,12 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             $format = 'null';
         }
 
-        $dateTimeClass = $this->getDateTimeClass($column);
-
         $script .= "
     " . $visibility . " function get$cfc(?string \$format = " . $format;
         if ($column->isLazyLoad()) {
             $script .= ', ?ConnectionInterface $con = null';
         }
-        $script .= "): string|" . $dateTimeClass . "|null
+        $script .= "): string|\DateTimeInterface|null
     {";
     }
 
