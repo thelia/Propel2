@@ -9,18 +9,42 @@
 namespace Propel\Runtime\ActiveRecord;
 
 /**
- * This ActiveRecord interface helps to find Propel Object
+ * Common interface for all Propel ActiveRecord model objects.
+ *
+ * All generated Base classes implement this interface via the baseObjectMethods template.
  *
  * @author jaugustin
- *
- * @method array toArray(string $keyType = \Propel\Runtime\Map\TableMap::TYPE_FIELDNAME, bool $includeLazyLoadColumns = true, array $alreadyDumpedObjects = [], bool $includeForeignObjects = false): array
  */
 interface ActiveRecordInterface
 {
     /**
      * Returns true if the primary key for this object is null.
-     *
-     * @return bool
      */
     public function isPrimaryKeyNull(): bool;
+
+    /**
+     * Get the associative array of the virtual columns in this object.
+     *
+     * @return array<string, mixed>
+     */
+    public function getVirtualColumns(): array;
+
+    /**
+     * Checks the existence of a virtual column in this object.
+     */
+    public function hasVirtualColumn(string $name): bool;
+
+    /**
+     * Get the value of a virtual column in this object.
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function getVirtualColumn(string $name): mixed;
+
+    /**
+     * Set the value of a virtual column in this object.
+     *
+     * @return $this
+     */
+    public function setVirtualColumn(string $name, mixed $value): static;
 }

@@ -135,11 +135,10 @@
      * Get the value of a virtual column in this object
      *
      * @param string $name The virtual column name
-     * @return mixed
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function getVirtualColumn(string $name)
+    public function getVirtualColumn(string $name): mixed
     {
         if (!$this->hasVirtualColumn($name)) {
             throw new PropelException(sprintf('Cannot get value of nonexistent virtual column `%s`.', $name));
@@ -156,7 +155,7 @@
      *
      * @return $this The current object, for fluid interface
      */
-    public function setVirtualColumn(string $name, $value)
+    public function setVirtualColumn(string $name, mixed $value): static
     {
         $this->virtualColumns[$name] = $value;
 

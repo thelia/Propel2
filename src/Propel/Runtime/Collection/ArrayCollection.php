@@ -12,6 +12,7 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Exception\ReadOnlyModelException;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Map\TableMap;
 
 /**
  * Class for iterating over a list of Propel objects stored as arrays
@@ -147,8 +148,13 @@ class ArrayCollection extends Collection
      *
      * @return array
      */
-    public function toArray(?string $keyColumn = null, bool $usePrefix = false): array
-    {
+    public function toArray(
+        ?string $keyColumn = null,
+        bool $usePrefix = false,
+        string $keyType = TableMap::TYPE_PHPNAME,
+        bool $includeLazyLoadColumns = true,
+        array $alreadyDumpedObjects = [],
+    ): array {
         $ret = [];
         foreach ($this as $key => $element) {
             $key = $keyColumn === null ? $key : $element[$keyColumn];

@@ -189,6 +189,30 @@ class Collection implements ArrayAccess, IteratorAggregate, Countable, Serializa
     }
 
     /**
+     * Get the collection data as a flat array.
+     *
+     * Subclasses (ObjectCollection, ArrayCollection, OnDemandCollection) override
+     * this with richer signatures. This base implementation returns raw data.
+     *
+     * @param string|null $keyColumn Column name to use as array key
+     * @param bool $usePrefix Whether to prefix keys with the model name
+     * @param string $keyType One of TableMap::TYPE_* constants
+     * @param bool $includeLazyLoadColumns Whether to include lazy-loaded columns
+     * @param array $alreadyDumpedObjects Internal tracking for circular references
+     *
+     * @return array
+     */
+    public function toArray(
+        ?string $keyColumn = null,
+        bool $usePrefix = false,
+        string $keyType = TableMap::TYPE_PHPNAME,
+        bool $includeLazyLoadColumns = true,
+        array $alreadyDumpedObjects = [],
+    ): array {
+        return $this->getArrayCopy();
+    }
+
+    /**
      * Set the data in the collection
      *
      * @param array $data
