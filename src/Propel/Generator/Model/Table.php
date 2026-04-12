@@ -36,6 +36,8 @@ class Table extends ScopedMappingModel implements IdMethod
 {
     use BehaviorableTrait;
 
+    public bool $isVersionTable = false;
+
     /**
      * @var array<\Propel\Generator\Model\Column>
      */
