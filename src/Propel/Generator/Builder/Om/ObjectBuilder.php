@@ -560,8 +560,8 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         $clo = $column->getLowercasedName();
         $nativeType = $column->getNativeTypeDeclaration();
 
-        if ($nativeType !== null && !$column->isEnumType() && !$column->isSetType()) {
-            if ($column->isPhpPrimitiveType() || $nativeType === 'array') {
+        if ($nativeType !== null && !$column->isEnumType() && !$column->isSetType() && !$column->isPhpArrayType()) {
+            if ($column->isPhpPrimitiveType()) {
                 $typeDeclaration = '?' . $nativeType;
             } else {
                 $typeDeclaration = '?' . $this->declareClass($nativeType);
