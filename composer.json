@@ -1,13 +1,13 @@
 {
     "name": "thelia/propel",
     "type": "library",
-    "description": "Propel2 is an open-source Object-Relational Mapping (ORM) for PHP.",
+    "description": "Propel ORM fork maintained for Thelia",
     "keywords": [
         "ORM",
         "persistence",
         "Active Record"
     ],
-    "homepage": "http://www.propelorm.org/",
+    "homepage": "https://thelia.net",
     "license": "MIT",
     "authors": [
         {
@@ -15,8 +15,12 @@
             "email": "william.durand1@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/thelia/Propel2/issues",
+        "source": "https://github.com/thelia/Propel2"
+    },
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.1",
         "psr/log": "^1.0 || ^2.0 || ^3.0",
         "symfony/yaml": "^5.0.0 || ^6.0.0 || ^7.0.0",
         "symfony/config": "^5.0.0 || ^6.0.0 || ^7.0.0",
