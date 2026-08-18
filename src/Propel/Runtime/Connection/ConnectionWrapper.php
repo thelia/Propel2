@@ -181,7 +181,7 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
      * @param null|EventDispatcherInterface $eventDispatcher
      * @return $this
      */
-    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null)
+    public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher = null)
     {
         $this->eventDispatcher = $eventDispatcher;
         return $this;

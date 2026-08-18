@@ -39,7 +39,7 @@ interface ConnectionInterface
      * @param null|EventDispatcherInterface $eventDispatcher
      * @return $this
      */
-    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher = null);
+    public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher = null);
 
     /**
      * @specificity thelia
