@@ -11,6 +11,7 @@ namespace Propel\Generator\Builder;
 use Propel\Common\Pluralizer\PluralizerInterface;
 use Propel\Generator\Builder\Om\AbstractObjectBuilder;
 use Propel\Generator\Builder\Om\AbstractOMBuilder;
+use Propel\Generator\Builder\Om\EventBuilder;
 use Propel\Generator\Builder\Om\MultiExtendObjectBuilder;
 use Propel\Generator\Builder\Om\ObjectBuilder;
 use Propel\Generator\Builder\Om\QueryBuilder;
@@ -21,7 +22,6 @@ use Propel\Generator\Model\Database;
 use Propel\Generator\Model\Inheritance;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
-use Thelia\Core\Propel\Generator\Builder\Om\EventBuilder;
 
 /**
  * This is the base class for any builder class that is using the data model.
@@ -122,8 +122,12 @@ abstract class DataModelBuilder
      */
     protected ?PlatformInterface $platform = null;
 
+    /**
+     * The Event builder class
+     *
+     * @var \Propel\Generator\Builder\Om\EventBuilder|null
+     */
     protected ?EventBuilder $eventBuilder = null;
-
 
     /**
      * Creates new instance of DataModelBuilder subclass.
@@ -230,13 +234,16 @@ abstract class DataModelBuilder
     }
 
     /**
-     * Returns new or existing Object builder class for this table.
-     * @return EventBuilder
+     * Returns new or existing Event builder class for this table.
+     *
+     * @return \Propel\Generator\Builder\Om\EventBuilder
      */
-    public function getEventBuilder()
+    public function getEventBuilder(): EventBuilder
     {
-        if (!isset($this->eventBuilder)) {
-            $this->eventBuilder = $this->getGeneratorConfig()->getConfiguredBuilder($this->getTable(), 'event');
+        if ($this->eventBuilder === null) {
+            /** @var \Propel\Generator\Builder\Om\EventBuilder $builder */
+            $builder = $this->getGeneratorConfig()->getConfiguredBuilder($this->getTable(), 'event');
+            $this->eventBuilder = $builder;
         }
 
         return $this->eventBuilder;
