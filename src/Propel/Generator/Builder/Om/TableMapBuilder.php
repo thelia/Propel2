@@ -10,6 +10,7 @@ namespace Propel\Generator\Builder\Om;
 
 use Propel\Generator\Model\ForeignKey;
 use Propel\Generator\Model\IdMethod;
+use Propel\Generator\Model\PropelTypes;
 use Propel\Generator\Platform\PlatformInterface;
 
 /**
@@ -953,7 +954,7 @@ class " . $this->getUnqualifiedClassName() . " extends TableMap
                 if (!$col->isLazyLoad()) {
                     if ($col->isPrimaryKey()) {
                         $script .= '
-        $pks[] = ' . ($col->isPhpObjectType() ? 'new ' . $col->getPhpType() . '(' : '(' . $col->getPhpType() . ') ') . "\$row[
+        $pks[] = ' . ($col->isPhpObjectType() ? 'new ' . $col->getPhpType() . '(' : '(' . (PropelTypes::getNativeTypeDeclaration($col->getPhpType()) ?? $col->getPhpType()) . ') ') . "\$row[
             \$indexType == TableMap::TYPE_NUM
                 ? $n + \$offset
                 : self::translateFieldName('{$col->getPhpName()}', TableMap::TYPE_PHPNAME, \$indexType)
@@ -971,7 +972,7 @@ class " . $this->getUnqualifiedClassName() . " extends TableMap
             foreach ($table->getColumns() as $col) {
                 if (!$col->isLazyLoad()) {
                     if ($col->isPrimaryKey()) {
-                        $pk = ($col->isPhpObjectType() ? 'new ' . $col->getPhpType() . '(' : '(' . $col->getPhpType() . ') ') . "\$row[
+                        $pk = ($col->isPhpObjectType() ? 'new ' . $col->getPhpType() . '(' : '(' . (PropelTypes::getNativeTypeDeclaration($col->getPhpType()) ?? $col->getPhpType()) . ') ') . "\$row[
             \$indexType == TableMap::TYPE_NUM
                 ? $n + \$offset
                 : self::translateFieldName('{$col->getPhpName()}', TableMap::TYPE_PHPNAME, \$indexType)
