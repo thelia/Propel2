@@ -266,7 +266,6 @@ class ModelJoin extends Join
         $reflectedJoin = new \ReflectionClass($join);
 
         foreach ($reflectedJoin->getProperties() as $reflectedProperty) {
-            $reflectedProperty->setAccessible(true);
             $reflectedProperty->setValue($this, $reflectedProperty->getValue($join));
         }
 

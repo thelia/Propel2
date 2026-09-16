@@ -195,7 +195,6 @@ class SchemaReader
                 ),
             );
         }
-        xml_parser_free($this->parser);
         $this->parser = $parserStash;
 
         array_pop($this->schemasTagsStack);
