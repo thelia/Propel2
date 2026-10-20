@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'thelia3.0'
   pull_request:
   workflow_dispatch:
 
@@ -14,79 +15,25 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: [ '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
-                db-type: [ sqlite, mysql, pgsql, agnostic ]
-                symfony-version: [ '5-min', '5-max', '6-min', '6-max', '7-min', '7-max']
-                exclude:
-                  - symfony-version: '6-min'
-                    php-version: '7.4'
-                  - symfony-version: '6-max'
-                    php-version: '7.4'
-                  - symfony-version: '6-min'
-                    php-version: '8.0'
-                  - symfony-version: '6-max'
-                    php-version: '8.0'
-                  - symfony-version: '7-min'
-                    php-version: '7.4'
-                  - symfony-version: '7-max'
-                    php-version: '7.4'
-                  - symfony-version: '7-min'
-                    php-version: '8.0'
-                  - symfony-version: '7-max'
-                    php-version: '8.0'
-                  - symfony-version: '7-min'
-                    php-version: '8.1'
-                  - symfony-version: '7-max'
-                    php-version: '8.1'
+                php-version: [ '8.3', '8.4', '8.5' ]
+                db-type: [ sqlite, mysql, agnostic ]
+                symfony-version: [ '7-max' ]
         env:
             DB_NAME: 'propel_tests'
             DB_USER: 'propel'
             DB_PW: 'propel'
         steps:
-            - name: Install PostgreSQL latest
-              if: matrix.db-type == 'pgsql' && matrix.php-version != '7.4'
-              uses: CasperWA/postgresql-action@v1.2
-              with:
-                  postgresql db: $DB_NAME
-                  postgresql user: $DB_USER
-                  postgresql password: $DB_PW
-
-            - name: Install PostgreSQL 16
-              if: matrix.db-type == 'pgsql' && matrix.php-version == '7.4' && matrix.symfony-version == '5-max'
-              uses: CasperWA/postgresql-action@v1.2
-              with:
-                  postgresql version: 16
-                  postgresql db: $DB_NAME
-                  postgresql user: $DB_USER
-                  postgresql password: $DB_PW
-
-            - name: Install PostgreSQL min
-              if: matrix.db-type == 'pgsql' && matrix.php-version == '7.4' && matrix.symfony-version == '5-min'
-              uses: CasperWA/postgresql-action@v1.2
-              with:
-                  postgresql version: 9
-                  postgresql db: $DB_NAME
-                  postgresql user: $DB_USER
-                  postgresql password: $DB_PW
-
             - name: Install MySQL latest
-              if: matrix.db-type == 'mysql' && matrix.php-version != '7.4'
+              if: matrix.db-type == 'mysql'
               uses: mirromutth/mysql-action@v1.1
               with:
-                  mysql root password: $DB_PW
-
-            - name: Install MariaDb min
-              if: matrix.db-type == 'mysql' && matrix.php-version == '7.4'
-              uses: getong/mariadb-action@v1.1
-              with:
-                  mariadb version: '10.2'
                   mysql root password: $DB_PW
 
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-version }}
-                  extensions: json, libxml, pdo, pdo_mysql, pdo_sqlite, pdo_pgsql, sqlite3
+                  extensions: json, libxml, pdo, pdo_mysql, pdo_sqlite, sqlite3
                   coverage: pcov
 
             - name: Checkout
@@ -142,21 +89,9 @@ jobs:
 
             - name: Run tests
               shell: 'script -q -e -c "bash {0}"'
-              run: |
-                if [[ ${{ matrix.php-version }} == '7.4' && ${{ matrix.symfony-version }} == '5-max' ]]; then
-                  export CODECOVERAGE=1 && vendor/bin/phpunit -c tests/${{ matrix.db-type }}.phpunit.xml --verbose --coverage-clover=tests/coverage.xml
-                else
-                  vendor/bin/phpunit -c tests/${{ matrix.db-type }}.phpunit.xml
-                fi
+              run: vendor/bin/phpunit -c tests/${{ matrix.db-type }}.phpunit.xml
               env:
                 SYMFONY_VERSION: ${{ matrix.symfony-version }}
-
-            - name: Code Coverage Report
-              if: success() && matrix.php-version == '7.4' && matrix.symfony-version == '5-max'
-              uses: codecov/codecov-action@v1
-              with:
-                  flags: ${{ matrix.php-version }}, ${{ matrix.db-type }}, ${{ matrix.symfony-version }}
-                  file: tests/coverage.xml
 
     code-style-and-static-analysis:
         runs-on: ubuntu-22.04
@@ -165,8 +100,8 @@ jobs:
               id: setup-php
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.1'
-                  extensions: json, libxml, pdo, pdo_mysql, pdo_sqlite, pdo_pgsql, sqlite3
+                  php-version: '8.3'
+                  extensions: json, libxml, pdo, pdo_mysql, pdo_sqlite, sqlite3
                   coverage: pcov
 
             - uses: actions/checkout@v2
