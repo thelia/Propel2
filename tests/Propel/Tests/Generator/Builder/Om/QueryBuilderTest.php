@@ -57,6 +57,8 @@ class QueryBuilderTest extends BookstoreTestBase
     protected function setUp(): void
     {
         parent::setUp();
+        // The M2M builder tests include the 'migration' runtime config, which leaves it as the default datasource
+        Propel::getServiceContainer()->setDefaultDatasource('bookstore');
         include_once(__DIR__ . '/QueryBuilderTestClasses.php');
         include_once(__DIR__ . '/TestableQueryBuilder.php');
     }
