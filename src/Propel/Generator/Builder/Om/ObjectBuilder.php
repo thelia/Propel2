@@ -1890,7 +1890,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         } elseif ($column->isTemporalType()) {
             $typeHint = 'string|int|\DateTimeInterface|null ';
             $null = ' = null';
-        } elseif (!$column->isEnumType() && !$column->isSetType() && !$column->isBooleanType()) {
+        } elseif (!$column->isEnumType() && !$column->isSetType() && !$column->isBooleanType() && $column->getType() !== \Propel\Generator\Model\PropelTypes::JSON) {
             $nativeType = $column->getNativeTypeDeclaration();
             if ($nativeType !== null) {
                 $typeHint = '?' . $nativeType . ' ';
