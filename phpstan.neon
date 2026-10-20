@@ -5,6 +5,11 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     paths:
         - '%rootDir%/../../../src/'
+    # class.notFound cannot go in the baseline nor in ignoreErrors: the first parent class no longer exists
+    # (Pgsql data SQL builder), the second comes from symfony/event-dispatcher-contracts, which composer.json does not require
+    excludePaths:
+        - src/Propel/Generator/Builder/Sql/Pgsql/PgsqlDataSQLBuilder.php
+        - src/Propel/Runtime/Event/ActiveRecordEvent.php
     ignoreErrors:
         - '#Call to an undefined method .+Collection::.+Array\(\)#'
         - '#Call to an undefined method object::.+\(\)#'
