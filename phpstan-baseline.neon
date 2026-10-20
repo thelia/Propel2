@@ -42,13 +42,6 @@ parameters:
 			count: 1
 			path: src/Propel/Generator/Behavior/I18n/I18nBehaviorObjectBuilderModifier.php
 
-		# Real defect, not noise: Table::$isVersionTable is now declared, so this guard always skips the table (see PR notes)
-		-
-			message: '#^Call to function property_exists\(\) with Propel\\Generator\\Model\\Table and ''isVersionTable'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Propel/Generator/Behavior/Versionable/VersionableBehavior.php
-
 		-
 			message: '#^Variable \$col might not be defined\.$#'
 			identifier: variable.undefined

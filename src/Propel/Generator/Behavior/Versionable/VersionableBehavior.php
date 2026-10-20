@@ -67,7 +67,7 @@ class VersionableBehavior extends Behavior
                 // don't add the same behavior twice
                 continue;
             }
-            if (property_exists($table, 'isVersionTable')) {
+            if ($table->isVersionTable) {
                 // don't add the behavior to version tables
                 continue;
             }
