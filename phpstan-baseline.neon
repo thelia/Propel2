@@ -19,36 +19,6 @@ parameters:
 			path: src/Propel/Common/Config/Loader/JsonFileLoader.php
 
 		-
-			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition\:\:requiresAtLeastOneElement\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Propel/Common/Config/PropelConfiguration.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\:\:arrayNode\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Propel/Common/Config/PropelConfiguration.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\:\:booleanNode\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Propel/Common/Config/PropelConfiguration.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\:\:end\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Propel/Common/Config/PropelConfiguration.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\:\:scalarNode\(\)\.$#'
-			identifier: method.notFound
-			count: 4
-			path: src/Propel/Common/Config/PropelConfiguration.php
-
-		-
 			message: '#^Call to an undefined method Propel\\Generator\\Config\\GeneratorConfigInterface\:\:get\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -72,9 +42,10 @@ parameters:
 			count: 1
 			path: src/Propel/Generator/Behavior/I18n/I18nBehaviorObjectBuilderModifier.php
 
+		# Real defect, not noise: Table::$isVersionTable is now declared, so this guard always skips the table (see PR notes)
 		-
-			message: '#^Access to an undefined property Propel\\Generator\\Model\\Table\:\:\$isVersionTable\.$#'
-			identifier: property.notFound
+			message: '#^Call to function property_exists\(\) with Propel\\Generator\\Model\\Table and ''isVersionTable'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
 			count: 1
 			path: src/Propel/Generator/Behavior/Versionable/VersionableBehavior.php
 
@@ -217,22 +188,52 @@ parameters:
 			path: src/Propel/Generator/Builder/Om/AbstractObjectBuilder.php
 
 		-
+			message: '#^Method Propel\\Generator\\Builder\\Om\\EventBuilder\:\:addConstruct\(\) has parameter \$script with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Propel/Generator/Builder/Om/EventBuilder.php
+
+		-
+			message: '#^Method Propel\\Generator\\Builder\\Om\\EventBuilder\:\:addGetter\(\) has parameter \$script with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Propel/Generator/Builder/Om/EventBuilder.php
+
+		-
+			message: '#^Method Propel\\Generator\\Builder\\Om\\EventBuilder\:\:addUseClasses\(\) has parameter \$script with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Propel/Generator/Builder/Om/EventBuilder.php
+
+		-
 			message: '#^Variable \$crossFK might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
 			path: src/Propel/Generator/Builder/Om/ObjectBuilder.php
 
 		-
-			message: '#^Variable \$mysqlInvalidDateString might not be defined\.$#'
-			identifier: variable.undefined
+			message: '#^Call to method getName\(\) on an unknown class Propel\\Generator\\Builder\\Table\.$#'
+			identifier: class.notFound
 			count: 1
-			path: src/Propel/Generator/Builder/Om/ObjectBuilder.php
+			path: src/Propel/Generator/Builder/ResolverBuilder.php
 
 		-
-			message: '#^Variable \$migration might not be defined\.$#'
-			identifier: variable.undefined
+			message: '#^Method Propel\\Generator\\Builder\\ResolverBuilder\:\:setGeneratorConfig\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
-			path: src/Propel/Generator/Command/MigrationMigrateCommand.php
+			path: src/Propel/Generator/Builder/ResolverBuilder.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$table contains unknown class Propel\\Generator\\Builder\\Table\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Propel/Generator/Builder/ResolverBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Propel\\Generator\\Config\\GeneratorConfig\:\:getConfiguredBuilder\(\) expects Propel\\Generator\\Model\\Table, Propel\\Generator\\Builder\\Table given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Propel/Generator/Builder/ResolverBuilder.php
 
 		-
 			message: '#^Variable \$countValidTimestamps might not be defined\.$#'
@@ -265,10 +266,34 @@ parameters:
 			path: src/Propel/Generator/Manager/MigrationManager.php
 
 		-
+			message: '#^Method Propel\\Generator\\Manager\\ModelManager\:\:buildResolver\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Propel/Generator/Manager/ModelManager.php
+
+		-
+			message: '#^Method Propel\\Generator\\Manager\\ModelManager\:\:buildResolver\(\) has parameter \$overwrite with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Propel/Generator/Manager/ModelManager.php
+
+		-
+			message: '#^Parameter \#1 \$generatorConfig of method Propel\\Generator\\Builder\\ResolverBuilder\:\:setGeneratorConfig\(\) expects Propel\\Generator\\Config\\GeneratorConfig, Propel\\Generator\\Config\\GeneratorConfigInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Propel/Generator/Manager/ModelManager.php
+
+		-
 			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: src/Propel/Generator/Manager/SqlManager.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/Propel/Generator/Model/PropelTypes.php
 
 		-
 			message: '#^Call to an undefined method Propel\\Generator\\Config\\GeneratorConfigInterface\:\:get\(\)\.$#'
@@ -283,6 +308,12 @@ parameters:
 			path: src/Propel/Generator/Platform/OraclePlatform.php
 
 		-
+			message: '#^Cannot access offset 0 on list\<mixed\>\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Propel/Generator/Platform/SqlitePlatform.php
+
+		-
 			message: '#^Call to an undefined method Propel\\Generator\\Model\\ForeignKey\:\:equals\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -295,8 +326,20 @@ parameters:
 			path: src/Propel/Generator/Reverse/MysqlSchemaParser.php
 
 		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: ''CASCADE''\|''NO ACTION''\|''RESTRICT''\|''SET NULL''\} will always evaluate to true\.$#'
+			message: '#^Call to function is_array\(\) with array\{non\-falsy\-string, ''CASCADE''\|''NO ACTION''\|''RESTRICT''\|''SET NULL''\} will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Propel/Generator/Reverse/MysqlSchemaParser.php
+
+		-
+			message: '#^Offset 1 on array\{non\-falsy\-string, ''CASCADE''\|''NO ACTION''\|''RESTRICT''\|''SET NULL''\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: src/Propel/Generator/Reverse/MysqlSchemaParser.php
+
+		-
+			message: '#^Parameter \#1 \$params of method Propel\\Generator\\Reverse\\AbstractSchemaParser\:\:getNewVendorInfoObject\(\) expects array, array\<string, mixed\>\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Propel/Generator/Reverse/MysqlSchemaParser.php
 
@@ -307,10 +350,22 @@ parameters:
 			path: src/Propel/Generator/Reverse/OracleSchemaParser.php
 
 		-
-			message: '#^Variable \$strDefault might not be defined\.$#'
-			identifier: variable.undefined
+			message: '#^Cannot access offset ''COLUMN_NAME'' on array\<string, mixed\>\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Propel/Generator/Reverse/OracleSchemaParser.php
+
+		-
+			message: '#^Cannot access offset ''TABLE_NAME'' on array\<string, mixed\>\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: src/Propel/Generator/Reverse/PgsqlSchemaParser.php
+			path: src/Propel/Generator/Reverse/OracleSchemaParser.php
+
+		-
+			message: '#^Offset 0 on non\-empty\-array\<string, mixed\> in isset\(\) does not exist\.$#'
+			identifier: isset.offset
+			count: 1
+			path: src/Propel/Generator/Reverse/OracleSchemaParser.php
 
 		-
 			message: '#^Call to an undefined method Propel\\Generator\\Config\\GeneratorConfigInterface\:\:get\(\)\.$#'
@@ -325,9 +380,9 @@ parameters:
 			path: src/Propel/Generator/Reverse/SqliteSchemaParser.php
 
 		-
-			message: '#^Call to an undefined method DOMNode\:\:setAttribute\(\)\.$#'
-			identifier: method.notFound
-			count: 6
+			message: '#^Parameter \#2 \$value of method DOMElement\:\:setAttribute\(\) expects string, int\<min, \-1\>\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
 			path: src/Propel/Generator/Schema/Dumper/XmlDumper.php
 
 		-
@@ -345,6 +400,12 @@ parameters:
 		-
 			message: '#^Call to an undefined method Propel\\Runtime\\ServiceContainer\\ServiceContainerInterface\:\:setConnection\(\)\.$#'
 			identifier: method.notFound
+			count: 1
+			path: src/Propel/Generator/Util/QuickBuilder.php
+
+		-
+			message: '#^Comparison operation "\>\=" between int\<80100, 80699\> and 80000 is always true\.$#'
+			identifier: greaterOrEqual.alwaysTrue
 			count: 1
 			path: src/Propel/Generator/Util/QuickBuilder.php
 
@@ -445,10 +506,10 @@ parameters:
 			path: src/Propel/Runtime/ActiveQuery/ModelCriteria.php
 
 		-
-			message: '#^Method Propel\\Runtime\\ActiveQuery\\SqlBuilder\\AbstractSqlQueryBuilder\:\:buildStatementFromCriterion\(\) never assigns null to &\$params so it can be removed from the by\-ref type\.$#'
-			identifier: parameterByRef.unusedType
+			message: '#^Method Propel\\Runtime\\ActiveQuery\\ModelJoin\:\:buildFromJoin\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
-			path: src/Propel/Runtime/ActiveQuery/SqlBuilder/AbstractSqlQueryBuilder.php
+			path: src/Propel/Runtime/ActiveQuery/ModelJoin.php
 
 		-
 			message: '#^Parameter &\$params by\-ref type of method Propel\\Runtime\\ActiveQuery\\SqlBuilder\\SelectQuerySqlBuilder\:\:build\(\) expects array\<mixed\>, array\<mixed\>\|null given\.$#'
@@ -493,6 +554,12 @@ parameters:
 			path: src/Propel/Runtime/Adapter/Pdo/SqliteAdapter.php
 
 		-
+			message: '#^Cannot call method bindParam\(\) on Propel\\Runtime\\Connection\\StatementInterface\|resource\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Propel/Runtime/Adapter/Pdo/SqlsrvAdapter.php
+
+		-
 			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:clear\(\)\.$#'
 			identifier: method.notFound
 			count: 2
@@ -529,10 +596,40 @@ parameters:
 			path: src/Propel/Runtime/Collection/ArrayCollection.php
 
 		-
+			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:toArray\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Propel/Runtime/Collection/ArrayCollection.php
+
+		-
 			message: '#^Call to an undefined static method Propel\\Runtime\\Map\\TableMap\:\:getPrimaryKeyFromRow\(\)\.$#'
 			identifier: staticMethod.notFound
 			count: 1
 			path: src/Propel/Runtime/Collection/ArrayCollection.php
+
+		-
+			message: '#^Method Propel\\Runtime\\Collection\\Collection\:\:next\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Propel/Runtime/Collection/Collection.php
+
+		-
+			message: '#^Method Propel\\Runtime\\Collection\\Collection\:\:rewind\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Propel/Runtime/Collection/Collection.php
+
+		-
+			message: '#^Method Propel\\Runtime\\Collection\\Collection\:\:seek\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Propel/Runtime/Collection/Collection.php
+
+		-
+			message: '#^Parameter \#1 \$offset of method ArrayIterator\<int\|string,mixed\>\:\:seek\(\) expects int, int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Propel/Runtime/Collection/Collection.php
 
 		-
 			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:delete\(\)\.$#'
@@ -559,6 +656,12 @@ parameters:
 			path: src/Propel/Runtime/Collection/ObjectCollection.php
 
 		-
+			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:toArray\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Propel/Runtime/Collection/ObjectCollection.php
+
+		-
 			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:getPrimaryKey\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -569,6 +672,60 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: src/Propel/Runtime/Collection/ObjectCombinationCollection.php
+
+		-
+			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:toArray\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Propel/Runtime/Collection/OnDemandCollection.php
+
+		-
+			message: '#^Method Propel\\Runtime\\Connection\\ConnectionInterface\:\:getEventDispatcher\(\) has invalid return type Symfony\\Component\\EventDispatcher\\EventDispatcherInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Propel/Runtime/Connection/ConnectionInterface.php
+
+		-
+			message: '#^Parameter \$eventDispatcher of method Propel\\Runtime\\Connection\\ConnectionInterface\:\:setEventDispatcher\(\) has invalid type Symfony\\Component\\EventDispatcher\\EventDispatcherInterface\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Propel/Runtime/Connection/ConnectionInterface.php
+
+		-
+			message: '#^Method Propel\\Runtime\\Connection\\ConnectionWrapper\:\:getEventDispatcher\(\) has invalid return type Symfony\\Component\\EventDispatcher\\EventDispatcherInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Propel/Runtime/Connection/ConnectionWrapper.php
+
+		-
+			message: '#^Parameter \$eventDispatcher of method Propel\\Runtime\\Connection\\ConnectionWrapper\:\:setEventDispatcher\(\) has invalid type Symfony\\Component\\EventDispatcher\\EventDispatcherInterface\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Propel/Runtime/Connection/ConnectionWrapper.php
+
+		-
+			message: '#^Property Propel\\Runtime\\Connection\\ConnectionWrapper\:\:\$eventDispatcher has unknown class Symfony\\Component\\EventDispatcher\\EventDispatcherInterface as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Propel/Runtime/Connection/ConnectionWrapper.php
+
+		-
+			message: '#^Method Propel\\Runtime\\Connection\\PdoConnection\:\:getEventDispatcher\(\) has invalid return type Symfony\\Component\\EventDispatcher\\EventDispatcherInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Propel/Runtime/Connection/PdoConnection.php
+
+		-
+			message: '#^Parameter \$eventDispatcher of method Propel\\Runtime\\Connection\\PdoConnection\:\:setEventDispatcher\(\) has invalid type Symfony\\Component\\EventDispatcher\\EventDispatcherInterface\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Propel/Runtime/Connection/PdoConnection.php
+
+		-
+			message: '#^Property Propel\\Runtime\\Connection\\PdoConnection\:\:\$eventDispatcher has unknown class Symfony\\Component\\EventDispatcher\\EventDispatcherInterface as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Propel/Runtime/Connection/PdoConnection.php
 
 		-
 			message: '#^Call to an undefined method Propel\\Runtime\\Connection\\ConnectionWrapper\:\:getProfiler\(\)\.$#'
@@ -583,6 +740,18 @@ parameters:
 			path: src/Propel/Runtime/DataFetcher/PDODataFetcher.php
 
 		-
+			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:toArray\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: src/Propel/Runtime/Formatter/AbstractFormatterWithHydration.php
+
+		-
+			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:toArray\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Propel/Runtime/Formatter/ArrayFormatter.php
+
+		-
 			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:getPrimaryKey\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -595,10 +764,10 @@ parameters:
 			path: src/Propel/Runtime/Formatter/ObjectFormatter.php
 
 		-
-			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:setVirtualColumn\(\)\.$#'
+			message: '#^Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface\:\:toArray\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: src/Propel/Runtime/Formatter/OnDemandFormatter.php
+			path: src/Propel/Runtime/Formatter/SimpleArrayFormatter.php
 
 		-
 			message: '#^PHPDoc tag @var with type Closure\(class\-string\<Propel\\Runtime\\Map\\TableMap\>\|Propel\\Runtime\\Map\\TableMap\)\: class\-string\<Propel\\Runtime\\Map\\TableMap\> is not subtype of native type Closure\(mixed\)\: string\.$#'
