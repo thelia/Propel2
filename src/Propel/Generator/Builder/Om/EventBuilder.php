@@ -17,28 +17,37 @@ class EventBuilder extends AbstractOMBuilder
 {
     /**
      * Gets the package for the map builder classes.
+     *
+     * @return string|null
      */
     public function getPackage(): ?string
     {
         return parent::getPackage() . '.Event';
     }
 
+    /**
+     * @return string|null
+     */
     public function getNamespace(): ?string
     {
-        if (!$namespace = parent::getNamespace()) {
+        $namespace = parent::getNamespace();
+        if (!$namespace) {
             return 'Event';
         }
 
-        if (
-            $this->getGeneratorConfig()
-            && $omns = $this->getBuildProperty('generator.objectModel.namespaceEvent')
-        ) {
-            return $namespace . '\\' . $omns;
+        if ($this->getGeneratorConfig()) {
+            $omns = $this->getBuildProperty('generator.objectModel.namespaceEvent');
+            if ($omns) {
+                return $namespace . '\\' . $omns;
+            }
         }
 
         return $namespace . 'Event';
     }
 
+    /**
+     * @return string
+     */
     public function getBaseTableMapClassName(): string
     {
         return 'Event';
@@ -46,6 +55,8 @@ class EventBuilder extends AbstractOMBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
+     * @return string
      */
     public function getUnprefixedClassName(): string
     {
@@ -54,6 +65,8 @@ class EventBuilder extends AbstractOMBuilder
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
+     * @param string $script
      *
      * @return void
      */
@@ -71,6 +84,8 @@ class " . $this->getUnqualifiedClassName() . " extends ActiveRecordEvent
      * This can be overridden by subclasses that wish to add more methods.
      *
      * @see ObjectBuilder::addClassBody()
+     *
+     * @param string $script
      *
      * @return void
      */
@@ -106,6 +121,8 @@ class " . $this->getUnqualifiedClassName() . " extends ActiveRecordEvent
     }
 
     /**
+     * @param string $script
+     *
      * @return void
      */
     protected function addUseClasses(&$script): void
@@ -117,6 +134,8 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
     }
 
     /**
+     * @param string $script
+     *
      * @return void
      */
     protected function addConstruct(&$script): void
@@ -133,6 +152,8 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
     }
 
     /**
+     * @param string $script
+     *
      * @return void
      */
     protected function addGetter(&$script): void
@@ -149,6 +170,8 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
     }
 
     /**
+     * @param string $script
+     *
      * @return void
      */
     protected function addClassClose(&$script): void

@@ -154,6 +154,12 @@ class ModelManager extends AbstractManager
         }
     }
 
+    /**
+     * @param \Propel\Generator\Model\Database $database
+     * @param bool $overwrite
+     *
+     * @return int
+     */
     protected function buildResolver(Database $database, $overwrite = true)
     {
         $totalNbFiles = 0;

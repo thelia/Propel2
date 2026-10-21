@@ -468,6 +468,10 @@ class PropelTypes
      * Converts PHPDoc-style types ('boolean', 'double') to valid PHP type
      * declaration keywords ('bool', 'float'). Returns null for types that
      * cannot be natively typed (resource, object).
+     *
+     * @param string $phpType
+     *
+     * @return string|null
      */
     public static function getNativeTypeDeclaration(string $phpType): ?string
     {
@@ -476,6 +480,10 @@ class PropelTypes
 
     /**
      * Returns whether the given PHP type can be expressed as a native PHP type declaration.
+     *
+     * @param string $phpType
+     *
+     * @return bool
      */
     public static function isNativelyTypable(string $phpType): bool
     {
