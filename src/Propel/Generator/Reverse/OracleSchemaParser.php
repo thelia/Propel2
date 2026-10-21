@@ -106,7 +106,7 @@ class OracleSchemaParser extends AbstractSchemaParser
             $this->addIndexes($table);
 
             $pkColumns = $table->getPrimaryKey();
-            if (1 === \count($pkColumns) && $seqPattern) {
+            if (count($pkColumns) === 1 && $seqPattern) {
                 $seqName = str_replace('${table}', $table->getName(), $seqPattern);
                 $seqName = strtoupper($seqName);
 

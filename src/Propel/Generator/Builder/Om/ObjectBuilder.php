@@ -195,7 +195,7 @@ class ObjectBuilder extends AbstractObjectBuilder
             }
         } elseif ($column->isEnumType()) {
             $valueSet = $column->getValueSet();
-            if (!\in_array($val, $valueSet)) {
+            if (!in_array($val, $valueSet)) {
                 throw new EngineException(sprintf('Default Value "%s" is not among the enumerated values', $val));
             }
             $defaultValue = (string)array_search($val, $valueSet);
@@ -318,7 +318,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             '\Propel\Runtime\Parser\AbstractParser',
             '\Propel\Runtime\Propel',
             '\Propel\Runtime\Map\TableMap',
-            $this->getEventClassName(true)
+            $this->getEventClassName(true),
         );
 
         $baseClass = $this->getBaseClass();
@@ -567,7 +567,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
                 $typeDeclaration = '?' . $this->declareClass($nativeType);
             }
             $script .= "
-    protected " . $typeDeclaration . " \$" . $clo . " = null;
+    protected " . $typeDeclaration . ' $' . $clo . " = null;
 ";
         } elseif ($column->isTemporalType()) {
             $script .= "
@@ -779,7 +779,6 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         /** @var string|null $className */
         $className = ClassTools::classname($this->getBaseClass());
         $hooks['hasBaseClass'] = $this->getBehaviorContent('parentClass') !== null || $className !== null;
-
 
         $hooks['eventClass'] = $this->getEventClassName();
 
@@ -1587,7 +1586,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
             if (!$column->isPhpPrimitiveType() && $nativeType !== 'array') {
                 $nativeType = $this->declareClass($nativeType);
             }
-            $script .= "): ?" . $nativeType . "
+            $script .= '): ?' . $nativeType . "
     {";
         } else {
             $script .= ")
@@ -1890,7 +1889,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         } elseif ($column->isTemporalType()) {
             $typeHint = 'string|int|\DateTimeInterface|null ';
             $null = ' = null';
-        } elseif (!$column->isEnumType() && !$column->isSetType() && !$column->isBooleanType() && $column->getType() !== \Propel\Generator\Model\PropelTypes::JSON) {
+        } elseif (!$column->isEnumType() && !$column->isSetType() && !$column->isBooleanType() && $column->getType() !== PropelTypes::JSON) {
             $nativeType = $column->getNativeTypeDeclaration();
             if ($nativeType !== null) {
                 $typeHint = '?' . $nativeType . ' ';
@@ -6202,7 +6201,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         $fks = $crossFKs->getCrossForeignKeys();
 
         foreach ($crossFKs->getMiddleTable()->getForeignKeys() as $fk) {
-            if ($fk !== $excludeFK && ($fk === $crossFKs->getIncomingForeignKey() || \in_array($fk, $fks))) {
+            if ($fk !== $excludeFK && ($fk === $crossFKs->getIncomingForeignKey() || in_array($fk, $fks))) {
                 if ($fk === $crossFKs->getIncomingForeignKey()) {
                     $names[] = '$this';
                 } else {
@@ -7123,7 +7122,7 @@ abstract class " . $this->getUnqualifiedClassName() . $parentClass . ' implement
         }
 
         foreach ($table->getColumns() as $col) {
-            if (!\in_array($col, $autoIncCols, true)) {
+            if (!in_array($col, $autoIncCols, true)) {
                 $script .= "
         \$copyObj->set" . $col->getPhpName() . '($this->get' . $col->getPhpName() . '());';
             }

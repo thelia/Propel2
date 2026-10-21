@@ -11,8 +11,8 @@ namespace Propel\Runtime\Connection;
 use PDO;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\DataFetcher\PDODataFetcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Propel\Runtime\Exception\InvalidArgumentException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * PDO extension that implements ConnectionInterface and builds StatementInterface statements.
@@ -28,7 +28,7 @@ class PdoConnection implements ConnectionInterface
 
     /**
      * @specificity thelia
-     * @var EventDispatcherInterface|null
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface|null
      * */
     protected $eventDispatcher;
 
@@ -70,18 +70,22 @@ class PdoConnection implements ConnectionInterface
 
     /**
      * @specificity thelia
-     * @param null|EventDispatcherInterface $eventDispatcher
+     *
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface|null $eventDispatcher
+     *
      * @return $this
      */
     public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher = null)
     {
         $this->eventDispatcher = $eventDispatcher;
+
         return $this;
     }
 
     /**
      * @specificity thelia
-     * @return null|EventDispatcherInterface
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface|null
      */
     public function getEventDispatcher()
     {

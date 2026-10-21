@@ -12,6 +12,7 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
+use ReflectionClass;
 
 /**
  * A ModelJoin is a Join object tied to a RelationMap object
@@ -249,7 +250,7 @@ class ModelJoin extends Join
     public function __toString(): string
     {
         return parent::toString()
-            . ' tableMap: ' . ($this->tableMap ? \get_class($this->tableMap) : 'null')
+            . ' tableMap: ' . ($this->tableMap ? get_class($this->tableMap) : 'null')
             . ' relationMap: ' . $this->relationMap->getName()
             . ' previousJoin: ' . ($this->previousJoin ? '(' . $this->previousJoin . ')' : 'null')
             . ' relationAlias: ' . $this->rightTableAlias;
@@ -257,13 +258,17 @@ class ModelJoin extends Join
 
     /**
      * Build from a Join.
-     * @param Join $join Join to build from.
+     *
      * @deprecated Compatibility hack. Do not use.
+     *
+     * @param \Propel\Runtime\ActiveQuery\Join $join Join to build from.
+     *
+     * @return void
      */
     public function buildFromJoin(Join $join)
     {
         // copy all join properties
-        $reflectedJoin = new \ReflectionClass($join);
+        $reflectedJoin = new ReflectionClass($join);
 
         foreach ($reflectedJoin->getProperties() as $reflectedProperty) {
             $reflectedProperty->setValue($this, $reflectedProperty->getValue($join));

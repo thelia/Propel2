@@ -1,11 +1,9 @@
 <?php
 
 /**
- * This file is part of the Propel package.
+ * MIT License. This file is part of the Propel package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @license MIT License
  */
 
 namespace Propel\Generator\Builder\Sql\Pgsql;
@@ -32,7 +30,8 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
      * The main method in this class, returns the SQL for INSERTing data into a
      * row.
      *
-     * @param  DataRow $row
+     * @param \Propel\Generator\Builder\Util\DataRow $row
+     *
      * @return string
      */
     public function buildRowSql(DataRow $row)
@@ -60,7 +59,7 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
         $sql = '';
         if ($table->hasAutoIncrementPrimaryKey() && $table->getIdMethod() == IdMethod::NATIVE) {
             $seqname = $this->getPlatform()->getSequenceName($table);
-            $sql .= "SELECT pg_catalog.setval('$seqname', ".((int) $this->maxSeqVal).");
+            $sql .= "SELECT pg_catalog.setval('$seqname', " . ((int)$this->maxSeqVal) . ");
 ";
         }
 
@@ -70,12 +69,13 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
     /**
      * Returns the SQL value to insert for PostGres BOOLEAN column.
      *
-     * @param  boolean $value
+     * @param bool $value
+     *
      * @return string
      */
     protected function getBooleanSql($value)
     {
-        if (\in_array($value, ['f', 'false', '0'])) {
+        if (in_array($value, ['f', 'false', '0'])) {
             $value = false;
         }
 
@@ -85,15 +85,16 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
     /**
      * Returns the SQL code for inserting a Blob value.
      *
-     * @param  mixed  $blob
+     * @param mixed $blob
+     *
      * @return string
      */
     protected function getBlobSql($blob)
     {
-       if (\is_resource($blob)) {
+        if (is_resource($blob)) {
             return fopen($blob, 'rb');
         }
 
-        return (string) $blob;
+        return (string)$blob;
     }
 }

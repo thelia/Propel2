@@ -14,8 +14,8 @@ use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\InvalidArgumentException;
 use Propel\Runtime\Propel;
 use Psr\Log\LoggerAwareInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Wraps a Connection class, providing nested transactions, statement cache, and logging.
@@ -60,7 +60,7 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
 
     /**
      * @specificity thelia
-     * @var EventDispatcherInterface|null
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface|null
      * */
     protected $eventDispatcher;
 
@@ -178,18 +178,22 @@ class ConnectionWrapper implements ConnectionInterface, LoggerAwareInterface
 
     /**
      * @specificity thelia
-     * @param null|EventDispatcherInterface $eventDispatcher
+     *
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface|null $eventDispatcher
+     *
      * @return $this
      */
     public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher = null)
     {
         $this->eventDispatcher = $eventDispatcher;
+
         return $this;
     }
 
     /**
      * @specificity thelia
-     * @return null|EventDispatcherInterface
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface|null
      */
     public function getEventDispatcher()
     {

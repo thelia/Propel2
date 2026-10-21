@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * MIT License. This file is part of the Propel package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Propel\Generator\Builder;
 
 use Propel\Generator\Builder\Om\ClassTools;
@@ -8,10 +14,14 @@ use Propel\Generator\Model\Database;
 
 class ResolverBuilder
 {
-    /** @var Database */
+    /**
+     * @var \Propel\Generator\Model\Database
+     */
     protected $database;
 
-    /** @var GeneratorConfig */
+    /**
+     * @var \Propel\Generator\Config\GeneratorConfig
+     */
     protected $generatorConfig;
 
     public function __construct(Database $database)
@@ -28,13 +38,11 @@ class ResolverBuilder
         $definitions = [
             'table' => [
 
-            ]
+            ],
         ];
 
-        /** @var Table $table */
+        /** @var \Propel\Generator\Builder\Table $table */
         foreach ($database->getTables() as $table) {
-
-
             foreach (['tablemap'] as $target) {
                 $builder = $this->generatorConfig->getConfiguredBuilder($table, $target);
 
@@ -42,9 +50,9 @@ class ResolverBuilder
             }
         }
 
-$script = '<?php
+        $script = '<?php
 
-namespace '. $this->getPackagePath() . ';
+namespace ' . $this->getPackagePath() . ';
 
 class PropelResolver
 {
@@ -58,10 +66,10 @@ class PropelResolver
 ';
 
         foreach ($definitions['table'] as $name => $namespace) {
-$script .= '            "' . $name . '" => "' . $namespace . '",
+            $script .= '            "' . $name . '" => "' . $namespace . '",
 ';
         }
-$script .= '
+        $script .= '
         ];
         
         if (isset($list[$name])) {
@@ -71,9 +79,13 @@ $script .= '
         return null;
     }
 }';
+
         return $script;
     }
-    
+
+    /**
+     * @return void
+     */
     public function setGeneratorConfig(GeneratorConfig $generatorConfig)
     {
         $this->generatorConfig = $generatorConfig;
@@ -91,6 +103,7 @@ $script .= '
 
     /**
      * Returns filesystem path for current package.
+     *
      * @return string
      */
     public function getPackagePath()

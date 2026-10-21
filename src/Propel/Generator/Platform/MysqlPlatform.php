@@ -835,7 +835,6 @@ RENAME TABLE %s TO %s;
         $pattern = "
 ALTER TABLE %s DROP %s;
 ";
-        
 
         return sprintf(
             $pattern,
@@ -984,7 +983,7 @@ ALTER TABLE %s ADD %s %s;
      */
     public function hasSize(string $sqlType): bool
     {
-        return !\in_array($sqlType, [
+        return !in_array($sqlType, [
             'MEDIUMTEXT',
             'LONGTEXT',
             'BLOB',
