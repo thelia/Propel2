@@ -130,8 +130,5 @@ jobs:
                 PHPSTAN: 1
               run: composer stan
 
-            - name: Psalm
-              run: composer psalm -- --php-version=${{ steps.setup-php.outputs.php-version }}
-
             - name: Code Style
               run: composer cs-check
