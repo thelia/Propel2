@@ -1,12 +1,12 @@
 <?php
 
+/**
+ * MIT License. This file is part of the Propel package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Propel\Generator\Builder\Om;
-
-use Propel\Generator\Model\ForeignKey;
-
-use Propel\Generator\Model\IdMethod;
-use Propel\Generator\Model\Table;
-use Propel\Generator\Platform\PlatformInterface;
 
 /**
  * Generates the PHP5 event class for user object model (OM).
@@ -29,17 +29,19 @@ class EventBuilder extends AbstractOMBuilder
             return 'Event';
         }
 
-        if ($this->getGeneratorConfig()
-            && $omns = $this->getBuildProperty('generator.objectModel.namespaceEvent')) {
+        if (
+            $this->getGeneratorConfig()
+            && $omns = $this->getBuildProperty('generator.objectModel.namespaceEvent')
+        ) {
             return $namespace . '\\' . $omns;
         }
 
-        return $namespace .'Event';
+        return $namespace . 'Event';
     }
 
     public function getBaseTableMapClassName(): string
     {
-        return "Event";
+        return 'Event';
     }
 
     /**
@@ -52,20 +54,25 @@ class EventBuilder extends AbstractOMBuilder
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
+     * @return void
      */
     protected function addClassOpen(&$script): void
     {
         $this->addUseClasses($script);
 
         $script .= "
-class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
+class " . $this->getUnqualifiedClassName() . " extends ActiveRecordEvent
 {";
     }
 
     /**
      * Specifies the methods that are added as part of the map builder class.
      * This can be overridden by subclasses that wish to add more methods.
+     *
      * @see ObjectBuilder::addClassBody()
+     *
+     * @return void
      */
     protected function addClassBody(&$script): void
     {
@@ -98,14 +105,20 @@ class ".$this->getUnqualifiedClassName()." extends ActiveRecordEvent
 ';
     }
 
+    /**
+     * @return void
+     */
     protected function addUseClasses(&$script): void
     {
-$script .= 'use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+        $script .= 'use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Event\ActiveRecordEvent;
 use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName() . ';
 ';
     }
 
+    /**
+     * @return void
+     */
     protected function addConstruct(&$script): void
     {
         $script .= '
@@ -119,6 +132,9 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
 ';
     }
 
+    /**
+     * @return void
+     */
     protected function addGetter(&$script): void
     {
         $script .= '
@@ -132,6 +148,9 @@ use ' . $this->getTable()->getNamespace() . '\\' . $this->getTable()->getPhpName
 ';
     }
 
+    /**
+     * @return void
+     */
     protected function addClassClose(&$script): void
     {
         $script .= '}';

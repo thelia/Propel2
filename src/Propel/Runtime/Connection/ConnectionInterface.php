@@ -9,8 +9,8 @@
 namespace Propel\Runtime\Connection;
 
 use PDO;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Interface for Propel Connection class.
@@ -36,14 +36,17 @@ interface ConnectionInterface
 
     /**
      * @specificity thelia
-     * @param null|EventDispatcherInterface $eventDispatcher
+     *
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface|null $eventDispatcher
+     *
      * @return $this
      */
     public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher = null);
 
     /**
      * @specificity thelia
-     * @return null|EventDispatcherInterface
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface|null
      */
     public function getEventDispatcher();
 

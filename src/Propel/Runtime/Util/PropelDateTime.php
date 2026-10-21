@@ -50,7 +50,7 @@ class PropelDateTime extends DateTime
             return false;
         }
 
-        if (8 === \strlen((string) $value)) {
+        if (strlen((string)$value) === 8) {
             return false;
         }
 

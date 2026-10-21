@@ -39,9 +39,12 @@ class TableMap
     /**
      * studlyphpname type
      * e.g. 'authorId'
+     *
      * @deprecated Legacy constant for compatibility. Use TYPE_CAMELNAME.
+     *
+     * @var string
      */
-    const TYPE_STUDLYPHPNAME = 'camelName';
+    public const TYPE_STUDLYPHPNAME = 'camelName';
 
     /**
      * camelCase type
@@ -62,9 +65,12 @@ class TableMap
     /**
      * column part of the column tableMap name
      * e.g. 'AUTHOR_ID'
+     *
      * @deprecated Legacy constant, was removed. Do not use.
+     *
+     * @var string
      */
-    const TYPE_RAW_COLNAME = 'rawColName';
+    public const TYPE_RAW_COLNAME = 'rawColName';
 
     /**
      * column fieldname type
@@ -982,7 +988,7 @@ class TableMap
     public function extractPrimaryKey(Criteria $criteria): ?array
     {
         $pkCols = $this->getPrimaryKeys();
-        if (\count($pkCols) !== \count($criteria->getMap())) {
+        if (count($pkCols) !== count($criteria->getMap())) {
             return null;
         }
 

@@ -597,7 +597,7 @@ class PropelTypes
      */
     public static function isTemporalType(string $type): bool
     {
-        return \in_array($type, [
+        return in_array($type, [
             self::DATE,
             self::DATETIME,
             self::TIME,
@@ -616,7 +616,7 @@ class PropelTypes
      */
     public static function isTextType(string $mappingType): bool
     {
-        return \in_array($mappingType, [
+        return in_array($mappingType, [
             self::CHAR,
             self::VARCHAR,
             self::LONGVARCHAR,
@@ -640,7 +640,7 @@ class PropelTypes
      */
     public static function isNumericType(string $mappingType): bool
     {
-        return \in_array($mappingType, [
+        return in_array($mappingType, [
             self::SMALLINT,
             self::TINYINT,
             self::INTEGER,

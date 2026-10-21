@@ -8,13 +8,11 @@
 
 namespace Propel\Generator\Manager;
 
-use Propel\Generator\Builder\ResolverBuilder;
-use Propel\Generator\Model\Database;
-use Propel\Generator\Model\Table;
-use Symfony\Component\Filesystem\Filesystem;
 use Propel\Generator\Builder\Om\AbstractOMBuilder;
 use Propel\Generator\Builder\Om\TableMapLoaderScriptBuilder;
+use Propel\Generator\Model\Database;
 use SplFileInfo;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This manager creates the Object Model classes based on the XML schema file.
@@ -26,14 +24,14 @@ class ModelManager extends AbstractManager
     /**
      * A Filesystem object.
      *
-     * @var Filesystem
+     * @var \Symfony\Component\Filesystem\Filesystem
      */
     private $filesystem;
 
     /**
      * Sets the filesystem object.
      *
-     * @param Filesystem $filesystem
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      *
      * @return void
      */
@@ -158,12 +156,12 @@ class ModelManager extends AbstractManager
 
     protected function buildResolver(Database $database, $overwrite = true)
     {
-        $totalNbFiles    = 0;
+        $totalNbFiles = 0;
         $generatorConfig = $this->getGeneratorConfig();
 
         $class = $generatorConfig->getConfigProperty('generator.builders.resolver');
 
-        /** @var ResolverBuilder $builder */
+        /** @var \Propel\Generator\Builder\ResolverBuilder $builder */
         $builder = new $class($database);
         $builder->setGeneratorConfig($generatorConfig);
 
@@ -171,7 +169,7 @@ class ModelManager extends AbstractManager
 
         $path = $builder->getClassFilePath();
 
-        $file = new \SplFileInfo($this->getWorkingDirectory() . DIRECTORY_SEPARATOR . $path);
+        $file = new SplFileInfo($this->getWorkingDirectory() . DIRECTORY_SEPARATOR . $path);
 
         // skip files already created once
         if ($file->isFile() && !$overwrite) {
@@ -193,7 +191,7 @@ class ModelManager extends AbstractManager
 
         // write / overwrite new / changed files
         $action = $file->isFile() ? 'Updating' : 'Creating';
-        $this->log(sprintf("\t-> %s %s (resolver: %s, builder: %s)", $action, $builder->getClassFilePath(), $database->getName(), \get_class($builder)));
+        $this->log(sprintf("\t-> %s %s (resolver: %s, builder: %s)", $action, $builder->getClassFilePath(), $database->getName(), get_class($builder)));
         file_put_contents($file->getPathname(), $script);
 
         return $totalNbFiles;
@@ -213,7 +211,7 @@ class ModelManager extends AbstractManager
     {
         $path = $builder->getClassFilePath();
 
-        $file = new \SplFileInfo($this->getWorkingDirectory() . DIRECTORY_SEPARATOR . $path);
+        $file = new SplFileInfo($this->getWorkingDirectory() . DIRECTORY_SEPARATOR . $path);
 
         $this->filesystem->mkdir($file->getPath());
 
@@ -238,7 +236,7 @@ class ModelManager extends AbstractManager
 
         // write / overwrite new / changed files
         $action = $file->isFile() ? 'Updating' : 'Creating';
-        $this->log(sprintf("\t-> %s %s (table: %s, builder: %s)", $action, $builder->getClassFilePath(), $builder->getTable()->getName(), \get_class($builder)));
+        $this->log(sprintf("\t-> %s %s (table: %s, builder: %s)", $action, $builder->getClassFilePath(), $builder->getTable()->getName(), get_class($builder)));
         file_put_contents($file->getPathname(), $script);
 
         return 1;
