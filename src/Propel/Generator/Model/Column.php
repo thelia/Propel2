@@ -1666,6 +1666,8 @@ class Column extends MappingModel
      *
      * When a typeHint is explicitly set (e.g. for OBJECT columns), it is
      * returned directly as a FQCN.
+     *
+     * @return string|null
      */
     public function getNativeTypeDeclaration(): ?string
     {

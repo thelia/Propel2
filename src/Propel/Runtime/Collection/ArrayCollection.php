@@ -145,6 +145,9 @@ class ArrayCollection extends Collection
      * 'Book_1' => array('Id' => 456, 'Title' => 'Don Juan'),
      * )
      * </code>
+     * @param string $keyType
+     * @param bool $includeLazyLoadColumns
+     * @param array<mixed> $alreadyDumpedObjects
      *
      * @return array
      */

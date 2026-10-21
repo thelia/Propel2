@@ -19,6 +19,8 @@ interface ActiveRecordInterface
 {
     /**
      * Returns true if the primary key for this object is null.
+     *
+     * @return bool
      */
     public function isPrimaryKeyNull(): bool;
 
@@ -31,13 +33,21 @@ interface ActiveRecordInterface
 
     /**
      * Checks the existence of a virtual column in this object.
+     *
+     * @param string $name
+     *
+     * @return bool
      */
     public function hasVirtualColumn(string $name): bool;
 
     /**
      * Get the value of a virtual column in this object.
      *
+     * @param string $name
+     *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return mixed
      */
     public function getVirtualColumn(string $name): mixed;
 

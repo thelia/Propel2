@@ -53,6 +53,9 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
         return $sql;
     }
 
+    /**
+     * @return string
+     */
     public function getTableEndSql()
     {
         $table = $this->getTable();

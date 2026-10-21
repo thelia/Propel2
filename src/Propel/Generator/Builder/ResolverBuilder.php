@@ -24,6 +24,9 @@ class ResolverBuilder
      */
     protected $generatorConfig;
 
+    /**
+     * @param \Propel\Generator\Model\Database $database
+     */
     public function __construct(Database $database)
     {
         $this->database = $database;
